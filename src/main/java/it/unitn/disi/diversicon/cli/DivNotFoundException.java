@@ -6,32 +6,32 @@ package it.unitn.disi.diversicon.cli;
  * @author David Leoni <david.leoni@unitn.it>
  * @since 0.1
  */
-public class DivcliNotFoundException extends DivcliException {
+public class DivNotFoundException extends DivcliException {
     
     private static final long serialVersionUID = 1L;
 
-    private DivcliNotFoundException(){
+    private DivNotFoundException(){
         super();
     }
     
     /**
      * Creates the NotFoundException using the provided throwable
      */
-    public DivcliNotFoundException(Throwable tr) {
+    public DivNotFoundException(Throwable tr) {
         super(tr);
     }
 
     /**
      * Creates the NotFoundException using the provided message and throwable
      */
-    public DivcliNotFoundException(String msg, Throwable tr) {
+    public DivNotFoundException(String msg, Throwable tr) {
         super(msg, tr);
     }
 
     /**
      * Creates the NotFoundException using the provided message
      */
-    public DivcliNotFoundException(String msg) {
+    public DivNotFoundException(String msg) {
         super(msg);
     }
 }
