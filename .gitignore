@@ -1,5 +1,7 @@
 
-db/*
+/db/
+/conf/*
+!/conf/README.txt
 
 
 ##### MAVEN

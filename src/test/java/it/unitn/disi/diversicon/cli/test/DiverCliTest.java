@@ -1,5 +1,6 @@
 package it.unitn.disi.diversicon.cli.test;
 
+import static it.unitn.disi.diversicon.test.LmfBuilder.lmf;
 import static org.junit.Assert.*;
 
 import java.io.File;
@@ -20,10 +21,19 @@ import org.slf4j.LoggerFactory;
 
 import com.beust.jcommander.ParameterException;
 
+import de.tudarmstadt.ukp.lmf.model.core.LexicalResource;
+import de.tudarmstadt.ukp.lmf.model.enums.ERelNameSemantics;
 import de.tudarmstadt.ukp.lmf.transform.DBConfig;
 import it.unitn.disi.diversicon.Diversicon;
 import it.unitn.disi.diversicon.Diversicons;
+import it.unitn.disi.diversicon.ImportJob;
 import it.unitn.disi.diversicon.cli.DiverCli;
+import it.unitn.disi.diversicon.cli.commands.CreateDbCommand;
+import it.unitn.disi.diversicon.cli.commands.DbProcessCommand;
+import it.unitn.disi.diversicon.cli.commands.ImportShowCommand;
+import it.unitn.disi.diversicon.cli.commands.ImportXmlCommand;
+import it.unitn.disi.diversicon.cli.commands.LogCommand;
+import it.unitn.disi.diversicon.data.wn30.DivWn30;
 import it.unitn.disi.diversicon.internal.Internals;
 import it.unitn.disi.diversicon.test.DivTester;
 
@@ -38,7 +48,7 @@ public class DiverCliTest {
 
     private Path testHome;
     private Path testConfDir;
-    private DBConfig dbConfig;
+
 
     @Before
     public void beforeMethod() throws IOException {
@@ -48,10 +58,7 @@ public class DiverCliTest {
         Internals.copyDirFromResource(DiverCli.class, "it/unitn/disi/divercli/conf-template", testConfDir.toFile());
         
         System.setProperty(DiverCli.SYSTEM_CONF_DIR,
-                testConfDir.toString());
-        
-        dbConfig = DivTester.createNewDbConfig();
-        Diversicons.dropCreateTables(dbConfig);
+                testConfDir.toString());        
         
         FileUtils.deleteDirectory(new File("db/"));
     }
@@ -59,8 +66,7 @@ public class DiverCliTest {
     
     
     @After
-    public void afterMethod() {
-        dbConfig = null;
+    public void afterMethod() {        
         testHome = null;
         testConfDir = null;
         System.setProperty(DiverCli.SYSTEM_CONF_DIR, "");
@@ -162,7 +168,7 @@ public class DiverCliTest {
      * @since 0.1.0
      */    
     @Test
-    public void testImportXml(){
+    public void testImportXmlBadParams(){
         
         File xmlFile = DivTester.writeXml(DivTester.GRAPH_1_HYPERNYM);
         
@@ -197,12 +203,33 @@ public class DiverCliTest {
         }
         
         try {
-            DiverCli.of("--import ", xmlFile.getAbsolutePath(), "--author", "a", "--description", " ").run();
+            DiverCli.of(ImportXmlCommand.CMD, "--author", "a", "--description", " ", xmlFile.getAbsolutePath()).run();
             Assert.fail("Need description!");
         } catch (Exception ex){
         }
         
-        DiverCli cli = DiverCli.of("--import ", xmlFile.getAbsolutePath(), "--author", "a", "--description", "d");
+        
+    }
+
+    /**
+     * This also tests MainCommand is working
+     * 
+     * @since 0.1
+     */
+    @Test
+    public void testDebug(){
+        DiverCli cli = DiverCli.of("--debug");        
+        cli.run();
+    }
+    
+    @Test
+    public void testImportXml(){
+        
+        File xmlFile = DivTester.writeXml(DivTester.GRAPH_1_HYPERNYM);
+        DiverCli cli = DiverCli.of(ImportXmlCommand.CMD,                                     
+                                    "--author", "a", 
+                                    "--description", "d", 
+                                    xmlFile.getAbsolutePath());
         
         cli.run();
               
@@ -211,5 +238,91 @@ public class DiverCliTest {
         div.getSession().close();
     }
     
+    /**
+     * @since 0.1
+     */    
+    @Test
+    public void testCreateDbFromDb() throws IOException {
+        
+        Path dir = Files.createTempDirectory("divercli-test");
+        String target = dir.toString() + "/test";
+        
+        DiverCli cli = DiverCli.of( CreateDbCommand.CMD, 
+               "--db",  DivWn30.WORDNET_DIV_H2_DB_RESOURCE_URI, 
+               "-t", target,
+               "-d");
+        
+        cli.run();
+        
+        File outf = new File(target + ".h2.db");
+        
+        assertTrue(outf.exists());
+        assertTrue(outf.length() > 0);
+        
+        Diversicon div = Diversicon.connectToDb(cli.getDbConfig());       
+        div.getSession().close();                               
+    }
+
+    /**
+     * @since 0.1
+     */    
+    @Test
+    public void testLog(){        
+        DiverCli cli = DiverCli.of(LogCommand.CMD);
+        cli.run();
+        // todo how to improve? 
+    }
+    
+    /**
+     * @since 0.1
+     */
+    @Test
+    public void testShowImport(){        
+        File xmlFile = DivTester.writeXml(DivTester.GRAPH_1_HYPERNYM);
+        DiverCli cli1 = DiverCli.of(ImportXmlCommand.CMD, xmlFile.getAbsolutePath(), "--author", "Test author", "--description", "Test description");
+        cli1.run();
+        
+        cli1.connect();
+        ImportJob job = cli1.getDiversicon().getImportJobs().get(0);
+        cli1.disconnect();
+
+        DiverCli cli2 = DiverCli.of(ImportShowCommand.CMD, Long.toString(job.getId()));
+        cli2.run();
+    }
+    
+    /**
+     * @since 0.1
+     */
+    @Test
+    public void testProcessGraph(){
+        LexicalResource res = lmf().lexicon()
+        .synset()
+        .synset()
+        .synsetRelation(ERelNameSemantics.HYPONYM, 1)
+        .build();
+        
+       File xmlFile = DivTester.writeXml(res);
+       
+       DiverCli cli1 = DiverCli.of(ImportXmlCommand.CMD,
+               "--process-db=false",
+               "--author=testAuthor",
+               "--description=testDescr",
+               xmlFile.getAbsolutePath());
+       cli1.run();       
+       
+       cli1.connect();
+       assertEquals(1, cli1.getDiversicon().getSynsetRelationsCount());
+       cli1.disconnect();             
+       
+       DiverCli cli2 = DiverCli.of(DbProcessCommand.CMD);
+       cli2.run();
+
+       cli2.connect();
+       
+       // graph should be normalized with hypernyms
+       assertTrue(cli2.getDiversicon().getSynsetRelationsCount() > 1);                  
+       cli2.disconnect();
+    }
    
+    
 }

@@ -114,6 +114,29 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-enforcer-plugin</artifactId>
 			</plugin>
+			
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<!-- note this IS NOT recognized in stupid Eclipse by design, see https://bugs.eclipse.org/bugs/show_bug.cgi?id=388683 -->
+					<systemPropertyVariables>
+						<logback.configurationFile>${basedir}/conf/logback-test.xml</logback.configurationFile>
+					</systemPropertyVariables>
+
+					<excludes>
+						<exclude>**/*SlowTest*</exclude>
+					</excludes>
+
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+			</plugin>
+			
 			<plugin>
 				<groupId>eu.trentorise.opendata</groupId>
 				<artifactId>josman-maven-plugin</artifactId>
