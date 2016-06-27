@@ -140,7 +140,7 @@ public class DiverCli {
         try {
             cli.run();
         } catch (ParameterException ex) {
-            LOG.error(ex.getMessage());
+            LOG.error("ERROR: " + ex.getMessage());
             System.exit(1);
         } catch (Exception ex) {
             LOG.error("Internal error occurred! Details:", ex);

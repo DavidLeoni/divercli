@@ -48,7 +48,7 @@ public class CreateDbCommand implements DiverCliCommand {
     String restoreH2DbPath = "";
     
     
-    @Parameter(names = {"--target-path", "-t"}, 
+    @Parameter(names = {"--target", "-t"}, 
             description = "The path to the database to create. For H2, don't include .h2.db .",
             required = true)
     String targetDbPath = "";

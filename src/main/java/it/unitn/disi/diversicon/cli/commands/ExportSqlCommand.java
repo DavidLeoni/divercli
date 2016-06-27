@@ -2,6 +2,9 @@ package it.unitn.disi.diversicon.cli.commands;
 
 import static it.unitn.disi.diversicon.internal.Internals.checkNotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
@@ -24,8 +27,8 @@ public class ExportSqlCommand implements DiverCliCommand {
     @Parameter(names = "--compress", description = "Compress the file into a zip archive")
     Boolean compress = false;
 
-    @Parameter(description = "the path where to save the generated sql dump")
-    String sqlPath = "";
+    @Parameter(description = "The filepath where to save the generated sql dump", arity=1, required=true)
+    List<String> sqlPaths = new ArrayList();
 
     DiverCli diverCli;
     
@@ -42,7 +45,7 @@ public class ExportSqlCommand implements DiverCliCommand {
     @Override
     public void run() {
         diverCli.connect();
-        diverCli.getDiversicon().exportToSql(sqlPath,  compress);
+        diverCli.getDiversicon().exportToSql(sqlPaths.get(0),  compress);
     }
 
     @Override

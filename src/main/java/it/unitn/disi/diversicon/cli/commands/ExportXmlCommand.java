@@ -2,9 +2,13 @@ package it.unitn.disi.diversicon.cli.commands;
 
 import static it.unitn.disi.diversicon.internal.Internals.checkNotNull;
 
+import java.util.List;
+
 import com.beust.jcommander.Parameter;
+import com.beust.jcommander.ParameterException;
 import com.beust.jcommander.Parameters;
 
+import it.unitn.disi.diversicon.DivNotFoundException;
 import it.unitn.disi.diversicon.cli.DiverCli;
 
 /** 
@@ -22,15 +26,15 @@ public class ExportXmlCommand implements DiverCliCommand {
     public static final String CMD = "export xml";
 
     
-    @Parameter(names = "--name", description = "The name of the lexical resource to export.")
+    @Parameter(names = "--name", required=true, description = "The name of the lexical resource to export.")
     String name;
 
     @Parameter(names = "--compress", description = "Compress the file into a zip archive")
     Boolean compress = false;
 
 
-    @Parameter(description = "the path where to save the generated xml")
-    String xmlPath;
+    @Parameter(required=true, arity=1, description = "Filepath of the xml to generate.")
+    List<String> xmlPath;
 
     DiverCli diverCli;
     
@@ -47,7 +51,11 @@ public class ExportXmlCommand implements DiverCliCommand {
     @Override
     public void run() {
         diverCli.connect();
-        diverCli.getDiversicon().exportToXml(xmlPath, name, compress);
+        try {
+            diverCli.getDiversicon().exportToXml(xmlPath.get(0), name, compress);
+        } catch (DivNotFoundException ex){
+            throw new ParameterException("Couldn't find lexical resource " + name + " !");
+        }
     }
 
     @Override
