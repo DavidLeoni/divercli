@@ -29,7 +29,7 @@ public class ImportShowCommand implements DiverCliCommand {
     /**
      * @since 0.1
      */
-    public static final String CMD = "import show";
+    public static final String CMD = "import-show";
     
     private static final Logger LOG = LoggerFactory.getLogger(ImportShowCommand.class);
 

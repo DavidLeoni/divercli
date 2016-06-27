@@ -28,7 +28,6 @@ public class LogCommand implements  DiverCliCommand {
      * @since 0.1
      */
     public static final String CMD = "log";
-
     
     private static final Logger LOG = LoggerFactory.getLogger(LogCommand.class);
 

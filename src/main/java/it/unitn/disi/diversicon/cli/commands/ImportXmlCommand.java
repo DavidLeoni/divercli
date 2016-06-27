@@ -28,7 +28,7 @@ public class ImportXmlCommand implements DiverCliCommand {
     /**
      * @since 0.1
      */
-    public static final String CMD = "import xml";
+    public static final String CMD = "import-xml";
 
     @Parameter(names = { "--author", "-a" }, required = true, description = "The author of the operations on the db.")
     String author = "";
@@ -38,9 +38,9 @@ public class ImportXmlCommand implements DiverCliCommand {
             "-d" }, required = true, description = "The description of the operation being performed on the db.")
     String description = "";
 
-    @Parameter(names = { "--process-db", "-p" }, arity=1, description = "Processes the db graph to speed up "
-            + " operations requiring the transitive closure. Defaults to true. To skip it, write  -p false")
-    boolean processDb = true;    
+    @Parameter(names = { "--skip-augment", "-s" },  description = "Skips augmenting the db graph to speed up "
+            + " operations requiring the transitive closure.")
+    boolean skipAugment=false;    
 
 
     @Parameter( required=true, variableArity = true, description = "a space separated list of XML files in UBY-LMF format."
@@ -69,8 +69,7 @@ public class ImportXmlCommand implements DiverCliCommand {
         importConfig = new ImportConfig();
         importConfig.setAuthor(author);
         importConfig.setDescription(description);
-
-        importConfig.setSkipAugment(!processDb);
+        importConfig.setSkipAugment(skipAugment);
 
         for (String fileUrl : importXmlPaths) {
             importConfig.addLexicalResource(fileUrl);

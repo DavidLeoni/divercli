@@ -78,6 +78,57 @@
 		</dependencies>
 	</dependencyManagement>
 
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>appassembler-maven-plugin</artifactId>
+						<version>1.10</version>
+						<configuration>
+							<programs>
+								<program>
+									<mainClass>it.unitn.disi.diversicon.cli.DiverCli</mainClass>
+									<id>divercli</id>
+								</program>
+							</programs>
+						</configuration>
+						<executions>
+							<execution>
+								<id>assemble</id>
+								<goals>
+									<goal>assemble</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<artifactId>maven-assembly-plugin</artifactId>
+						<version>2.5.3</version>
+						<configuration>
+							<descriptor>src/assembly/bin.xml</descriptor>
+							<finalName>${project.artifactId}-${project.version}</finalName>
+							<appendAssemblyId>false</appendAssemblyId>
+						</configuration>
+						<executions>
+							<execution>
+								<id>create-archive</id>
+								<phase>package</phase>
+								<goals>
+									<goal>single</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+
 
 	<build>
 		<plugins>
@@ -114,8 +165,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-enforcer-plugin</artifactId>
 			</plugin>
-			
-			
+
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -136,7 +187,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>eu.trentorise.opendata</groupId>
 				<artifactId>josman-maven-plugin</artifactId>
@@ -147,29 +198,15 @@
 				<artifactId>site-maven-plugin</artifactId>
 			</plugin>
 
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>appassembler-maven-plugin</artifactId>
-				<version>1.10</version>
-				<configuration>
-					<programs>
-						<program>
-							<mainClass>it.unitn.disi.DiverCli</mainClass>
-							<id>divercli</id>
-						</program>
-					</programs>
-				</configuration>
-			</plugin>
-
 		</plugins>
 	</build>
 
 	<dependencies>
-	
-	<dependency>
-		    <groupId>com.github.lalyos</groupId>
-		    <artifactId>jfiglet</artifactId>
-		    <version>0.0.7</version>
+
+		<dependency>
+			<groupId>com.github.lalyos</groupId>
+			<artifactId>jfiglet</artifactId>
+			<version>0.0.7</version>
 		</dependency>
 
 		<dependency>
@@ -179,15 +216,15 @@
 		</dependency>
 
 		<dependency>
-		  <groupId>com.beust</groupId>
-		  <artifactId>jcommander</artifactId>
-		  <version>1.48</version>
+			<groupId>com.beust</groupId>
+			<artifactId>jcommander</artifactId>
+			<version>1.48</version>
 		</dependency>
 
 		<dependency>
-		    <groupId>org.ini4j</groupId>
-		    <artifactId>ini4j</artifactId>
-		    <version>0.5.1</version>
+			<groupId>org.ini4j</groupId>
+			<artifactId>ini4j</artifactId>
+			<version>0.5.1</version>
 		</dependency>
 
 
@@ -205,16 +242,16 @@
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.uby</groupId>
 			<artifactId>de.tudarmstadt.ukp.uby.lmf.api-asl</artifactId>
-			<exclusions> <!--  we use logback -->
+			<exclusions> <!-- we use logback -->
 				<exclusion>
-				    <groupId>org.slf4j</groupId>
-				    <artifactId>slf4j-simple</artifactId>	
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-simple</artifactId>
 				</exclusion>
 			</exclusions>
-			
+
 		</dependency>
 
-        
+
 		<dependency>
 
 			<groupId>org.hibernate.common</groupId>
@@ -238,12 +275,12 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			  <version>1.3.160</version>  
-			  
+			<version>1.3.160</version>
+
 			<type>jar</type>
-<!-- 			<scope>compile</scope>  -->
+			<!-- <scope>compile</scope> -->
 		</dependency>
- 
+
 
 
 		<dependency>
@@ -252,12 +289,17 @@
 			<version>1.0.13</version>
 		</dependency>
 
-	
+
 		<dependency>
-		    <groupId>commons-io</groupId>
-		    <artifactId>commons-io</artifactId>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>jline</groupId>
+			<artifactId>jline</artifactId>
+			<version>2.12</version>
+		</dependency>
 
 		<!-- ****************** TEST DEPENDENCIES ****************** -->
 

@@ -21,7 +21,7 @@ public class ExportSqlCommand implements DiverCliCommand {
     /**
      * @since 0.1
      */
-    public static final String CMD = "export sql";
+    public static final String CMD = "export-sql";
 
     
     @Parameter(names = "--compress", description = "Compress the file into a zip archive")

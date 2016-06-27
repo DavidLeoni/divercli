@@ -31,8 +31,8 @@ import de.tudarmstadt.ukp.lmf.model.enums.ERelNameSemantics;
 import it.unitn.disi.diversicon.Diversicon;
 import it.unitn.disi.diversicon.ImportJob;
 import it.unitn.disi.diversicon.cli.DiverCli;
-import it.unitn.disi.diversicon.cli.commands.CreateDbCommand;
-import it.unitn.disi.diversicon.cli.commands.DbProcessCommand;
+import it.unitn.disi.diversicon.cli.commands.DbCreateCommand;
+import it.unitn.disi.diversicon.cli.commands.DbAugmentCommand;
 import it.unitn.disi.diversicon.cli.commands.ExportSqlCommand;
 import it.unitn.disi.diversicon.cli.commands.ExportXmlCommand;
 import it.unitn.disi.diversicon.cli.commands.ImportShowCommand;
@@ -344,7 +344,7 @@ public class DiverCliTest {
         Path dir = Files.createTempDirectory("divercli-test");
         String target = dir.toString() + "/test";
 
-        DiverCli cli = DiverCli.of(CreateDbCommand.CMD,
+        DiverCli cli = DiverCli.of(DbCreateCommand.CMD,
                 "--db", DivWn30.WORDNET_DIV_H2_DB_RESOURCE_URI,
                 "--target", target,
                 "--set-default");
@@ -395,7 +395,7 @@ public class DiverCliTest {
      * @since 0.1
      */
     @Test
-    public void testProcessGraph() {
+    public void testDbAugment() {
         LexicalResource res = lmf().lexicon()
                                    .synset()
                                    .synset()
@@ -405,7 +405,7 @@ public class DiverCliTest {
         File xmlFile = DivTester.writeXml(res);
 
         DiverCli cli1 = DiverCli.of(ImportXmlCommand.CMD,
-                "--process-db=false",
+                "--skip-augment",
                 "--author=testAuthor",
                 "--description=testDescr",
                 xmlFile.getAbsolutePath());
@@ -416,7 +416,7 @@ public class DiverCliTest {
                             .getSynsetRelationsCount());
         cli1.disconnect();
 
-        DiverCli cli2 = DiverCli.of(DbProcessCommand.CMD);
+        DiverCli cli2 = DiverCli.of(DbAugmentCommand.CMD);
         cli2.run();
 
         cli2.connect();
@@ -502,7 +502,7 @@ public class DiverCliTest {
     }
     
     @Test
-    public void testExportCompressedXml() throws IOException {
+    public void testExportXmlCompressed() throws IOException {
 
         File outF = getNonExistingFile("zip");
 

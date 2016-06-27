@@ -23,7 +23,7 @@ public class ExportXmlCommand implements DiverCliCommand {
     /**
      * @since 0.1
      */
-    public static final String CMD = "export xml";
+    public static final String CMD = "export-xml";
 
     
     @Parameter(names = "--name", required=true, description = "The name of the lexical resource to export.")

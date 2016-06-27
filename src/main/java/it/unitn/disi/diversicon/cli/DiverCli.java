@@ -28,8 +28,8 @@ import it.unitn.disi.diversicon.Diversicon;
 import it.unitn.disi.diversicon.Diversicons;
 import it.unitn.disi.diversicon.ImportConfig;
 import it.unitn.disi.diversicon.ImportJob;
-import it.unitn.disi.diversicon.cli.commands.CreateDbCommand;
-import it.unitn.disi.diversicon.cli.commands.DbProcessCommand;
+import it.unitn.disi.diversicon.cli.commands.DbCreateCommand;
+import it.unitn.disi.diversicon.cli.commands.DbAugmentCommand;
 import it.unitn.disi.diversicon.cli.commands.DiverCliCommand;
 import it.unitn.disi.diversicon.cli.commands.ExportSqlCommand;
 import it.unitn.disi.diversicon.cli.commands.ExportXmlCommand;
@@ -204,7 +204,7 @@ public class DiverCli {
     
     private void addCommand(DiverCliCommand cmd){
         commands.put(cmd.getName(), cmd);
-        jcom.addCommand(cmd.getName(), cmd);
+        jcom.addCommand(cmd.getName(), cmd);        
     }
 
     /**
@@ -217,14 +217,18 @@ public class DiverCli {
             
             jcom = new JCommander(mainCommand);
             
+            // doesn't work well, see https://github.com/DavidLeoni/divercli/issues/1
+            // int terminalWidth = jline.TerminalFactory.get().getWidth();
+            // jcom.setColumnSize(terminalWidth);            
+            
             
             addCommand(new ExportXmlCommand(this));
             addCommand(new ExportSqlCommand(this));
-            addCommand(new CreateDbCommand(this));
+            addCommand(new DbCreateCommand(this));
             addCommand(new LogCommand(this));
             addCommand(new ImportShowCommand(this));
             addCommand(new ImportXmlCommand(this));
-            addCommand(new DbProcessCommand(this));
+            addCommand(new DbAugmentCommand(this));
                         
             jcom.parse(args);
 

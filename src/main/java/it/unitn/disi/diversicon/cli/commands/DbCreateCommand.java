@@ -22,25 +22,25 @@ import it.unitn.disi.diversicon.data.wn30.DivWn30;
  *
  */
 @Parameters(separators = "=", commandDescription = "Creates a file database")
-public class CreateDbCommand implements DiverCliCommand { 
+public class DbCreateCommand implements DiverCliCommand { 
     
     /**
      * @since 0.1
      */
-    public static final String CMD = "db create";
+    public static final String CMD = "db-create";
     
-    private static final Logger LOG = LoggerFactory.getLogger(CreateDbCommand.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DbCreateCommand.class);
 
     private DiverCli diverCli;
         
-    @Parameter(names = { "--sql" },  description = "Restores an h2 database from a sql or an {@code .h2.db} dump. Dump can be expressed as a URL." 
+    @Parameter(names = { "--sql" },  description = "Restores an h2 database from a sql or a .h2.db dump. Dump can be expressed as a URL." 
     + " and can be in a compressed format."
     + " DB configuration MUST point to a non-existing database, otherwise"
     + " behaviour is unspecified. For Wordnet 3.0 packaged dump, you can use "
     + DivWn30.WORDNET_DIV_SQL_RESOURCE_URI)
     String restoreSqlPath = "";
 
-    @Parameter(names = { "--db" },  description = "Restores an h2 database from a {@code .h2.db} dump. Dump can be expressed as a URL." 
+    @Parameter(names = { "--db" },  description = "Restores an h2 database from a .h2.db dump. Dump can be expressed as a URL." 
     + " and can be in a compressed format."
     + " DB configuration MUST point to a non-existing database, otherwise"
     + " behaviour is unspecified. For Wordnet 3.0 packaged dump, you can use "
@@ -56,7 +56,7 @@ public class CreateDbCommand implements DiverCliCommand {
     @Parameter(names = {"--set-default", "-d"}, description = "Sets user configuration to use this database as default for successive operations.")
     boolean makeDefault = false;
 
-    public CreateDbCommand(DiverCli diverCli){
+    public DbCreateCommand(DiverCli diverCli){
         checkNotNull(diverCli);
         this.diverCli = diverCli;
     }

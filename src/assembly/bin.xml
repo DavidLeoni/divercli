@@ -1,0 +1,69 @@
+<assembly
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+	<id>bin</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<fileSets>
+		<fileSet>
+			<directory>${project.basedir}/</directory>
+			<outputDirectory>/</outputDirectory>
+			<includes>
+				<include>LICENSE*</include>
+				<include>docs/CHANGES*</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>${project.build.directory}/site</directory>
+			<outputDirectory>docs</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>target/appassembler/bin</directory>
+			<outputDirectory>bin</outputDirectory>
+			<excludes>
+				<exclude>*.bat</exclude>
+			</excludes>
+			<directoryMode>0755</directoryMode>
+			<fileMode>0755</fileMode>
+		</fileSet>
+		<fileSet>
+			<directory>target/appassembler/bin</directory>
+			<outputDirectory>bin</outputDirectory>
+			<includes>
+				<include>*.bat</include>
+			</includes>
+			<directoryMode>0755</directoryMode>
+			<fileMode>0644</fileMode>
+		</fileSet>
+		<fileSet>
+			<directory>target/appassembler/repo</directory>
+			<outputDirectory>repo</outputDirectory>
+			<directoryMode>0755</directoryMode>
+			<fileMode>0644</fileMode>
+		</fileSet>
+
+	</fileSets>
+	<files>
+
+
+		<file>
+			<source>${project.build.directory}/${artifactId}-${version}.jar</source>
+			<outputDirectory>/dist/</outputDirectory>
+			<destName>${artifactId}-${version}.jar</destName>
+		</file>
+		<file>
+			<source>${project.build.directory}/${artifactId}-${version}-javadoc.jar</source>
+			<outputDirectory>/dist/</outputDirectory>
+			<destName>${artifactId}-${version}-javadoc.jar</destName>
+		</file>
+		<file>
+			<source>${project.build.directory}/${artifactId}-${version}-sources.jar</source>
+			<outputDirectory>/dist/</outputDirectory>
+			<destName>${artifactId}-${version}-sources.jar</destName>
+		</file>
+
+
+	</files>
+</assembly>

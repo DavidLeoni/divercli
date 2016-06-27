@@ -12,19 +12,18 @@ import it.unitn.disi.diversicon.cli.DiverCli;
  * @since 0.1.0
  *
  */
-@Parameters(separators = "=", commandDescription = "Processes the db graph to speed up "
+@Parameters(separators = "=", commandDescription = "Augments the db graph to speed up "
         + " operations requiring the transitive closure.")
-public class DbProcessCommand implements DiverCliCommand {
-
+public class DbAugmentCommand implements DiverCliCommand {
     
     /**
      * @since 0.1
      */
-    public static final String CMD = "db process";
+    public static final String CMD = "db-augment";
 
     DiverCli diverCli;
     
-    public DbProcessCommand(DiverCli diverCli) {
+    public DbAugmentCommand(DiverCli diverCli) {
         checkNotNull(diverCli);
         this.diverCli = diverCli;
     }
