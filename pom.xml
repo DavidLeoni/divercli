@@ -15,7 +15,7 @@
 	<version>0.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Diversicon</name>
+	<name>DiverCLI</name>
 	<url>https://github.com/DavidLeoni/divercli</url>
 	<description>Command line interface to manage Diversicon knowledge base.</description>
 
