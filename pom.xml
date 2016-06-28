@@ -83,27 +83,6 @@
 			<id>release</id>
 			<build>
 				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>appassembler-maven-plugin</artifactId>
-						<version>1.10</version>
-						<configuration>
-							<programs>
-								<program>
-									<mainClass>it.unitn.disi.diversicon.cli.DiverCli</mainClass>
-									<id>divercli</id>
-								</program>
-							</programs>
-						</configuration>
-						<executions>
-							<execution>
-								<id>assemble</id>
-								<goals>
-									<goal>assemble</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
 
 					<plugin>
 						<artifactId>maven-assembly-plugin</artifactId>
@@ -166,6 +145,27 @@
 				<artifactId>maven-enforcer-plugin</artifactId>
 			</plugin>
 
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>appassembler-maven-plugin</artifactId>
+				<version>1.10</version>
+				<configuration>
+					<programs>
+						<program>
+							<mainClass>it.unitn.disi.diversicon.cli.DiverCli</mainClass>
+							<id>divercli</id>
+						</program>
+					</programs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>assemble</id>
+						<goals>
+							<goal>assemble</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

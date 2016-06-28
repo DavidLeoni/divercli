@@ -302,9 +302,6 @@ public class DiverCli {
             try {
                 String asciiArt1 = FigletFont.convertOneLine("diversicon");
                 LOG.info("    " + asciiArt1.replace("\n", "\n    "));
-                LOG.info("");
-                LOG.info("Connected to   " + dbConfig.getJdbc_url());
-                LOG.info("");
             } catch (Exception ex) {
                 LOG.debug("Minor error: Couldn't display awesome ASCII banner!", ex);
             }
