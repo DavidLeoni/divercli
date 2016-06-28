@@ -1,7 +1,7 @@
 package it.unitn.disi.diversicon.cli.exceptions;
 
 /**
- * @since 0.1
+ * @since 0.1.0
  * 
  */
 public class DiverCliIoException extends DiverCliException {
@@ -10,7 +10,7 @@ public class DiverCliIoException extends DiverCliException {
 
 
     /**
-     * @since 0.1
+     * @since 0.1.0
      * 
      */
     public DiverCliIoException() {
@@ -18,7 +18,7 @@ public class DiverCliIoException extends DiverCliException {
     }
 
     /**
-     * @since 0.1
+     * @since 0.1.0
      * 
      */
     public DiverCliIoException(String msg, Throwable tr) {
@@ -26,7 +26,7 @@ public class DiverCliIoException extends DiverCliException {
     }
 
     /**
-     * @since 0.1
+     * @since 0.1.0
      * 
      */
     public DiverCliIoException(String msg) {
@@ -34,7 +34,7 @@ public class DiverCliIoException extends DiverCliException {
     }
 
     /**
-     * @since 0.1
+     * @since 0.1.0
      * 
      */
     public DiverCliIoException(Throwable tr) {

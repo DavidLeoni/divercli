@@ -91,7 +91,7 @@ public class DiverCli {
          
     
     /**
-     * @since 0.1
+     * @since 0.1.0
      */
     public static final String DEFAULT_H2_FILE_DB_PATH = "db" + File.separator + "my-diversicon.h2.db";
 
@@ -479,7 +479,7 @@ public class DiverCli {
      * @throws DiverCliNotFoundException
      * @throws DivIoException
      * 
-     * @since 0.1
+     * @since 0.1.0
      */
     static void checkConfDir(File dir) {
         if (!dir.exists()) {
@@ -502,7 +502,7 @@ public class DiverCli {
     /**
      * Returns true if provided config points to default H2 file db .
      *  
-     * @since 0.1
+     * @since 0.1.0
      */
     public static boolean isDefaultH2FileDb(DBConfig dbConfig){
         return dbConfig.getJdbc_url().contains("jdbc_url=jdbc:h2:file:db/my-diversicon");                               
@@ -511,7 +511,7 @@ public class DiverCli {
     /**
      * Returns true if provided config points to default H2 mem db . 
      *
-     * @since 0.1
+     * @since 0.1.0
      */    
     public static boolean isH2MemDb(DBConfig dbConfig){
         return dbConfig.getJdbc_url().contains("jdbc_url=jdbc:h2:mem:");    
@@ -522,7 +522,7 @@ public class DiverCli {
      * 
      * @throws DiverCliIoException
      * 
-     * @since 0.1
+     * @since 0.1.0
      */
     public void saveConfig() {
        
@@ -542,7 +542,7 @@ public class DiverCli {
     }
 
     /**
-     * @since 0.1
+     * @since 0.1.0
      */
     public void setDbConfig(DBConfig dbCfg) {
         checkNotNull(dbCfg);
@@ -556,14 +556,14 @@ public class DiverCli {
 /**
  * Special command used for setting configuretion / help / debugging 
  *
- * @since 0.1
+ * @since 0.1.0
  */
 @Parameters()
 class MainCommand implements DiverCliCommand {
     
     
     /**
-     * @since 0.1
+     * @since 0.1.0
      */
     public static final String CMD = "main";
 

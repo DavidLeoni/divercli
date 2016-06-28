@@ -4,7 +4,7 @@ package it.unitn.disi.diversicon.cli.exceptions;
  * A runtime exception to raise when something is not found.
  * 
  * @author David Leoni <david.leoni@unitn.it>
- * @since 0.1
+ * @since 0.1.0
  */
 public class DiverCliNotFoundException extends DiverCliException {
     

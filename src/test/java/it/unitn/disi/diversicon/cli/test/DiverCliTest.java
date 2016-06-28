@@ -107,7 +107,7 @@ public class DiverCliTest {
      * @param extension
      *            something like 'sql' or 'xml' without the dot
      *            l
-     * @since 0.1
+     * @since 0.1.0
      */
     private File getNonExistingFile(String extension) {
         checkNotBlank(extension, "Invalid extension!");
@@ -123,7 +123,7 @@ public class DiverCliTest {
     }
     
     /**
-     * @since 0.1
+     * @since 0.1.0
      * @param zipFile
      */
     private void readZipped(File zipFile) {
@@ -310,7 +310,7 @@ public class DiverCliTest {
     /**
      * This also tests MainCommand is working
      * 
-     * @since 0.1
+     * @since 0.1.0
      */
     @Test
     public void testDebug() {
@@ -336,7 +336,7 @@ public class DiverCliTest {
     }
 
     /**
-     * @since 0.1
+     * @since 0.1.0
      */
     @Test
     public void testCreateDbFromDb() throws IOException {
@@ -362,7 +362,7 @@ public class DiverCliTest {
     }
 
     /**
-     * @since 0.1
+     * @since 0.1.0
      */
     @Test
     public void testLog() {
@@ -372,7 +372,7 @@ public class DiverCliTest {
     }
 
     /**
-     * @since 0.1
+     * @since 0.1.0
      */
     @Test
     public void testImportShow() {
@@ -392,7 +392,7 @@ public class DiverCliTest {
     }
 
     /**
-     * @since 0.1
+     * @since 0.1.0
      */
     @Test
     public void testDbAugment() {
@@ -567,7 +567,7 @@ public class DiverCliTest {
     }
 
     /**
-     * @since 0.1
+     * @since 0.1.0
      */
     @Test
     public void testExportSqlCompressed() throws IOException {
