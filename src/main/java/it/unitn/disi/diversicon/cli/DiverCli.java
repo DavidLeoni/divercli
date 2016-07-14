@@ -341,7 +341,8 @@ public class DiverCli {
      */
     public static File defaultConfDirPath() {
         return new File(System.getProperty("user.home") + File.separator
-                + ".config" + File.separator + CMD);
+                + CONF_PATH);
+        
     }
 
     /**

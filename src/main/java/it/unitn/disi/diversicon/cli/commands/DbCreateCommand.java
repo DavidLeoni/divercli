@@ -74,7 +74,7 @@ public class DbCreateCommand implements DiverCliCommand {
     @Override
     public void run(){
         
-        DBConfig dbCfg = Diversicons.makeDefaultH2FileDbConfig(targetDbPath);
+        DBConfig dbCfg = Diversicons.makeDefaultH2FileDbConfig(targetDbPath, false);
         
         if (!restoreH2DbPath.trim().isEmpty()){            
             Diversicons.restoreH2Db(restoreH2DbPath, targetDbPath);    
