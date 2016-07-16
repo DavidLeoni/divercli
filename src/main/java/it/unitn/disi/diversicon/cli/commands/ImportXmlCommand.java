@@ -31,12 +31,12 @@ public class ImportXmlCommand implements DiverCliCommand {
     public static final String CMD = "import-xml";
 
     @Parameter(names = { "--author", "-a" }, required = true, description = "The author of the operations on the db.")
-    String author = "";
+    String author;
 
     
     @Parameter(names = { "--description",
             "-d" }, required = true, description = "The description of the operation being performed on the db.")
-    String description = "";
+    String description;
 
     @Parameter(names = { "--skip-augment", "-s" },  description = "Skips augmenting the db graph to speed up "
             + " operations requiring the transitive closure.")

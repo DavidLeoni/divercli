@@ -28,8 +28,9 @@ import it.unitn.disi.diversicon.Diversicon;
 import it.unitn.disi.diversicon.Diversicons;
 import it.unitn.disi.diversicon.ImportConfig;
 import it.unitn.disi.diversicon.ImportJob;
-import it.unitn.disi.diversicon.cli.commands.DbCreateCommand;
+import it.unitn.disi.diversicon.cli.commands.DbRestoreCommand;
 import it.unitn.disi.diversicon.cli.commands.DbAugmentCommand;
+import it.unitn.disi.diversicon.cli.commands.DbResetCommand;
 import it.unitn.disi.diversicon.cli.commands.DiverCliCommand;
 import it.unitn.disi.diversicon.cli.commands.ExportSqlCommand;
 import it.unitn.disi.diversicon.cli.commands.ExportXmlCommand;
@@ -224,7 +225,8 @@ public class DiverCli {
             
             addCommand(new ExportXmlCommand(this));
             addCommand(new ExportSqlCommand(this));
-            addCommand(new DbCreateCommand(this));
+            addCommand(new DbRestoreCommand(this));
+            addCommand(new DbResetCommand(this));
             addCommand(new LogCommand(this));
             addCommand(new ImportShowCommand(this));
             addCommand(new ImportXmlCommand(this));

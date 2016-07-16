@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import it.unitn.disi.diversicon.Diversicon;
 import it.unitn.disi.diversicon.cli.DiverCli;
-import it.unitn.disi.diversicon.cli.commands.DbCreateCommand;
+import it.unitn.disi.diversicon.cli.commands.DbRestoreCommand;
 import it.unitn.disi.diversicon.data.wn30.DivWn30;
 
 /**
@@ -27,12 +27,12 @@ public class DiverCliIT extends DiverCliTestBase {
      * @since 0.1.0
      */
     @Test
-    public void testCreateDbFromDb() throws IOException {
+    public void testRestoreDbFromWordnetDb() throws IOException {
 
         Path dir = Files.createTempDirectory("divercli-test");
         String target = dir.toString() + "/test";
 
-        DiverCli cli = DiverCli.of(DbCreateCommand.CMD,
+        DiverCli cli = DiverCli.of(DbRestoreCommand.CMD,
                 "--db", DivWn30.WORDNET_DIV_H2_DB_RESOURCE_URI,
                 "--target", target,
                 "--set-default");

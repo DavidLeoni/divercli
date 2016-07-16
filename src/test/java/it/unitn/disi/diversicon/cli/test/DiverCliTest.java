@@ -1,25 +1,21 @@
 package it.unitn.disi.diversicon.cli.test;
 
 import static it.unitn.disi.diversicon.internal.Internals.checkNotBlank;
+import static it.unitn.disi.diversicon.internal.Internals.checkNotNull;
 import static it.unitn.disi.diversicon.test.LmfBuilder.lmf;
 import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import org.apache.commons.io.FileUtils;
 import org.ini4j.InvalidFileFormatException;
 import org.ini4j.Wini;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,16 +25,17 @@ import com.beust.jcommander.ParameterException;
 import de.tudarmstadt.ukp.lmf.model.core.LexicalResource;
 import de.tudarmstadt.ukp.lmf.model.enums.ERelNameSemantics;
 import it.unitn.disi.diversicon.Diversicon;
+import it.unitn.disi.diversicon.Diversicons;
 import it.unitn.disi.diversicon.ImportJob;
 import it.unitn.disi.diversicon.cli.DiverCli;
-import it.unitn.disi.diversicon.cli.commands.DbCreateCommand;
 import it.unitn.disi.diversicon.cli.commands.DbAugmentCommand;
+import it.unitn.disi.diversicon.cli.commands.DbResetCommand;
+import it.unitn.disi.diversicon.cli.commands.DbRestoreCommand;
 import it.unitn.disi.diversicon.cli.commands.ExportSqlCommand;
 import it.unitn.disi.diversicon.cli.commands.ExportXmlCommand;
 import it.unitn.disi.diversicon.cli.commands.ImportShowCommand;
 import it.unitn.disi.diversicon.cli.commands.ImportXmlCommand;
 import it.unitn.disi.diversicon.cli.commands.LogCommand;
-import it.unitn.disi.diversicon.data.wn30.DivWn30;
 import it.unitn.disi.diversicon.internal.Internals;
 import it.unitn.disi.diversicon.test.DivTester;
 
@@ -76,7 +73,7 @@ public class DiverCliTest extends DiverCliTestBase {
      */
     private File getNonExistingFile(String extension) {
         checkNotBlank(extension, "Invalid extension!");
-
+        
         Path out;
         try {
             out = Files.createTempDirectory("divercli-test");
@@ -86,6 +83,7 @@ public class DiverCliTest extends DiverCliTestBase {
 
         return new File(out.toString() + "/test." + extension);
     }
+    
     
     /**
      * @since 0.1.0
@@ -135,8 +133,8 @@ public class DiverCliTest extends DiverCliTestBase {
      * @since 0.1.0
      */
     @Test
-    public void testNoCommand() throws IOException {
-        DiverCli.of();
+    public void testUsage() throws IOException {
+        DiverCli.of().run();
     }
 
     /**
@@ -527,5 +525,63 @@ public class DiverCliTest extends DiverCliTestBase {
         readZipped(outF);
 
     }
+
+    
+    /**
+     * @since 0.1.0
+     */    
+    @Test
+    public void testDbRestoreNothing(){
+        DiverCli cli = DiverCli.of(DbRestoreCommand.CMD, "-t", getNonExistingFile("test").getAbsolutePath());
+        try {
+            cli.run();
+            Assert.fail("Shouldn't arrive here!");
+        } catch (ParameterException ex){
+            LOG.debug("caught exception", ex);
+        }
+    }
+    
+    /**
+     * @since 0.1.0
+     */    
+    @Test
+    public void testDbRestoreWrongSql(){
+
+        DiverCli cli1 = DiverCli.of(DbRestoreCommand.CMD,
+                "--sql", "-t", getNonExistingFile("test").getAbsolutePath());
+        try {
+            cli1.run();
+            Assert.fail("Shouldn't arrive here!");
+        } catch (ParameterException ex){
+            
+        }        
+        
+        DiverCli cli2 = DiverCli.of(DbRestoreCommand.CMD,
+                "--sql", "", "-t", getNonExistingFile("test").getAbsolutePath());
+        try {        
+            cli2.run();
+            Assert.fail("Shouldn't arrive here!");
+        } catch (Exception ex){
+            
+        }
+        
+               
+    }
+    
+    /**
+     * @since 0.1.0
+     */    
+    @Test
+    public void testDbReset(){
+        
+        DiverCli cli1 = DiverCli.of(DbResetCommand.CMD);
+        
+        cli1.run();
+        
+        assertTrue(Diversicons.exists(cli1.getDbConfig()));
+        DiverCli.of(DbResetCommand.CMD).run(); // shouldn't complain
+        assertTrue(Diversicons.exists(cli1.getDbConfig()));
+    }
+    
 
 }

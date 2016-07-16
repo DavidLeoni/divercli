@@ -15,21 +15,22 @@ import de.tudarmstadt.ukp.lmf.transform.DBConfig;
 import it.unitn.disi.diversicon.Diversicons;
 import it.unitn.disi.diversicon.cli.DiverCli;
 import it.unitn.disi.diversicon.data.wn30.DivWn30;
+import it.unitn.disi.diversicon.internal.Internals;
 
 /**
  * 
  * @since 0.1.0
  *
  */
-@Parameters(separators = "=", commandDescription = "Creates a file database")
-public class DbCreateCommand implements DiverCliCommand { 
+@Parameters(separators = "=", commandDescription = "Restores a file database")
+public class DbRestoreCommand implements DiverCliCommand { 
     
     /**
      * @since 0.1.0
      */
-    public static final String CMD = "db-create";
+    public static final String CMD = "db-restore";
     
-    private static final Logger LOG = LoggerFactory.getLogger(DbCreateCommand.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DbRestoreCommand.class);
 
     private DiverCli diverCli;
         
@@ -38,33 +39,39 @@ public class DbCreateCommand implements DiverCliCommand {
     + " DB configuration MUST point to a non-existing database, otherwise"
     + " behaviour is unspecified. For Wordnet 3.0 packaged dump, you can use "
     + DivWn30.WORDNET_DIV_SQL_RESOURCE_URI)
-    String restoreSqlPath = "";
+    String restoreSqlPath;
 
     @Parameter(names = { "--db" },  description = "Restores an h2 database from a .h2.db dump. Dump can be expressed as a URL." 
     + " and can be in a compressed format."
     + " DB configuration MUST point to a non-existing database, otherwise"
     + " behaviour is unspecified. For Wordnet 3.0 packaged dump, you can use "
     + DivWn30.WORDNET_DIV_H2_DB_RESOURCE_URI)
-    String restoreH2DbPath = "";
+    String restoreH2DbPath;
     
     
     @Parameter(names = {"--target", "-t"}, 
             description = "The path to the database to create. For H2, don't include .h2.db .",
             required = true)
-    String targetDbPath = "";
+    String targetDbPath;
     
     @Parameter(names = {"--set-default", "-d"}, description = "Sets user configuration to use this database as default for successive operations.")
     boolean makeDefault = false;
 
-    public DbCreateCommand(DiverCli diverCli){
+    public DbRestoreCommand(DiverCli diverCli){
         checkNotNull(diverCli);
         this.diverCli = diverCli;
     }
+        
     
     @Override
     public void configure(){
-        if (!restoreH2DbPath.trim().isEmpty()
-                && !restoreSqlPath.trim().isEmpty()){
+        
+        if (Internals.isBlank(restoreSqlPath) && Internals.isBlank(restoreH2DbPath)){
+            throw new ParameterException("Need either --sql  or --db  argument!");
+        }
+        
+        if (!Internals.isBlank(restoreSqlPath)
+                && !Internals.isBlank(restoreH2DbPath)){
             throw new ParameterException("Tried to restore two files to same db! Files were:\n " + restoreH2DbPath + "\n   and\n     "
                     + restoreSqlPath);
         }     
@@ -76,13 +83,11 @@ public class DbCreateCommand implements DiverCliCommand {
         
         DBConfig dbCfg = Diversicons.makeDefaultH2FileDbConfig(targetDbPath, false);
         
-        if (!restoreH2DbPath.trim().isEmpty()){            
+        if (!Internals.isBlank(restoreH2DbPath)){            
             Diversicons.restoreH2Db(restoreH2DbPath, targetDbPath);    
-        }
-                       
-        if (!restoreSqlPath.trim().isEmpty()){        
+        } else if (!Internals.isBlank(restoreSqlPath)){        
             Diversicons.restoreH2Sql(restoreSqlPath, dbCfg);    
-        }
+        } 
         
         if (makeDefault){
             diverCli.setDbConfig(dbCfg);
