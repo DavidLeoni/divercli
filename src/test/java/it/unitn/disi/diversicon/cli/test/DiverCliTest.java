@@ -45,46 +45,11 @@ import it.unitn.disi.diversicon.test.DivTester;
 /**
  * @since 0.1.0
  */
-public class DiverCliTest {
+public class DiverCliTest extends DiverCliTestBase {
 
     private static final Logger LOG = LoggerFactory.getLogger(DiverCliTest.class);
 
-    private Path testHome;
-    private Path testWorkingDir;
-    private Path testConfDir;
-
-    @Before
-    public void beforeMethod() throws IOException {
-
-        testHome = Files.createTempDirectory("divercli-test-home");
-        testConfDir = Files.createDirectories(Paths.get(testHome.toString(), ".config", "divercli"));
-        testWorkingDir = Files.createTempDirectory("divercli-test-working-dir");
-
-        System.setProperty(DiverCli.SYSTEM_CONF_DIR,
-                testConfDir.toString());
-
-        // filter ini to have temp working dir...
-        Internals.copyDirFromResource(DiverCli.class, "it/unitn/disi/divercli/conf-template", testConfDir.toFile());
-        Path iniPath = Paths.get(testConfDir.toString(), DiverCli.DIVERCLI_INI);
-        byte[] encoded = Files.readAllBytes(iniPath);
-        String filteredIni = new String(encoded, StandardCharsets.UTF_8)
-                                                                        .replace(
-                                                                                DiverCli.DEFAULT_H2_FILE_DB_PATH.replace(
-                                                                                        ".h2.db", ""),
-                                                                                testWorkingDir.toString() + "/"
-                                                                                        + DiverCli.DEFAULT_H2_FILE_DB_PATH);
-        // LOG.debug("\nFiltered ini = \n" + filteredIni);
-        Files.write(iniPath, filteredIni.getBytes());
-
-        FileUtils.deleteDirectory(new File("db/"));
-    }
-
-    @After
-    public void afterMethod() {
-        testHome = null;
-        testConfDir = null;
-        System.setProperty(DiverCli.SYSTEM_CONF_DIR, "");
-    }
+   
 
     /**
      * 
@@ -335,31 +300,7 @@ public class DiverCliTest {
            .close();
     }
 
-    /**
-     * @since 0.1.0
-     */
-    @Test
-    public void testCreateDbFromDb() throws IOException {
-
-        Path dir = Files.createTempDirectory("divercli-test");
-        String target = dir.toString() + "/test";
-
-        DiverCli cli = DiverCli.of(DbCreateCommand.CMD,
-                "--db", DivWn30.WORDNET_DIV_H2_DB_RESOURCE_URI,
-                "--target", target,
-                "--set-default");
-
-        cli.run();
-
-        File outf = new File(target + ".h2.db");
-
-        assertTrue(outf.exists());
-        assertTrue(outf.length() > 0);
-
-        Diversicon div = Diversicon.connectToDb(cli.getDbConfig());
-        div.getSession()
-           .close();
-    }
+   
 
     /**
      * @since 0.1.0
