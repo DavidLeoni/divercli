@@ -473,7 +473,7 @@ public class DiverCli {
     void copyTemplateConf() {
         // better not check, may still be initilalizing checkConfigured();
 
-        Internals.copyDirFromResource(DiverCli.class, "it/unitn/disi/divercli/conf-template", confDir);
+        Internals.copyDirFromResource(DiverCli.class, "it/unitn/disi/diversicon/cli/conf-template", confDir);
     }
 
     /**
@@ -600,9 +600,7 @@ public class DiverCli {
                 }
             } else {
                 LOG.error("Can't recognize the command.");
-            }
-            
-        
+            }                   
 
     }
 }

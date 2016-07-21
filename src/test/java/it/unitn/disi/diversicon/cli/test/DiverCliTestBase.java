@@ -36,7 +36,7 @@ public class DiverCliTestBase {
                 testConfDir.toString());
 
         // filter ini to have temp working dir...
-        Internals.copyDirFromResource(DiverCli.class, "it/unitn/disi/divercli/conf-template", testConfDir.toFile());
+        Internals.copyDirFromResource(DiverCli.class, "it/unitn/disi/diversicon/cli/conf-template", testConfDir.toFile());
         Path iniPath = Paths.get(testConfDir.toString(), DiverCli.DIVERCLI_INI);
         byte[] encoded = Files.readAllBytes(iniPath);
         String filteredIni = new String(encoded, StandardCharsets.UTF_8)

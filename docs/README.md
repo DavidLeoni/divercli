@@ -41,14 +41,14 @@ DiverCLI uses <a href="http://www.slf4j.org" target="_blank">SLF4J </a> logging 
 
 #### Logging during execution
 
-1) whatever is passed by command line: ` java -jar divercli.jar -Dlogback.configurationFile=path-to-my-logback.xml` 
-2) `logback.xml` in [main resources](src/main/resources/logback.xml). 
+1. whatever is passed by command line: ` java -jar divercli.jar -Dlogback.configurationFile=path-to-my-logback.xml` 
+2. `logback.xml` in [main resources](src/main/resources/logback.xml). 
 
 #### Logging when testing (for developers)
 
-1) whatever is passed by command line: ` mvn test -Dlogback.configurationFile=path-to-my-logback.xml`
-2) `conf/logback-test.xml` as indicated in Maven surefire plugin configuration 
-3) `logback-test.xml` in [test resources](src/test/resources/logback-test.xml). 
+1. whatever is passed by command line: ` mvn test -Dlogback.configurationFile=path-to-my-logback.xml`
+2. `conf/logback-test.xml` as indicated in Maven surefire plugin configuration 
+3. `logback-test.xml` in [test resources](src/test/resources/logback-test.xml). 
 
 CAVEAT: stupid Eclipse doesn't pick those surefire properties [by design](https://bugs.eclipse.org/bugs/show_bug.cgi?id=388683) , nor allows to apply run settings to all tests (O_o) so I went to `Windows->Preferences->Java->Installed JREs->Default one->Edit` and set default VM arguments to `-Dlogback.configurationFile=conf/logback-test.xml`. It's silly but could somewhat make sense for other projects too. 
  
