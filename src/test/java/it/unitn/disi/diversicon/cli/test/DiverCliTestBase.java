@@ -32,8 +32,11 @@ public class DiverCliTestBase {
         testConfDir = Files.createDirectories(Paths.get(testHome.toString(), ".config", "divercli"));
         testWorkingDir = Files.createTempDirectory("divercli-test-working-dir");
 
-        System.setProperty(DiverCli.SYSTEM_CONF_DIR,
+        System.setProperty(DiverCli.SYSTEM_PROPERTY_CONF_DIR,
                 testConfDir.toString());
+        
+        // so it always work even in stupid Eclipse, see see https://bugs.eclipse.org/bugs/show_bug.cgi?id=388683
+        System.setProperty(DiverCli.SYSTEM_PROPERTY_TESTING, "true");
 
         // filter ini to have temp working dir...
         Internals.copyDirFromResource(DiverCli.class, "it/unitn/disi/diversicon/cli/conf-template", testConfDir.toFile());
@@ -55,6 +58,6 @@ public class DiverCliTestBase {
     public void afterMethod() {
         testHome = null;
         testConfDir = null;
-        System.setProperty(DiverCli.SYSTEM_CONF_DIR, "");
+        System.setProperty(DiverCli.SYSTEM_PROPERTY_CONF_DIR, "");
     }
 }

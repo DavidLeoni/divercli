@@ -67,7 +67,7 @@ public class MainCommand implements DiverCliCommand {
      * Configures conf folder searching in order:
      * <ol>
      * <li>{@code confDirParam}</li>
-     * <li> Java {@link DiverCli#SYSTEM_CONF_DIR} system property argument </li>
+     * <li> Java {@link DiverCli#SYSTEM_PROPERTY_CONF_DIR} system property argument </li>
      * <li> {@link DiverCli#defaultConfDirPath()}, if full </li>
      * <li> if {@link DiverCli#defaultConfDirPath()} is empty, populates it with {@code conf-template} folder </li>
      * </ol>
@@ -78,7 +78,7 @@ public class MainCommand implements DiverCliCommand {
     public void configure() {
 
         if (Internals.isBlank(confDirParam)) {
-            String systemConfDir = System.getProperty(DiverCli.SYSTEM_CONF_DIR);
+            String systemConfDir = System.getProperty(DiverCli.SYSTEM_PROPERTY_CONF_DIR);
             if (Internals.isBlank(systemConfDir)) {
 
                 // create or replace default conf dir

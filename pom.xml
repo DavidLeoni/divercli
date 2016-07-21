@@ -173,6 +173,7 @@
 					<!-- note this IS NOT recognized in stupid Eclipse by design, see https://bugs.eclipse.org/bugs/show_bug.cgi?id=388683 -->
 					<systemPropertyVariables>
 						<logback.configurationFile>${basedir}/conf/logback-test.xml</logback.configurationFile>
+						<divercli.testing>true</divercli.testing>
 					</systemPropertyVariables>
 
 					<excludes>

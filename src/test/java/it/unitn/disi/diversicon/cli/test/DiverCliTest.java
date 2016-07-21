@@ -38,6 +38,7 @@ import it.unitn.disi.diversicon.cli.commands.HelpCommand;
 import it.unitn.disi.diversicon.cli.commands.ImportShowCommand;
 import it.unitn.disi.diversicon.cli.commands.ImportXmlCommand;
 import it.unitn.disi.diversicon.cli.commands.LogCommand;
+import it.unitn.disi.diversicon.cli.exceptions.DiverCliTerminatedException;
 import it.unitn.disi.diversicon.internal.Internals;
 import it.unitn.disi.diversicon.test.DivTester;
 
@@ -49,10 +50,10 @@ public class DiverCliTest extends DiverCliTestBase {
     private static final Logger LOG = LoggerFactory.getLogger(DiverCliTest.class);
 
    
-
     /**
      * 
      * Imports provided lexical resource and returns its xml file.
+     * @since 0.1.0
      */
     private File importLexRes(LexicalResource lexRes) {
         File xmlFile = DivTester.writeXml(lexRes);
@@ -150,7 +151,12 @@ public class DiverCliTest extends DiverCliTestBase {
      */
     @Test
     public void testDidYouMeanCommand(){
-        DiverCli.main(LogCommand.CMD + "g");
+        try {
+            DiverCli.main(LogCommand.CMD + "g");
+            Assert.fail("Shouldn't arrive here!");
+        } catch (DiverCliTerminatedException ex){
+            
+        }
     }
     
     /**
@@ -223,7 +229,7 @@ public class DiverCliTest extends DiverCliTestBase {
      */
     @Test
     public void testCustomConfFolderNonExisting() throws IOException {
-        System.setProperty(DiverCli.SYSTEM_CONF_DIR, "");
+        System.setProperty(DiverCli.SYSTEM_PROPERTY_CONF_DIR, "");
 
         try {
             DiverCli.of("--conf", "666")

@@ -46,6 +46,7 @@ import it.unitn.disi.diversicon.cli.exceptions.DiverCliException;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliIllegalStateException;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliIoException;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliNotFoundException;
+import it.unitn.disi.diversicon.cli.exceptions.DiverCliTerminatedException;
 import it.unitn.disi.diversicon.internal.Internals;
 import it.unitn.disi.diversicon.internal.ExtractedStream;
 
@@ -93,32 +94,32 @@ public class DiverCli {
     /**
      * @since 0.1.0
      */
-    public static final String SYSTEM_CONF_DIR = "divercli-conf-dir";
-         
-    
+    public static final String SYSTEM_PROPERTY_CONF_DIR = "divercli.conf-dir";
+
     /**
      * @since 0.1.0
      */
     public static final String DEFAULT_H2_FILE_DB_PATH = "db" + File.separator + "my-diversicon.h2.db";
 
+    public static final String SYSTEM_PROPERTY_TESTING = "divercli.testing";
+
     private static JCommander jcom;
 
     private MainCommand mainCommand;
-
 
     @Nullable
     Diversicon diversicon;
 
     @Nullable
     DBConfig dbConfig;
-    
+
     @Nullable
     Wini ini;
 
     File confDir = null;
 
     private String[] args;
-    
+
     Map<String, DiverCliCommand> commands;
 
     private DiverCli() {
@@ -147,25 +148,47 @@ public class DiverCli {
             cli.run();
         } catch (MissingCommandException ex) {
             String GOT = "got ";
-            int i = ex.getMessage().indexOf(GOT);
-            if (i != -1){
-                String cmd = ex.getMessage().substring(i + GOT.length());
+            int i = ex.getMessage()
+                      .indexOf(GOT);
+            if (i != -1) {
+                String cmd = ex.getMessage()
+                               .substring(i + GOT.length());
                 cli.didYouMean(cmd);
             }
-            System.exit(1);
+            exit(1);
+
         } catch (ParameterException ex) {
             LOG.error("ERROR: " + ex.getMessage());
-            System.exit(1);
+            exit(1);
         } catch (Exception ex) {
             LOG.error("Internal error occurred! Details:", ex);
+            exit(1);
+        }
+    }
+
+    /**
+     * Normally exits the program. If testing throws
+     * {@link DiverCliTerminatedException} (for explanation see
+     * <a href="http://maven.apache.org/surefire/maven-surefire-plugin/faq.html#vm-
+     * termination" target="_blank">surefire FAQ</a>)
+     *
+     * @since 0.1.0
+     */
+    private static void exit(int code) {
+        if (Boolean.parseBoolean(System.getProperty(DiverCli.SYSTEM_PROPERTY_TESTING))) {
+            throw new DiverCliTerminatedException(code);
+        } else {
+            System.exit(code);
         }
     }
 
     /**
      * 
-     * Extracts given {@code option} from ini file. 
+     * Extracts given {@code option} from ini file.
      * 
-     * @param allowEmpty if false and option is empty throws {@link DiverCliNotFoundException}
+     * @param allowEmpty
+     *            if false and option is empty throws
+     *            {@link DiverCliNotFoundException}
      * 
      * @throws DiverCliNotFoundException
      * @since 0.1.0
@@ -176,7 +199,8 @@ public class DiverCli {
 
         String ret = ini.get(sectionName, optionName, String.class);
 
-        if (!allowEmpty && (ret == null || ret.trim().isEmpty())){
+        if (!allowEmpty && (ret == null || ret.trim()
+                                              .isEmpty())) {
             throw new DiverCliNotFoundException("Couldn't find " + optionName + " in section "
                     + sectionName + " of file " + ini.getFile()
                                                      .getAbsolutePath()
@@ -208,17 +232,16 @@ public class DiverCli {
      */
     public DBConfig getDbConfig() {
         if (dbConfig == null) {
-            throw new DiverCliIllegalStateException("Tried to access DbConfig without proper parsing of configuration!");
+            throw new DiverCliIllegalStateException(
+                    "Tried to access DbConfig without proper parsing of configuration!");
         } else {
             return dbConfig;
         }
     }
-    
-    
-    
-    private void addCommand(DiverCliCommand cmd){
+
+    private void addCommand(DiverCliCommand cmd) {
         commands.put(cmd.getName(), cmd);
-        jcom.addCommand(cmd.getName(), cmd);        
+        jcom.addCommand(cmd.getName(), cmd);
     }
 
     /**
@@ -228,24 +251,24 @@ public class DiverCli {
         try {
 
             mainCommand = new MainCommand(this);
-            
+
             jcom = new JCommander(mainCommand);
-            
-            // doesn't work well, see https://github.com/DavidLeoni/divercli/issues/1
+
+            // doesn't work well, see
+            // https://github.com/DavidLeoni/divercli/issues/1
             // int terminalWidth = jline.TerminalFactory.get().getWidth();
-            // jcom.setColumnSize(terminalWidth);            
-            
-            
+            // jcom.setColumnSize(terminalWidth);
+
             addCommand(new ExportXmlCommand(this));
             addCommand(new ExportSqlCommand(this));
             addCommand(new DbRestoreCommand(this));
             addCommand(new DbResetCommand(this));
-            addCommand(new LogCommand(this));            
+            addCommand(new LogCommand(this));
             addCommand(new ImportShowCommand(this));
             addCommand(new ImportXmlCommand(this));
             addCommand(new DbAugmentCommand(this));
             addCommand(new HelpCommand(this));
-                        
+
             jcom.parse(args);
 
             if (args.length == 0) {
@@ -254,12 +277,12 @@ public class DiverCli {
 
                 mainCommand.configure();
                 mainCommand.run();
-                
+
                 String parsedCmd = jcom.getParsedCommand();
-                if (parsedCmd != null){
+                if (parsedCmd != null) {
                     DiverCliCommand cmd = commands.get(parsedCmd);
                     cmd.configure();
-                    cmd.run();                    
+                    cmd.run();
                 }
             }
         } finally {
@@ -303,16 +326,16 @@ public class DiverCli {
 
         checkConfigured();
 
-        if (!isConnected()) {           
-                                       
-            if (Diversicons.isH2Db(dbConfig)){                
-                if (Diversicons.isEmpty(dbConfig)){
+        if (!isConnected()) {
+
+            if (Diversicons.isH2Db(dbConfig)) {
+                if (Diversicons.isEmpty(dbConfig)) {
                     Diversicons.dropCreateTables(dbConfig);
-                }               
-            } 
-            
+                }
+            }
+
             diversicon = Diversicon.connectToDb(dbConfig);
-            
+
             LOG.info("");
             LOG.info(" Welcome to");
             try {
@@ -333,13 +356,13 @@ public class DiverCli {
             throw new DiverCliIllegalStateException("Divercli was not configured!");
         }
     }
-    
+
     /**
      * Returns the registered commands
      * 
      * @since 0.1.0
      */
-    public Map<String, DiverCliCommand> getCommands(){
+    public Map<String, DiverCliCommand> getCommands() {
         return Collections.unmodifiableMap(commands);
     }
 
@@ -370,11 +393,12 @@ public class DiverCli {
     public static File defaultConfDirPath() {
         return new File(System.getProperty("user.home") + File.separator
                 + CONF_PATH);
-        
+
     }
 
     /**
-     * Finds a configuration file in {@link #confDir}. Optionally, if configuration files are not
+     * Finds a configuration file in {@link #confDir}. Optionally, if
+     * configuration files are not
      * present in user home they are created.
      *
      * @param filepath
@@ -382,8 +406,10 @@ public class DiverCli {
      *            abc/myfile.xml, which will be first searched in
      *            {@link #confDir}/abc/myfile.xml
      *
-     * @param createIfMissing if true and file is not found, it is searched in 
-     * {@code conf-template} resource folder and copied to current {@link #confDir}.
+     * @param createIfMissing
+     *            if true and file is not found, it is searched in
+     *            {@code conf-template} resource folder and copied to current
+     *            {@link #confDir}.
      * 
      * @throws DiverCliNotFoundException
      *             if no file is found
@@ -399,8 +425,8 @@ public class DiverCli {
         if (candFile.exists()) {
             return candFile;
         } else {
-            
-            if (createIfMissing){
+
+            if (createIfMissing) {
                 LOG.debug("Couldn't find conf file " + filepath + ", attempting copy from conf-template...");
 
                 try {
@@ -411,13 +437,12 @@ public class DiverCli {
                             + filepath + " in " + CONF_TEMPLATE_URI);
 
                 }
-                
+
             } else {
                 throw new DiverCliNotFoundException("Can't find file "
                         + filepath + " in " + CONF_TEMPLATE_URI);
 
             }
-            
 
         }
 
@@ -463,7 +488,6 @@ public class DiverCli {
             return diversicon;
         }
     }
-
 
     /**
      * Copies template conf dir into {@link #getConfDir()}
@@ -522,28 +546,27 @@ public class DiverCli {
         if (dir.list().length == 0) {
             throw new DivIoException("Conf dir is empty: " + dir.getAbsolutePath() + "  !");
         }
-        
-        
-        
+
     }
 
-    
     /**
      * Returns true if provided config points to default H2 file db .
-     *  
+     * 
      * @since 0.1.0
      */
-    public static boolean isDefaultH2FileDb(DBConfig dbConfig){
-        return dbConfig.getJdbc_url().contains("jdbc_url=jdbc:h2:file:db/my-diversicon");                               
+    public static boolean isDefaultH2FileDb(DBConfig dbConfig) {
+        return dbConfig.getJdbc_url()
+                       .contains("jdbc_url=jdbc:h2:file:db/my-diversicon");
     }
 
     /**
-     * Returns true if provided config points to default H2 mem db . 
+     * Returns true if provided config points to default H2 mem db .
      *
      * @since 0.1.0
-     */    
-    public static boolean isH2MemDb(DBConfig dbConfig){
-        return dbConfig.getJdbc_url().contains("jdbc_url=jdbc:h2:mem:");    
+     */
+    public static boolean isH2MemDb(DBConfig dbConfig) {
+        return dbConfig.getJdbc_url()
+                       .contains("jdbc_url=jdbc:h2:mem:");
     }
 
     /**
@@ -554,19 +577,20 @@ public class DiverCli {
      * @since 0.1.0
      */
     public void saveConfig() {
-       
+
         checkConfigured();
-        
+
         ini.put(DATABASE_SECTION_INI, "jdbc_driver_class", dbConfig.getJdbc_driver_class());
         ini.put(DATABASE_SECTION_INI, "db_vendor", dbConfig.getDb_vendor());
         ini.put(DATABASE_SECTION_INI, "jdbc_url", dbConfig.getJdbc_url());
         ini.put(DATABASE_SECTION_INI, "user", dbConfig.getUser());
         ini.put(DATABASE_SECTION_INI, "password", dbConfig.getPassword());
-        
+
         try {
             ini.store();
-        } catch (IOException ex) {        
-            throw new DiverCliIoException("Error while saving INI file to " + confDir.getAbsolutePath() + File.separator + DIVERCLI_INI, ex);
+        } catch (IOException ex) {
+            throw new DiverCliIoException(
+                    "Error while saving INI file to " + confDir.getAbsolutePath() + File.separator + DIVERCLI_INI, ex);
         }
     }
 
@@ -576,32 +600,30 @@ public class DiverCli {
     public void setDbConfig(DBConfig dbCfg) {
         checkNotNull(dbCfg);
         disconnect();
-        this.dbConfig = dbCfg;        
+        this.dbConfig = dbCfg;
     }
-    
-    public JCommander getJCommander(){
+
+    public JCommander getJCommander() {
         return jcom;
     }
 
-    public void didYouMean(String commandName) {              
-        
-        
-            List<String> candidates = new ArrayList();
-            for (String candidate : commands.keySet()){
-                if (Internals.editDistance(commandName, candidate) < 3) {
-                    candidates.add(candidate);
-                }
-            }                
-            LOG.error("");
-            if (candidates.size() > 0){
-                LOG.error("Did you mean ... ?");
-                for (String s : candidates){
-                    LOG.error(" - " + s);
-                }
-            } else {
-                LOG.error("Can't recognize the command.");
-            }                   
+    public void didYouMean(String commandName) {
+
+        List<String> candidates = new ArrayList();
+        for (String candidate : commands.keySet()) {
+            if (Internals.editDistance(commandName, candidate) < 3) {
+                candidates.add(candidate);
+            }
+        }
+        LOG.error("");
+        if (candidates.size() > 0) {
+            LOG.error("Did you mean ... ?");
+            for (String s : candidates) {
+                LOG.error(" - " + s);
+            }
+        } else {
+            LOG.error("Can't recognize the command.");
+        }
 
     }
 }
-
