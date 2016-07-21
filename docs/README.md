@@ -25,6 +25,15 @@ bin\divercli.bat
 
 In case updates are available, version numbers follow <a href="http://semver.org/" target="_blank">semantic versioning</a> rules.
 
+### Usage
+
+TODO put usage
+
+To set Java options in Linux / Mac, you can do something like:
+```
+JAVA_OPTS="-Xms1g -Xmx3g -XX:-UseGCOverheadLimit" ./divercli db-augment
+```
+
 
 ### Logging
 

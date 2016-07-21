@@ -14,7 +14,7 @@ import com.beust.jcommander.Parameters;
 import de.tudarmstadt.ukp.lmf.transform.DBConfig;
 import it.unitn.disi.diversicon.Diversicons;
 import it.unitn.disi.diversicon.cli.DiverCli;
-import it.unitn.disi.diversicon.data.wn30.DivWn30;
+import it.unitn.disi.diversicon.data.DivWn31;
 import it.unitn.disi.diversicon.internal.Internals;
 
 /**
@@ -38,14 +38,14 @@ public class DbRestoreCommand implements DiverCliCommand {
     + " and can be in a compressed format."
     + " DB configuration MUST point to a non-existing database, otherwise"
     + " behaviour is unspecified. For Wordnet 3.0 packaged dump, you can use "
-    + DivWn30.WORDNET_DIV_SQL_RESOURCE_URI)
+    + DivWn31.SQL_URI)
     String restoreSqlPath;
 
     @Parameter(names = { "--db" },  description = "Restores an h2 database from a .h2.db dump. Dump can be expressed as a URL." 
     + " and can be in a compressed format."
     + " DB configuration MUST point to a non-existing database, otherwise"
     + " behaviour is unspecified. For Wordnet 3.0 packaged dump, you can use "
-    + DivWn30.WORDNET_DIV_H2_DB_RESOURCE_URI)
+    + DivWn31.H2DB_URI)
     String restoreH2DbPath;
     
     

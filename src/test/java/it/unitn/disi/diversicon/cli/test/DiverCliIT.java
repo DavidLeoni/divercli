@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import it.unitn.disi.diversicon.Diversicon;
 import it.unitn.disi.diversicon.cli.DiverCli;
 import it.unitn.disi.diversicon.cli.commands.DbRestoreCommand;
-import it.unitn.disi.diversicon.data.wn30.DivWn30;
+import it.unitn.disi.diversicon.data.DivWn31;
 
 /**
  * @since 0.1.0
@@ -21,7 +21,6 @@ import it.unitn.disi.diversicon.data.wn30.DivWn30;
 public class DiverCliIT extends DiverCliTestBase {
 
     private static final Logger LOG = LoggerFactory.getLogger(DiverCliIT.class);
-
 
     /**
      * @since 0.1.0
@@ -33,7 +32,7 @@ public class DiverCliIT extends DiverCliTestBase {
         String target = dir.toString() + "/test";
 
         DiverCli cli = DiverCli.of(DbRestoreCommand.CMD,
-                "--db", DivWn30.WORDNET_DIV_H2_DB_RESOURCE_URI,
+                "--db", DivWn31.H2DB_URI,
                 "--target", target,
                 "--set-default");
 

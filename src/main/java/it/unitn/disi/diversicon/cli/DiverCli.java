@@ -6,7 +6,10 @@ import static it.unitn.disi.diversicon.internal.Internals.checkNotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nullable;
@@ -17,13 +20,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.beust.jcommander.JCommander;
+import com.beust.jcommander.MissingCommandException;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
 import com.beust.jcommander.Parameters;
 import com.github.lalyos.jfiglet.FigletFont;
 
 import de.tudarmstadt.ukp.lmf.transform.DBConfig;
-import it.unitn.disi.diversicon.DivIoException;
+import it.disi.unitn.diversicon.exceptions.DivIoException;
 import it.unitn.disi.diversicon.Diversicon;
 import it.unitn.disi.diversicon.Diversicons;
 import it.unitn.disi.diversicon.ImportConfig;
@@ -34,6 +38,7 @@ import it.unitn.disi.diversicon.cli.commands.DbResetCommand;
 import it.unitn.disi.diversicon.cli.commands.DiverCliCommand;
 import it.unitn.disi.diversicon.cli.commands.ExportSqlCommand;
 import it.unitn.disi.diversicon.cli.commands.ExportXmlCommand;
+import it.unitn.disi.diversicon.cli.commands.HelpCommand;
 import it.unitn.disi.diversicon.cli.commands.ImportShowCommand;
 import it.unitn.disi.diversicon.cli.commands.ImportXmlCommand;
 import it.unitn.disi.diversicon.cli.commands.LogCommand;
@@ -68,7 +73,7 @@ public class DiverCli {
      */
     public static final String DIVERCLI_INI = CMD + ".ini";
 
-    public static final String CONF_TEMPLATE_DIR = "/it/unitn/disi/divercli/conf-template/";
+    public static final String CONF_TEMPLATE_DIR = "/it/unitn/disi/diversicon/cli/conf-template/";
 
     /**
      * @since 0.1.0
@@ -140,6 +145,14 @@ public class DiverCli {
 
         try {
             cli.run();
+        } catch (MissingCommandException ex) {
+            String GOT = "got ";
+            int i = ex.getMessage().indexOf(GOT);
+            if (i != -1){
+                String cmd = ex.getMessage().substring(i + GOT.length());
+                cli.didYouMean(cmd);
+            }
+            System.exit(1);
         } catch (ParameterException ex) {
             LOG.error("ERROR: " + ex.getMessage());
             System.exit(1);
@@ -150,20 +163,20 @@ public class DiverCli {
 
     /**
      * 
-     * Extracts given {@code option} from ini file. If option is empty throws
-     * {@link DiverCliNotFoundException}
+     * Extracts given {@code option} from ini file. 
+     * 
+     * @param allowEmpty if false and option is empty throws {@link DiverCliNotFoundException}
      * 
      * @throws DiverCliNotFoundException
      * @since 0.1.0
      */
-    static String extract(String sectionName, String optionName, Wini ini) {
+    static String extract(String sectionName, String optionName, boolean allowEmpty, Wini ini) {
         checkNotEmpty(sectionName, "Invalid section name!");
         checkNotEmpty(optionName, "Invalid option name!");
 
         String ret = ini.get(sectionName, optionName, String.class);
 
-        if (ret == null || ret.trim()
-                              .isEmpty()) {
+        if (!allowEmpty && (ret == null || ret.trim().isEmpty())){
             throw new DiverCliNotFoundException("Couldn't find " + optionName + " in section "
                     + sectionName + " of file " + ini.getFile()
                                                      .getAbsolutePath()
@@ -227,10 +240,11 @@ public class DiverCli {
             addCommand(new ExportSqlCommand(this));
             addCommand(new DbRestoreCommand(this));
             addCommand(new DbResetCommand(this));
-            addCommand(new LogCommand(this));
+            addCommand(new LogCommand(this));            
             addCommand(new ImportShowCommand(this));
             addCommand(new ImportXmlCommand(this));
             addCommand(new DbAugmentCommand(this));
+            addCommand(new HelpCommand(this));
                         
             jcom.parse(args);
 
@@ -311,10 +325,22 @@ public class DiverCli {
 
     }
 
+    /**
+     * @since 0.1.0
+     */
     private void checkConfigured() {
         if (!isConfigured()) {
             throw new DiverCliIllegalStateException("Divercli was not configured!");
         }
+    }
+    
+    /**
+     * Returns the registered commands
+     * 
+     * @since 0.1.0
+     */
+    public Map<String, DiverCliCommand> getCommands(){
+        return Collections.unmodifiableMap(commands);
     }
 
     /**
@@ -553,134 +579,31 @@ public class DiverCli {
         this.dbConfig = dbCfg;        
     }
     
-
-}
-
-/**
- * Special command used for setting configuretion / help / debugging 
- *
- * @since 0.1.0
- */
-@Parameters()
-class MainCommand implements DiverCliCommand {
-    
-    
-    /**
-     * @since 0.1.0
-     */
-    public static final String CMD = "main";
-
-    
-    /**
-     * @since 0.1.0
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(MainCommand.class);
-
-
-    @Parameter(names = { "--conf", "-c" }, description = "Path to the configuration folder. Defaults to USER_HOME/"
-            + DiverCli.CONF_PATH)
-    String confDirParam = null;
-
-    @Parameter(names = { "--reset-conf" }, description = "Resets the configuration in USER_DIR/" + DiverCli.CONF_PATH)
-    boolean resetConf = false;
-
-    @Parameter(names = "--help", help = true)
-    boolean help = false;
-
-    @Parameter(names = "--debug", hidden = true)
-    boolean debug = false;
-
-    private DiverCli diverCli;       
-        
-    @Nullable
-    private ImportConfig importConfig;   
-    
-    public MainCommand(DiverCli diverCli) {    
-        checkNotNull(diverCli);
-        this.diverCli = diverCli;
+    public JCommander getJCommander(){
+        return jcom;
     }
 
-    /**
-     * Configures conf folder searching in order:
-     * <ol>
-     * <li>{@code confDirParam}</li>
-     * <li> Java {@link DiverCli#SYSTEM_CONF_DIR} system property argument </li>
-     * <li> {@link DiverCli#defaultConfDirPath()}, if full </li>
-     * <li> if {@link DiverCli#defaultConfDirPath()} is empty, populates it with {@code conf-template} folder </li>
-     * </ol>
-     * @since 0.1.0
-     * @throws DiverCliException
-     */
-    @Override
-    public void configure() {
-
-        if (Internals.isBlank(confDirParam)) {
-            String systemConfDir = System.getProperty(DiverCli.SYSTEM_CONF_DIR);
-            if (Internals.isBlank(systemConfDir)) {
-
-                // create or replace default conf dir
-                diverCli.confDir = DiverCli.defaultConfDirPath();
-                if (!(diverCli.confDir.exists()
-                        && diverCli.confDir.isDirectory()
-                        && diverCli.confDir.list().length != 0)) {
-
-                    diverCli.copyTemplateConf();
+    public void didYouMean(String commandName) {              
+        
+        
+            List<String> candidates = new ArrayList();
+            for (String candidate : commands.keySet()){
+                if (Internals.editDistance(commandName, candidate) < 3) {
+                    candidates.add(candidate);
                 }
-
+            }                
+            LOG.error("");
+            if (candidates.size() > 0){
+                LOG.error("Did you mean ... ?");
+                for (String s : candidates){
+                    LOG.error(" - " + s);
+                }
             } else {
-                diverCli.confDir = new File(systemConfDir);                                               
+                LOG.error("Can't recognize the command.");
             }
-        } else {
-            diverCli.confDir = new File(confDirParam);            
-        }
-
-        if (resetConf) {
-            LOG.info("");
-            LOG.info("Resetting user configuration at " + diverCli.confDir + "   ...");
-            diverCli.replaceConfDir();
-
-            LOG.info("Done.");
-            LOG.info("");
-        }
-
-        diverCli.dbConfig = new DBConfig();
-
-
-        try {
-            DiverCli.checkConfDir(diverCli.confDir);
-
-            File confFile = diverCli.findConfFile(DiverCli.DIVERCLI_INI, false);
-            diverCli.ini = new Wini(confFile);
-            diverCli.dbConfig.setJdbc_driver_class(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "jdbc_driver_class", diverCli.ini));
-            diverCli.dbConfig.setDb_vendor(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "db_vendor", diverCli.ini));
-            diverCli.dbConfig.setJdbc_url(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "jdbc_url", diverCli.ini));
-            diverCli.dbConfig.setUser(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "user", diverCli.ini));
-            diverCli.dbConfig.setPassword(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "password", diverCli.ini));
-            diverCli.dbConfig.setShowSQL(false);
-
-        } catch (Exception ex) {
-            throw new DiverCliException(diverCli.configIsCorruptedMessage(), ex);
-        }
-
-
-    }
-
-    @Override
-    public void run(){
-
-        if (debug) {
-            LOG.info("\n * * * *    DEBUG MODE IS ON    * * * * * \n");
-        } 
+            
         
-    }    
-    
-    
-    @Override
-    public String getName() {
-        return CMD;
+
     }
-
-    
-    
-
 }
+

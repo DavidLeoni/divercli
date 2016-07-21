@@ -20,6 +20,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.beust.jcommander.MissingCommandException;
 import com.beust.jcommander.ParameterException;
 
 import de.tudarmstadt.ukp.lmf.model.core.LexicalResource;
@@ -33,6 +34,7 @@ import it.unitn.disi.diversicon.cli.commands.DbResetCommand;
 import it.unitn.disi.diversicon.cli.commands.DbRestoreCommand;
 import it.unitn.disi.diversicon.cli.commands.ExportSqlCommand;
 import it.unitn.disi.diversicon.cli.commands.ExportXmlCommand;
+import it.unitn.disi.diversicon.cli.commands.HelpCommand;
 import it.unitn.disi.diversicon.cli.commands.ImportShowCommand;
 import it.unitn.disi.diversicon.cli.commands.ImportXmlCommand;
 import it.unitn.disi.diversicon.cli.commands.LogCommand;
@@ -118,17 +120,72 @@ public class DiverCliTest extends DiverCliTestBase {
      * @since 0.1.0
      */
     @Test
-    public void testWrongCommand() throws IOException {
+    public void testWrongOption() throws IOException {
 
         try {
             DiverCli.of("-666")
                     .run();
             Assert.fail();
         } catch (ParameterException ex) {
+        }
+    }
+    
+    /**
+     * @since 0.1.0
+     */
+    @Test
+    public void testWrongCommand() throws IOException {
+
+        try {
+            DiverCli.of("666")
+                    .run();
+            Assert.fail();
+        } catch (MissingCommandException ex) {
 
         }
     }
 
+    /**
+     * @since 0.1.0
+     */
+    @Test
+    public void testDidYouMeanCommand(){
+        DiverCli.main(LogCommand.CMD + "g");
+    }
+    
+    /**
+     * @since 0.1.0
+     */
+    @Test
+    public void testHelpNoArgs(){
+        DiverCli.of(HelpCommand.CMD).run();
+    }
+    
+    /**
+     * @since 0.1.0
+     */
+    @Test
+    public void testHelp(){
+        DiverCli.of(HelpCommand.CMD, LogCommand.CMD).run();
+    }
+    
+    /**
+     * @since 0.1.0
+     */
+    @Test
+    public void testHelpSimilar(){
+        DiverCli.of(HelpCommand.CMD, LogCommand.CMD + "o").run();
+    }
+    
+    /**
+     * @since 0.1.0
+     */
+    @Test
+    public void testHelpCantFind(){
+        DiverCli.of(HelpCommand.CMD, "666").run();
+    }
+    
+    
     /**
      * @since 0.1.0
      */

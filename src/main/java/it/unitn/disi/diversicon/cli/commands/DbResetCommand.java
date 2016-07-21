@@ -14,7 +14,7 @@ import com.beust.jcommander.Parameters;
 import de.tudarmstadt.ukp.lmf.transform.DBConfig;
 import it.unitn.disi.diversicon.Diversicons;
 import it.unitn.disi.diversicon.cli.DiverCli;
-import it.unitn.disi.diversicon.data.wn30.DivWn30;
+import it.unitn.disi.diversicon.data.DivWn31;
 import it.unitn.disi.diversicon.internal.Internals;
 
 /**
