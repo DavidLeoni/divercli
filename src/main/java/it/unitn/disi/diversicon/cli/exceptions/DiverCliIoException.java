@@ -2,7 +2,6 @@ package it.unitn.disi.diversicon.cli.exceptions;
 
 /**
  * @since 0.1.0
- * 
  */
 public class DiverCliIoException extends DiverCliException {
 

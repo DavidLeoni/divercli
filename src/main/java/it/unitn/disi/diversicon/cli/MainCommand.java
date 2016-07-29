@@ -4,8 +4,6 @@ import static it.unitn.disi.diversicon.internal.Internals.checkNotNull;
 
 import java.io.File;
 
-import javax.annotation.Nullable;
-
 import org.ini4j.Wini;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +12,6 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
 import de.tudarmstadt.ukp.lmf.transform.DBConfig;
-import it.unitn.disi.diversicon.ImportConfig;
 import it.unitn.disi.diversicon.cli.commands.DiverCliCommand;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliException;
 import it.unitn.disi.diversicon.internal.Internals;
@@ -26,8 +23,7 @@ import it.unitn.disi.diversicon.internal.Internals;
  */
 @Parameters()
 public class MainCommand implements DiverCliCommand {
-    
-    
+        
     /**
      * @since 0.1.0
      */
@@ -42,22 +38,19 @@ public class MainCommand implements DiverCliCommand {
 
     @Parameter(names = { "--conf", "-c" }, description = "Path to the configuration folder. Defaults to USER_HOME/"
             + DiverCli.CONF_PATH)
-    String confDirParam = null;
+    private String confDirParam = null;
 
     @Parameter(names = { "--reset-conf" }, description = "Resets the configuration in USER_DIR/" + DiverCli.CONF_PATH)
-    boolean resetConf = false;
+    private boolean resetConf = false;
 
     @Parameter(names = "--help", help = true)
-    boolean help = false;
+    private boolean help = false;
 
     @Parameter(names = "--debug", hidden = true)
-    boolean debug = false;
+    private boolean debug = false;
 
     private DiverCli diverCli;       
-        
-    @Nullable
-    private ImportConfig importConfig;   
-    
+            
     public MainCommand(DiverCli diverCli) {    
         checkNotNull(diverCli);
         this.diverCli = diverCli;
@@ -71,8 +64,10 @@ public class MainCommand implements DiverCliCommand {
      * <li> {@link DiverCli#defaultConfDirPath()}, if full </li>
      * <li> if {@link DiverCli#defaultConfDirPath()} is empty, populates it with {@code conf-template} folder </li>
      * </ol>
-     * @since 0.1.0
+     * 
      * @throws DiverCliException
+     * 
+     * @since 0.1.0
      */
     @Override
     public void configure() {
@@ -114,8 +109,8 @@ public class MainCommand implements DiverCliCommand {
 
             File confFile = diverCli.findConfFile(DiverCli.DIVERCLI_INI, false);
             diverCli.ini = new Wini(confFile);
-            diverCli.dbConfig.setJdbc_driver_class(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "jdbc_driver_class", false, diverCli.ini));
             diverCli.dbConfig.setDb_vendor(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "db_vendor", false, diverCli.ini));
+            diverCli.dbConfig.setJdbc_driver_class(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "jdbc_driver_class", false, diverCli.ini));
             diverCli.dbConfig.setJdbc_url(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "jdbc_url", false,  diverCli.ini));
             diverCli.dbConfig.setUser(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "user", true, diverCli.ini));
             diverCli.dbConfig.setPassword(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "password", true, diverCli.ini));
@@ -128,6 +123,10 @@ public class MainCommand implements DiverCliCommand {
 
     }
 
+    /**
+     * {@inheritDoc}
+     * @since 0.1.0
+     */    
     @Override
     public void run(){
 
@@ -137,7 +136,10 @@ public class MainCommand implements DiverCliCommand {
         
     }    
     
-    
+    /**
+     * {@inheritDoc}
+     * @since 0.1.0
+     */
     @Override
     public String getName() {
         return CMD;

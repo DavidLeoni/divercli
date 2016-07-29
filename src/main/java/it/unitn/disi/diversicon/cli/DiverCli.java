@@ -7,6 +7,7 @@ import static it.unitn.disi.diversicon.internal.Internals.checkNotNull;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -21,16 +22,13 @@ import org.slf4j.LoggerFactory;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.MissingCommandException;
-import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
-import com.beust.jcommander.Parameters;
 import com.github.lalyos.jfiglet.FigletFont;
 
 import de.tudarmstadt.ukp.lmf.transform.DBConfig;
 import it.disi.unitn.diversicon.exceptions.DivIoException;
 import it.unitn.disi.diversicon.Diversicon;
 import it.unitn.disi.diversicon.Diversicons;
-import it.unitn.disi.diversicon.ImportConfig;
 import it.unitn.disi.diversicon.ImportJob;
 import it.unitn.disi.diversicon.cli.commands.DbRestoreCommand;
 import it.unitn.disi.diversicon.cli.commands.DbAugmentCommand;
@@ -52,18 +50,21 @@ import it.unitn.disi.diversicon.internal.ExtractedStream;
 
 /**
  * Provides a Command Line Interface to
- * {@link it.unitn.disi.diversicon.Diversicon}. Can be run as
- * program or you can use {@link #of} method to create instances of this object.
+ * {@link it.unitn.disi.diversicon.Diversicon Diversicon}. Can be run as
+ * program or you can use {@link #of} factory method to create instances
+ * of this object.
  *
  * @since 0.1.0
  */
-public class DiverCli {
+public final class DiverCli {
 
     /**
      * @since 0.1.0
      */
     private static final Logger LOG = LoggerFactory.getLogger(DiverCli.class);
 
+    private static final int SUGGESTION_EDIT_DISTANCE = 3;
+    
     /**
      * @since 0.1.0
      */
@@ -105,34 +106,43 @@ public class DiverCli {
 
     private static JCommander jcom;
 
-    private MainCommand mainCommand;
+    
 
     @Nullable
-    Diversicon diversicon;
+    private Diversicon diversicon;
 
+    // used by MainCommand for initialization, don't make it private
     @Nullable
     DBConfig dbConfig;
 
+    // used by MainCommand for initialization, don't make it private    
     @Nullable
     Wini ini;
 
+    // used by MainCommand for initialization, don't make it private    
     File confDir = null;
 
     private String[] args;
 
-    Map<String, DiverCliCommand> commands;
+    private Map<String, DiverCliCommand> commands;
 
+    /**
+     * @since 0.1.0
+     */
     private DiverCli() {
         String[] s = {};
         this.args = s;
-        this.commands = new HashMap();
+        this.commands = new HashMap<>();
     }
 
+    /**
+     * @since 0.1.0
+     */    
     private DiverCli(String[] args) {
         this();
         checkNotNull(args);
 
-        this.args = args;
+        this.args =  Arrays.copyOf(args, args.length);;
     }
 
     /**
@@ -147,7 +157,7 @@ public class DiverCli {
         try {
             cli.run();
         } catch (MissingCommandException ex) {
-            String GOT = "got ";
+            final String GOT = "got ";
             int i = ex.getMessage()
                       .indexOf(GOT);
             if (i != -1) {
@@ -227,8 +237,11 @@ public class DiverCli {
     }
 
     /**
-     * @since 0.1.0
+     * Returns db configuration of UBY.
+     * 
      * @throws DiverCliIllegalStateException
+     * 
+     * @since 0.1.0
      */
     public DBConfig getDbConfig() {
         if (dbConfig == null) {
@@ -239,17 +252,24 @@ public class DiverCli {
         }
     }
 
+    /**
+     * @since 0.1.0
+     */
     private void addCommand(DiverCliCommand cmd) {
         commands.put(cmd.getName(), cmd);
         jcom.addCommand(cmd.getName(), cmd);
     }
 
     /**
+     * Runs the cli, actually parsing the arguments. 
+     * 
      * @since 0.1.0
      */
     public void run() {
         try {
 
+            MainCommand mainCommand;
+            
             mainCommand = new MainCommand(this);
 
             jcom = new JCommander(mainCommand);
@@ -328,10 +348,8 @@ public class DiverCli {
 
         if (!isConnected()) {
 
-            if (Diversicons.isH2Db(dbConfig)) {
-                if (Diversicons.isEmpty(dbConfig)) {
-                    Diversicons.dropCreateTables(dbConfig);
-                }
+            if (Diversicons.isH2Db(dbConfig) && Diversicons.isEmpty(dbConfig)) {
+                    Diversicons.dropCreateTables(dbConfig);                
             }
 
             diversicon = Diversicon.connectToDb(dbConfig);
@@ -434,7 +452,7 @@ public class DiverCli {
                     return stream.toTempFile();
                 } catch (DivIoException ex) {
                     throw new DiverCliNotFoundException("Can't find file "
-                            + filepath + " in " + CONF_TEMPLATE_URI);
+                            + filepath + " in " + CONF_TEMPLATE_URI, ex);
 
                 }
 
@@ -449,7 +467,8 @@ public class DiverCli {
     }
 
     /**
-     * Factory method to create an instance.
+     * Factory method to create an instance. After creation you can call {@link #run()} 
+     * to actually parse arguments and run commands. 
      *
      * @param args
      *            the arguments of the command line
@@ -609,9 +628,9 @@ public class DiverCli {
 
     public void didYouMean(String commandName) {
 
-        List<String> candidates = new ArrayList();
+        List<String> candidates = new ArrayList<>();
         for (String candidate : commands.keySet()) {
-            if (Internals.editDistance(commandName, candidate) < 3) {
+            if (Internals.editDistance(commandName, candidate) < SUGGESTION_EDIT_DISTANCE) {
                 candidates.add(candidate);
             }
         }

@@ -31,7 +31,7 @@ public class ImportXmlCommand implements DiverCliCommand {
     public static final String CMD = "import-xml";
 
     @Parameter(names = { "--author", "-a" }, required = true, description = "The author of the operations on the db.")
-    String author;
+    private String author;
 
     
     @Parameter(names = { "--description",
@@ -48,19 +48,26 @@ public class ImportXmlCommand implements DiverCliCommand {
             + " same name, content will be merged.")
     // streamlined behaviour with respect to
     // https://github.com/DavidLeoni/diversicon/issues/6
-    List<String> importXmlPaths = new ArrayList();
+    List<String> importXmlPaths = new ArrayList<>();
 
     @Nullable
     private ImportConfig importConfig;
 
     private DiverCli diverCli;
 
+    /**
+     * @since 0.1.0
+     */
     public ImportXmlCommand(DiverCli diverCli) {
         checkNotNull(diverCli);
         this.diverCli = diverCli;
     }
 
-    @Override
+        /**
+     * {@inheritDoc}
+     * @since 0.1.0
+     */
+@Override
     public void configure() {
 
         checkNotBlank(author, "Tried to import files without '--author' parameter! ");
@@ -77,7 +84,11 @@ public class ImportXmlCommand implements DiverCliCommand {
 
     }
 
-    @Override
+        /**
+     * {@inheritDoc}
+     * @since 0.1.0
+     */
+@Override
     public void run() {
         diverCli.connect();
 
@@ -95,7 +106,11 @@ public class ImportXmlCommand implements DiverCliCommand {
 
     }
 
-    @Override
+        /**
+     * {@inheritDoc}
+     * @since 0.1.0
+     */
+@Override
     public String getName() {
         return CMD;
     }

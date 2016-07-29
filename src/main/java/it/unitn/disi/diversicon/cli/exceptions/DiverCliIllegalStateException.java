@@ -1,5 +1,8 @@
 package it.unitn.disi.diversicon.cli.exceptions;
 
+/**
+ * @since 0.1.0
+ */
 public class DiverCliIllegalStateException extends DiverCliException {
    
     private static final long serialVersionUID = 1L;

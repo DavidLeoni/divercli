@@ -27,38 +27,53 @@ public class ExportXmlCommand implements DiverCliCommand {
 
     
     @Parameter(names = "--name", required=true, description = "The name of the lexical resource to export.")
-    String name;
+    private String name;
 
     @Parameter(names = "--compress", description = "Compress the file into a zip archive")
-    Boolean compress = false;
+    private Boolean compress = false;
 
 
     @Parameter(required=true, arity=1, description = "Filepath of the xml to generate.")
-    List<String> xmlPath;
+    private List<String> xmlPath;
 
-    DiverCli diverCli;
+    private DiverCli diverCli;
     
+    /**
+     * @since 0.1.0
+     */
     public ExportXmlCommand(DiverCli diverCli) {
         checkNotNull(diverCli);
         this.diverCli = diverCli;
     }
 
-    @Override
+        /**
+     * {@inheritDoc}
+     * @since 0.1.0
+     */
+@Override
     public void configure(){
         // empty, for now diversicon will do the checks
     }
     
-    @Override
+        /**
+     * {@inheritDoc}
+     * @since 0.1.0
+     */
+@Override
     public void run() {
         diverCli.connect();
         try {
             diverCli.getDiversicon().exportToXml(xmlPath.get(0), name, compress);
         } catch (DivNotFoundException ex){
-            throw new ParameterException("Couldn't find lexical resource " + name + " !");
+            throw new ParameterException("Couldn't find lexical resource " + name + " !", ex);
         }
     }
 
-    @Override
+        /**
+     * {@inheritDoc}
+     * @since 0.1.0
+     */
+@Override
     public String getName() {
         return CMD;
     }

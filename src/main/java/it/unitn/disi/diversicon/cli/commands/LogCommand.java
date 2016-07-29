@@ -2,19 +2,12 @@ package it.unitn.disi.diversicon.cli.commands;
 
 import static it.unitn.disi.diversicon.internal.Internals.checkNotNull;
 
-import java.io.File;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.beust.jcommander.Parameter;
-import com.beust.jcommander.ParameterException;
 import com.beust.jcommander.Parameters;
 
-import de.tudarmstadt.ukp.lmf.transform.DBConfig;
-import it.unitn.disi.diversicon.Diversicons;
 import it.unitn.disi.diversicon.cli.DiverCli;
-import it.unitn.disi.diversicon.data.DivWn31;
 
 /**
  * 
@@ -33,18 +26,28 @@ public class LogCommand implements  DiverCliCommand {
 
     private DiverCli diverCli;
         
-   
+   /**
+    * @since 0.1.0
+    */
     public LogCommand(DiverCli diverCli){
         checkNotNull(diverCli);
         this.diverCli = diverCli;
     }
     
-    @Override
+        /**
+     * {@inheritDoc}
+     * @since 0.1.0
+     */
+@Override
     public void configure(){       
                 
     }
     
-    @Override
+        /**
+     * {@inheritDoc}
+     * @since 0.1.0
+     */
+@Override
     public void run(){
         
         diverCli.connect();
@@ -54,7 +57,11 @@ public class LogCommand implements  DiverCliCommand {
         LOG.info(diverCli.getDiversicon().formatImportJobs(false));        
     }
     
-    @Override
+        /**
+     * {@inheritDoc}
+     * @since 0.1.0
+     */
+@Override
     public String getName() {
         return CMD;
     }

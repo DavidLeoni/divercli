@@ -2,20 +2,10 @@ package it.unitn.disi.diversicon.cli.commands;
 
 import static it.unitn.disi.diversicon.internal.Internals.checkNotNull;
 
-import java.io.File;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.beust.jcommander.Parameter;
-import com.beust.jcommander.ParameterException;
 import com.beust.jcommander.Parameters;
 
-import de.tudarmstadt.ukp.lmf.transform.DBConfig;
 import it.unitn.disi.diversicon.Diversicons;
 import it.unitn.disi.diversicon.cli.DiverCli;
-import it.unitn.disi.diversicon.data.DivWn31;
-import it.unitn.disi.diversicon.internal.Internals;
 
 /**
  * 
@@ -23,33 +13,45 @@ import it.unitn.disi.diversicon.internal.Internals;
  *
  */
 @Parameters(separators = "=", commandDescription = "Resets current database. If it doesn't exist it is created empty.")
-public class DbResetCommand implements DiverCliCommand { 
-    
+public class DbResetCommand implements DiverCliCommand {
+
     /**
      * @since 0.1.0
      */
     public static final String CMD = "db-reset";
-    
-    private static final Logger LOG = LoggerFactory.getLogger(DbResetCommand.class);
 
     private DiverCli diverCli;
-        
-    public DbResetCommand(DiverCli diverCli){
+
+    public DbResetCommand(DiverCli diverCli) {
         checkNotNull(diverCli);
         this.diverCli = diverCli;
     }
-        
-    
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @since 0.1.0
+     */
     @Override
-    public void configure(){                   
-                
+    public void configure() {
+
     }
-    
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @since 0.1.0
+     */
     @Override
-    public void run(){        
-        Diversicons.dropCreateTables(diverCli.getDbConfig());        
+    public void run() {
+        Diversicons.dropCreateTables(diverCli.getDbConfig());
     }
-    
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @since 0.1.0
+     */
     @Override
     public String getName() {
         return CMD;

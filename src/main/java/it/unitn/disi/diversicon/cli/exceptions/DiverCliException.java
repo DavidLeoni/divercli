@@ -4,7 +4,6 @@ package it.unitn.disi.diversicon.cli.exceptions;
 /**
  * A generic runtime exception. 
  * 
- * @author David Leoni <david.leoni@unitn.it>
  * @since 0.1.0
  */
 public class DiverCliException extends RuntimeException {

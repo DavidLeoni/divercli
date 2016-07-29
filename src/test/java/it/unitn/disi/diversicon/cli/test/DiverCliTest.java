@@ -48,7 +48,6 @@ import it.unitn.disi.diversicon.test.DivTester;
 public class DiverCliTest extends DiverCliTestBase {
 
     private static final Logger LOG = LoggerFactory.getLogger(DiverCliTest.class);
-
    
     /**
      * 

@@ -24,18 +24,19 @@ public class ImportAppender extends AppenderBase<ILoggingEvent> {
 
     private Diversicon diversicon;
     
+    /**
+     * @since 0.1.0
+     */
     public ImportAppender (Diversicon diversicon) {
         checkNotNull(diversicon);
         
         this.diversicon = diversicon;
     }
 
-    @Override
-    public void start() {
-
-      super.start();
-    }
-
+ 
+    /**
+     * @since 0.1.0
+     */
     public void append(ILoggingEvent event) {
         ImportJob importJob = diversicon.getDbInfo().getCurrentImportJob();
         

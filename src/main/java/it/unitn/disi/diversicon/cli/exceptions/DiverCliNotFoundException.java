@@ -3,17 +3,12 @@ package it.unitn.disi.diversicon.cli.exceptions;
 /**
  * A runtime exception to raise when something is not found.
  * 
- * @author David Leoni <david.leoni@unitn.it>
  * @since 0.1.0
  */
 public class DiverCliNotFoundException extends DiverCliException {
     
     private static final long serialVersionUID = 1L;
 
-    private DiverCliNotFoundException(){
-        super();
-    }
-    
     /**
      * Creates the NotFoundException using the provided throwable
      */

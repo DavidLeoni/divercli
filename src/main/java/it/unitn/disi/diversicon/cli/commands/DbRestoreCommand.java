@@ -63,7 +63,11 @@ public class DbRestoreCommand implements DiverCliCommand {
     }
         
     
-    @Override
+        /**
+     * {@inheritDoc}
+     * @since 0.1.0
+     */
+@Override
     public void configure(){
         
         if (Internals.isBlank(restoreSqlPath) && Internals.isBlank(restoreH2DbPath)){
@@ -78,7 +82,11 @@ public class DbRestoreCommand implements DiverCliCommand {
                 
     }
     
-    @Override
+        /**
+     * {@inheritDoc}
+     * @since 0.1.0
+     */
+@Override
     public void run(){
         
         DBConfig dbCfg = Diversicons.makeDefaultH2FileDbConfig(targetDbPath, false);
@@ -97,7 +105,11 @@ public class DbRestoreCommand implements DiverCliCommand {
         
     }
     
-    @Override
+        /**
+     * {@inheritDoc}
+     * @since 0.1.0
+     */
+@Override
     public String getName() {
         return CMD;
     }

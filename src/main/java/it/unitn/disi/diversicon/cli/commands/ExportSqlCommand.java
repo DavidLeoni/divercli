@@ -23,38 +23,52 @@ public class ExportSqlCommand implements DiverCliCommand {
      */
     public static final String CMD = "export-sql";
 
-    
     @Parameter(names = "--compress", description = "Compress the file into a zip archive")
-    Boolean compress = false;
+    private Boolean compress = false;
 
-    @Parameter(description = "The filepath where to save the generated sql dump", arity=1, required=true)
-    List<String> sqlPaths = new ArrayList();
+    @Parameter(description = "The filepath where to save the generated sql dump", arity = 1, required = true)
+    private List<String> sqlPaths = new ArrayList<>();
 
-    DiverCli diverCli;
-    
+    private DiverCli diverCli;
+
+    /**
+     * @since 0.1.0
+     */
     public ExportSqlCommand(DiverCli diverCli) {
         checkNotNull(diverCli);
         this.diverCli = diverCli;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @since 0.1.0
+     */
     @Override
-    public void configure(){
+    public void configure() {
         // empty, for now diversicon will do the checks
     }
-    
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @since 0.1.0
+     */
     @Override
     public void run() {
         diverCli.connect();
-        diverCli.getDiversicon().exportToSql(sqlPaths.get(0),  compress);
+        diverCli.getDiversicon()
+                .exportToSql(sqlPaths.get(0), compress);
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @since 0.1.0
+     */
     @Override
     public String getName() {
         return CMD;
     }
 
 }
-
-
-
-
