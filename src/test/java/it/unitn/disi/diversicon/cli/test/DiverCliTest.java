@@ -77,11 +77,8 @@ public class DiverCliTest extends DiverCliTestBase {
         checkNotBlank(extension, "Invalid extension!");
         
         Path out;
-        try {
-            out = Files.createTempDirectory("divercli-test");
-        } catch (IOException e) {
-            throw new RuntimeException("Something went wrong!", e);
-        }
+ 
+        out = Internals.createTempDir("divercli-test");
 
         return new File(out.toString() + "/test." + extension);
     }
@@ -206,7 +203,7 @@ public class DiverCliTest extends DiverCliTestBase {
     public void testReset() {
         DiverCli.of("--reset-conf")
                 .run();
-        assertTrue(testConfDir.toFile()
+        assertTrue(testEnv.getTestConfDir().toFile()
                               .exists());
     }
 
@@ -216,11 +213,11 @@ public class DiverCliTest extends DiverCliTestBase {
     @Test
     public void testCustomConfFolderExisting() throws IOException {
 
-        Path existingPath = Files.createTempDirectory(DiverCli.CMD + "-test");
+        Path existingPath = Internals.createTempDir(DiverCli.CMD + "-test");
 
         Internals.copyDirFromResource(DiverCli.class, DiverCli.CONF_TEMPLATE_DIR, existingPath.toFile());
 
-        DiverCli.of("--conf ", existingPath.toString());
+        DiverCli.of("--conf", existingPath.toString());
     }
 
     /**
@@ -246,7 +243,7 @@ public class DiverCliTest extends DiverCliTestBase {
     @Test
     public void testCustomConfFolderEmptyDir() throws IOException {
 
-        Path emptyDir = Files.createTempDirectory(DiverCli.CMD + "-test");
+        Path emptyDir = Internals.createTempDir(DiverCli.CMD + "-test");
 
         try {
             DiverCli.of("--conf ", emptyDir.toString())
@@ -442,7 +439,7 @@ public class DiverCliTest extends DiverCliTestBase {
     @Test
     public void testExportXmlMissingLexicalResourceName() throws IOException {
 
-        Path out = Files.createTempDirectory("divercli-test");
+        Path out = Internals.createTempDir("divercli-test");
 
         try {
             DiverCli cli = DiverCli.of(ExportXmlCommand.CMD, out.toString() + "/test.xml");
@@ -456,7 +453,7 @@ public class DiverCliTest extends DiverCliTestBase {
     @Test
     public void testExportXmlWrongLexicalResource() throws IOException {
 
-        Path out = Files.createTempDirectory("divercli-test");
+        Path out = Internals.createTempDir("divercli-test");
 
         try {
             DiverCli cli = DiverCli.of(ExportXmlCommand.CMD, "--name", "666", out.toString() + "/test.xml");
@@ -472,7 +469,7 @@ public class DiverCliTest extends DiverCliTestBase {
 
         importLexRes(DivTester.GRAPH_1_HYPERNYM);
 
-        Path out = Files.createTempFile("divercli-test", "xml");
+        Path out = Internals.createTempFile("divercli-test", "xml");
 
         try {
             DiverCli cli2 = DiverCli.of(ExportXmlCommand.CMD,
@@ -538,7 +535,7 @@ public class DiverCliTest extends DiverCliTestBase {
 
         importLexRes(DivTester.GRAPH_1_HYPERNYM);
 
-        Path out = Files.createTempFile("divercli-test", "sql");
+        Path out = Internals.createTempFile("divercli-test", "sql");
 
         DiverCli cli = DiverCli.of(ExportSqlCommand.CMD,
                 out.toString());
@@ -645,5 +642,10 @@ public class DiverCliTest extends DiverCliTestBase {
         assertTrue(Diversicons.exists(cli1.getDbConfig()));
     }
     
+    @Test
+    public void testExamples(){
+        // better not
+        // System.out.println("\n ******   WHAT I GOT: ******* \n" + CliTester.log());
+    }
 
 }

@@ -14,6 +14,7 @@ import com.beust.jcommander.Parameters;
 import de.tudarmstadt.ukp.lmf.transform.DBConfig;
 import it.unitn.disi.diversicon.Diversicons;
 import it.unitn.disi.diversicon.cli.DiverCli;
+import it.unitn.disi.diversicon.cli.exceptions.DiverCliException;
 import it.unitn.disi.diversicon.data.DivWn31;
 import it.unitn.disi.diversicon.internal.Internals;
 
@@ -34,7 +35,7 @@ public class DbRestoreCommand implements DiverCliCommand {
 
     private DiverCli diverCli;
         
-    @Parameter(names = { "--sql" },  description = "Restores an h2 database from a sql or a .h2.db dump. Dump can be expressed as a URL." 
+    @Parameter(names = { "--sql" },  description = "Restores an h2 database from a sql dump. Dump can be expressed as a URL." 
     + " and can be in a compressed format."
     + " DB configuration MUST point to a non-existing database, otherwise"
     + " behaviour is unspecified. For Wordnet 3.0 packaged dump, you can use "
@@ -56,6 +57,9 @@ public class DbRestoreCommand implements DiverCliCommand {
     
     @Parameter(names = {"--set-default", "-d"}, description = "Sets user configuration to use this database as default for successive operations.")
     boolean makeDefault = false;
+    
+    @Parameter(names = {"--create-conf", "-f"}, description = "Creates in the target database directory another directory named DBNAME.conf with the configuration needed to access the db")
+    boolean createConf = false;
 
     public DbRestoreCommand(DiverCli diverCli){
         checkNotNull(diverCli);
@@ -63,11 +67,11 @@ public class DbRestoreCommand implements DiverCliCommand {
     }
         
     
-        /**
+    /**
      * {@inheritDoc}
      * @since 0.1.0
      */
-@Override
+    @Override
     public void configure(){
         
         if (Internals.isBlank(restoreSqlPath) && Internals.isBlank(restoreH2DbPath)){
@@ -82,11 +86,11 @@ public class DbRestoreCommand implements DiverCliCommand {
                 
     }
     
-        /**
+    /**
      * {@inheritDoc}
      * @since 0.1.0
      */
-@Override
+    @Override
     public void run(){
         
         DBConfig dbCfg = Diversicons.makeDefaultH2FileDbConfig(targetDbPath, false);
@@ -97,19 +101,33 @@ public class DbRestoreCommand implements DiverCliCommand {
             Diversicons.restoreH2Sql(restoreSqlPath, dbCfg);    
         } 
         
+        if (createConf){        
+            File targetDb = new File(targetDbPath);
+                        
+            File parentFolder = targetDb.getParentFile();
+            if (!parentFolder.isDirectory()){
+                throw new DiverCliException("Expected a directory where to place the configuration, found instead: " + parentFolder.getAbsolutePath());
+            }
+            File configFolder = new File(parentFolder, targetDb.getName() + "-conf");
+            DiverCli.saveConfig(dbCfg, configFolder);
+            LOG.info("Created configuration folder " + configFolder.getAbsolutePath());
+        }
+        
         if (makeDefault){
             diverCli.setDbConfig(dbCfg);
             diverCli.saveConfig();
             LOG.info("Set default configuration to track " + new File(targetDbPath).getAbsolutePath() + " database");
         }
         
+        
+        
     }
     
-        /**
+    /**
      * {@inheritDoc}
      * @since 0.1.0
      */
-@Override
+    @Override
     public String getName() {
         return CMD;
     }

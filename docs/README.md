@@ -25,14 +25,67 @@ bin\divercli.bat
 
 In case updates are available, version numbers follow <a href="http://semver.org/" target="_blank">semantic versioning</a> rules.
 
-### Usage
 
-TODO put usage
+### Commands list
 
-To set Java options in Linux / Mac, you can do something like:
+From the client you can get a full command list:
+
+```
+$eval{help}
+```
+
+### Configuration
+
+By default, DiverCli connects to the H2 database `$eval{it.unitn.disi.diversicon.cli.DEFAULT_H2_FILE_DB_PATH}`. H2 databases if not present are created upon first connection in the directory from which DiverCli is launched. Default username is `$eval{it.unitn.disi.diversicon.Diversicons.DEFAULT_H2_USER}` and password is `$eval{it.unitn.disi.diversicon.Diversicons.DEFAULT_H2_PASSWORD}`. To determine to which database to connect, DiverCli uses configuration file located in `$eval{it.unitn.disi.diversicon.cli.DiverCli.CONF_PATH}` inside user home, which you can edit to connect to the database of choice. 
+
+
+#### Resetting configuration
+
+In case configuration gets messed up, you can reset it by issuing:
+
+$eval{resetConf}
+
+#### Connecting to many databases
+
+If you need to connect to many databases, you can create a different configuration folder for each database you want to connect to. Then just specify from the command line the folder you want to use with `--conf PUT_FOLDER_PATH` parameter:
+
+
+#### Java options
+
+To set Java options  in Linux / Mac (for example to give DiverCli more memory), you can do something like:
 ```
 JAVA_OPTS="-Xms1g -Xmx3g -XX:-UseGCOverheadLimit" ./divercli db-augment
 ```
+
+  
+### Getting help
+
+To get some help about a specific command (say `import-xml`), you can issue something like 
+    
+$eval{helpImportXml}    
+              
+### Restoring packaged Wordnet
+
+Wordnet 3.1 is packaged within DiverCli, in the format of a <a href="http://www.h2database.com" target="_blank">H2 database</a>, as a SQL dump, and as an LMF XML file. You can unpack the database where you like (i.e. db/my-wn31) by issuing:
+
+$eval{wn31Restore}
+
+To keep DiverCli using that database in the following commands, you can use the `--make-default` flag:
+
+$eval{wn31RestoreMakeDefault}
+$eval{wn31Restore}
+
+              
+### Showing import logs
+
+For each resource imported via DiverCli, you can see an import log. For example, here we show the Wordnet 3.1 log :
+ 
+$eval{dbRestore}
+$eval{log}
+
+Note each import has a numerical identifier. To get more details about a single import (like warnings occurred during the import), you can use this command:
+
+$eval{importShow}
 
 
 ### Logging

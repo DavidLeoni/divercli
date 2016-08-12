@@ -18,7 +18,7 @@ Java command line client for <a href="https://github.com/DavidLeoni/diversicon" 
 
 **Features:**
   
-  * for now fully supports <a href="http://www.h2database.com/html/main.html" target="_blank">H2 DB</a>, a pure Java database (both in-memory and on disk). No separate installation is required.
+  * supports <a href="http://www.h2database.com/html/main.html" target="_blank">H2 DB</a>, a pure Java database (both in-memory and on disk, no separate installation is required).
   * dependency handling with Maven    
   * unit tested with proper integration tests    
   * supports Java 7+

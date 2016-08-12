@@ -33,17 +33,15 @@ public class ImportXmlCommand implements DiverCliCommand {
     @Parameter(names = { "--author", "-a" }, required = true, description = "The author of the operations on the db.")
     private String author;
 
-    
     @Parameter(names = { "--description",
             "-d" }, required = true, description = "The description of the operation being performed on the db.")
     String description;
 
-    @Parameter(names = { "--skip-augment", "-s" },  description = "Skips augmenting the db graph to speed up "
+    @Parameter(names = { "--skip-augment", "-s" }, description = "Skips augmenting the db graph to speed up "
             + " operations requiring the transitive closure.")
-    boolean skipAugment=false;    
+    boolean skipAugment = false;
 
-
-    @Parameter( required=true, variableArity = true, description = "a space separated list of XML files in UBY-LMF format."
+    @Parameter(required = true, variableArity = true, description = "a space separated list of XML files in UBY-LMF format."
             + " Lexical resources must have a 'name' attribute. If there are already present resources with the"
             + " same name, content will be merged.")
     // streamlined behaviour with respect to
@@ -63,11 +61,12 @@ public class ImportXmlCommand implements DiverCliCommand {
         this.diverCli = diverCli;
     }
 
-        /**
+    /**
      * {@inheritDoc}
+     * 
      * @since 0.1.0
      */
-@Override
+    @Override
     public void configure() {
 
         checkNotBlank(author, "Tried to import files without '--author' parameter! ");
@@ -84,11 +83,12 @@ public class ImportXmlCommand implements DiverCliCommand {
 
     }
 
-        /**
+    /**
      * {@inheritDoc}
+     * 
      * @since 0.1.0
      */
-@Override
+    @Override
     public void run() {
         diverCli.connect();
 
@@ -100,17 +100,19 @@ public class ImportXmlCommand implements DiverCliCommand {
         importAppender.setContext(logger.getLoggerContext());
         logger.addAppender(importAppender);
 
-        diverCli.getDiversicon().importFiles(importConfig);
+        diverCli.getDiversicon()
+                .importFiles(importConfig);
 
         logger.detachAppender(importAppender);
 
     }
 
-        /**
+    /**
      * {@inheritDoc}
+     * 
      * @since 0.1.0
      */
-@Override
+    @Override
     public String getName() {
         return CMD;
     }

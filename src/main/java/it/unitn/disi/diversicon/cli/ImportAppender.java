@@ -31,6 +31,7 @@ public class ImportAppender extends AppenderBase<ILoggingEvent> {
         checkNotNull(diversicon);
         
         this.diversicon = diversicon;
+        start();
     }
 
  

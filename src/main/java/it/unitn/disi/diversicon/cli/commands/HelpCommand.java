@@ -59,15 +59,19 @@ public class HelpCommand implements DiverCliCommand {
     public void run() {
         LOG.info("");
         if (commandNameList == null || commandNameList.isEmpty()) {
+            StringBuilder sb = new StringBuilder();            
             diverCli.getJCommander()
-                    .usage();
+                    .usage(sb);
+            LOG.info(sb.toString());
         } else {
+            StringBuilder sb = new StringBuilder();
             String cmd = commandNameList.get(0);
             if (diverCli.getCommands()
                         .keySet()
                         .contains(cmd)) {
                 diverCli.getJCommander()
-                        .usage(cmd);
+                        .usage(cmd, sb);
+                LOG.info(sb.toString());
             } else {
                 diverCli.didYouMean(cmd);
             }

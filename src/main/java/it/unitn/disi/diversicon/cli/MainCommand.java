@@ -65,6 +65,7 @@ public class MainCommand implements DiverCliCommand {
      * <li> if {@link DiverCli#defaultConfDirPath()} is empty, populates it with {@code conf-template} folder </li>
      * </ol>
      * 
+     * 
      * @throws DiverCliException
      * 
      * @since 0.1.0

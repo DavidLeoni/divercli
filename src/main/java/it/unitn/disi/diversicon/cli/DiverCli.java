@@ -75,12 +75,12 @@ public final class DiverCli {
      */
     public static final String DIVERCLI_INI = CMD + ".ini";
 
-    public static final String CONF_TEMPLATE_DIR = "/it/unitn/disi/diversicon/cli/conf-template/";
+    public static final String CONF_TEMPLATE_DIR = "it/unitn/disi/diversicon/cli/conf-template/";
 
     /**
      * @since 0.1.0
      */
-    public static final String CONF_TEMPLATE_URI = "classpath:" + CONF_TEMPLATE_DIR;
+    public static final String CONF_TEMPLATE_URI = "classpath:/" + CONF_TEMPLATE_DIR;
 
     /**
      * @since 0.1.0
@@ -98,9 +98,10 @@ public final class DiverCli {
     public static final String SYSTEM_PROPERTY_CONF_DIR = "divercli.conf-dir";
 
     /**
+     * NOTE: it doesn't end with '.h2.db' as H2 doesn't want the suffix in db urls 
      * @since 0.1.0
      */
-    public static final String DEFAULT_H2_FILE_DB_PATH = "db" + File.separator + "my-diversicon.h2.db";
+    public static final String DEFAULT_H2_FILE_DB_PATH = "db" + File.separator + "my-diversicon";
 
     public static final String SYSTEM_PROPERTY_TESTING = "divercli.testing";
 
@@ -273,7 +274,7 @@ public final class DiverCli {
             mainCommand = new MainCommand(this);
 
             jcom = new JCommander(mainCommand);
-
+            
             // doesn't work well, see
             // https://github.com/DavidLeoni/divercli/issues/1
             // int terminalWidth = jline.TerminalFactory.get().getWidth();
@@ -291,10 +292,14 @@ public final class DiverCli {
 
             jcom.parse(args);
 
+            
+            
             if (args.length == 0) {
-                jcom.usage();
+                StringBuilder sb = new StringBuilder();
+                jcom.usage(sb);
+                LOG.info(sb.toString());
+                mainCommand.configure();
             } else {
-
                 mainCommand.configure();
                 mainCommand.run();
 
@@ -349,6 +354,7 @@ public final class DiverCli {
         if (!isConnected()) {
 
             if (Diversicons.isH2Db(dbConfig) && Diversicons.isEmpty(dbConfig)) {
+                
                     Diversicons.dropCreateTables(dbConfig);                
             }
 
@@ -514,9 +520,10 @@ public final class DiverCli {
      * @since 0.1.0
      */
     void copyTemplateConf() {
-        // better not check, may still be initilalizing checkConfigured();
+        // better not check, may still be initializing 
+        // checkConfigured();
 
-        Internals.copyDirFromResource(DiverCli.class, "it/unitn/disi/diversicon/cli/conf-template", confDir);
+        Internals.copyDirFromResource(DiverCli.class, CONF_TEMPLATE_DIR, confDir);
     }
 
     /**
@@ -644,5 +651,51 @@ public final class DiverCli {
             LOG.error("Can't recognize the command.");
         }
 
+    }
+
+    /**
+     * Saves {@code dbConfig} as INI file in {@code destFolder}.
+     * If target folder does not exists it is created. If INI file already exists it is overwritten.
+     * 
+     * @param destFolder
+     * @since 0.1.0
+     */
+    // TODO similar to saveConfig() , need to merge them
+    public static void saveConfig(DBConfig dbConfig, File destFolder) {
+        checkNotNull(dbConfig);
+        checkNotNull(destFolder);
+        
+        if (!destFolder.exists()){
+            if (!destFolder.mkdirs()){
+                throw new DiverCliException("Couldn't create directory " + destFolder.getAbsolutePath() + "  !!");
+            }
+        }
+        
+        File destFile = new File(destFolder, DiverCli.DIVERCLI_INI);
+        if (destFile.exists()){
+            LOG.info("Overwriting file " + destFile.getAbsolutePath() + "  ...");
+        }
+        
+        Internals.copyDirFromResource(DiverCli.class, CONF_TEMPLATE_DIR, destFolder);
+        
+        try {
+                       
+            Internals.copyDirFromResource(DiverCli.class, CONF_TEMPLATE_DIR, destFolder);
+            
+            Wini ini = new Wini(destFile);
+            
+            ini.put(DATABASE_SECTION_INI, "jdbc_driver_class", dbConfig.getJdbc_driver_class());
+            ini.put(DATABASE_SECTION_INI, "db_vendor", dbConfig.getDb_vendor());
+            ini.put(DATABASE_SECTION_INI, "jdbc_url", dbConfig.getJdbc_url());
+            ini.put(DATABASE_SECTION_INI, "user", dbConfig.getUser());
+            ini.put(DATABASE_SECTION_INI, "password", dbConfig.getPassword());      
+            ini.store();
+            
+        } catch (IOException ex) {
+            throw new DiverCliIoException(
+                    "Error while saving INI file to " + destFolder.getAbsolutePath() + File.separator + DIVERCLI_INI, ex);
+        }
+        
+        
     }
 }
