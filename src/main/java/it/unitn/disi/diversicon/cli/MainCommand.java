@@ -92,15 +92,8 @@ public class MainCommand implements DiverCliCommand {
     }
 
     /**
-     * Configures global configuration folder searching in order:
-     * 
-     * <ol>
-     * <li>{@link DiverCli#SYSTEM_GLOBAL_CONF_DIR} Java system property argument
-     * </li>
-     * <li>{@link DiverCli#defaultGlobalConfDirPath()}</li>
-     * <li>if {@link DiverCli#defaultGlobalConfDirPath()} contains no files,
-     * populates it with {@code global-conf} folder</li>
-     * </ol>
+     * Configures global configuration folder searching in {@link DiverCli#globalConfDirPath()}. 
+     * If folder is not found or empty populates it with {@code global-conf} template folder
      * 
      * To be called for all commands
      * 
@@ -112,30 +105,23 @@ public class MainCommand implements DiverCliCommand {
     @Override
     public void configure() {
 
-        String systemGlobalDir = System.getProperty(DiverCli.SYSTEM_GLOBAL_CONF_DIR);
-
-        if (Internals.isBlank(systemGlobalDir)) {
-
-            // create or replace default conf dir
-            cli.globalConfDir = DiverCli.defaultGlobalConfDirPath();
-            if (!(cli.globalConfDir.exists()
-                    && cli.globalConfDir.isDirectory()
-                    && cli.globalConfDir.list().length != 0)) {
-
-                Internals.copyDirFromResource(DiverCli.class, DiverCli.GLOBAL_CONF_TEMPLATE_DIR, cli.globalConfDir);
-            }
-
-        } else {
-            cli.globalConfDir = new File(systemGlobalDir);
-        }
+        // create or replace default conf dir
+        cli.globalConfDir = DiverCli.globalConfDirPath();
 
         if (resetGlobalConf) {
             LOG.info("");
             LOG.info("Resetting user configuration at " + cli.globalConfDir + "   ...");
-            cli.replaceGlobalConfDir();
-
+            cli.resetGlobalConfDir();
             LOG.info("Done.");
             LOG.info("");
+        } else {
+            if ( 
+                !(cli.globalConfDir.exists()
+                && cli.globalConfDir.isDirectory()
+                && cli.globalConfDir.list().length != 0)) {
+                LOG.info("Found no global configuration, creating it at " + cli.globalConfDir.getAbsolutePath() + " ...");
+                cli.resetGlobalConfDir();                
+            }            
         }
 
         DiverCli.checkGlobalConfDir(cli.globalConfDir);
@@ -162,7 +148,7 @@ public class MainCommand implements DiverCliCommand {
      */
     private void fixConfigIfTesting() {
         if (System.getProperty(DiverCli.SYSTEM_PROPERTY_TESTING) != null) {
-            String workingDir = System.getProperty(DiverCli.SYSTEM_WORKING_DIR);
+            String workingDir = System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR);
             checkNotEmpty(workingDir, "When testing working dir shouldn't be empty!");
 
             cli.projectDir = new File(cli.projectDir.getAbsolutePath()

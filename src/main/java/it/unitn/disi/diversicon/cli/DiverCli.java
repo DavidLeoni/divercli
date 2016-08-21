@@ -1,20 +1,21 @@
 package it.unitn.disi.diversicon.cli;
 
 import static it.unitn.disi.diversicon.internal.Internals.checkArgument;
+import static it.unitn.disi.diversicon.internal.Internals.checkNotBlank;
 import static it.unitn.disi.diversicon.internal.Internals.checkNotEmpty;
 import static it.unitn.disi.diversicon.internal.Internals.checkNotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import javax.annotation.Nullable;
 
 import org.apache.commons.io.FileUtils;
@@ -97,7 +98,7 @@ public final class DiverCli {
     /**
      * @since 0.1.0
      */
-    public static final String GLOBAL_CONF_TEMPLATE_DIR = TEMPLATES_DIR + "global";
+    public static final String GLOBAL_CONF_TEMPLATE_DIR = TEMPLATES_DIR + "global-conf";
 
     /**
      * @since 0.1.0
@@ -132,21 +133,17 @@ public final class DiverCli {
     /**
      * @since 0.1.0
      */
-    public static final String SYSTEM_GLOBAL_CONF_DIR = "divercli.conf.dir";
+    // Because changing system vars is problematic: http://stackoverflow.com/questions/840190/changing-the-current-working-directory-in-java/8204584#8204584    
+    public static final String SYSTEM_PROPERTY_USER_HOME = "divercli.user.home";    
+
 
     /**
      * 
      * @since 0.1.0
      */
     // Because changing system vars is problematic: http://stackoverflow.com/questions/840190/changing-the-current-working-directory-in-java/8204584#8204584
-    public static final String SYSTEM_WORKING_DIR = "divercli.user.dir";
-
-    
-    /**
-     * @since 0.1.0
-     */
-    // Because changing system vars is problematic: http://stackoverflow.com/questions/840190/changing-the-current-working-directory-in-java/8204584#8204584    
-    public static final String SYSTEM_USER_HOME = "divercli.user.home";    
+    public static final String SYSTEM_PROPERTY_WORKING_DIR = "divercli.user.dir";
+   
     
     /**
      * NOTE: it doesn't end with '.h2.db' as H2 doesn't want the suffix in db
@@ -478,14 +475,22 @@ public final class DiverCli {
     }
 
     /**
-     * Returns default conf folder dir path in user home.
+     * Returns global conf folder dir path in user home.
      * 
      * @since 0.1.0
      * 
      */
-    public static File defaultGlobalConfDirPath() {
-        return new File(System.getProperty("user.home") + File.separator
-                + GLOBAL_CONF_PATH);
+    public static File globalConfDirPath() {
+        if (System.getProperty(SYSTEM_PROPERTY_TESTING) == null){
+            return new File(System.getProperty("user.home"), GLOBAL_CONF_PATH);            
+        } else {
+            String testHome = System.getProperty(SYSTEM_PROPERTY_USER_HOME);        
+            checkNotBlank(testHome, "SYSTEM_PROPERTY_USER_HOME shouldn't be blank when testing!");
+            return new File(testHome, GLOBAL_CONF_PATH);
+            
+        }
+        
+        
 
     }
 
@@ -594,7 +599,7 @@ public final class DiverCli {
      * 
      * @since 0.1.0
      */
-    void replaceGlobalConfDir() {
+    void resetGlobalConfDir() {
 
         // better not check, may still be initilalizing checkConfigured();
 
@@ -610,7 +615,29 @@ public final class DiverCli {
             }
         }
 
-        Internals.copyDirFromResource(DiverCli.class, GLOBAL_CONF_TEMPLATE_DIR, globalConfDir);
+        if (System.getProperty(DiverCli.SYSTEM_PROPERTY_TESTING) == null){
+            Internals.copyDirFromResource(DiverCli.class, GLOBAL_CONF_TEMPLATE_DIR, globalConfDir);
+        } else {                       
+            
+            // filter ini to have temp working dir...
+            Internals.copyDirFromResource(DiverCli.class, "it/unitn/disi/diversicon/cli/templates/global-conf",
+                    globalConfDir);                                  
+            
+            Path globalIniPath = new File(globalConfDir, DIVERCLI_INI).toPath();
+            byte[] encoded;
+            try {
+                encoded = Files.readAllBytes(globalIniPath);
+                String filteredGlobalIni = new String(encoded, StandardCharsets.UTF_8);
+                      //  .replace()  nothing to replace fo now!
+                             
+                Files.write(globalIniPath, filteredGlobalIni.getBytes());                
+            } catch (IOException e) { 
+                throw new DiverCliIoException("Error while filtering global conf dir!", e);
+            }
+            
+        }
+        
+        
     }
 
 

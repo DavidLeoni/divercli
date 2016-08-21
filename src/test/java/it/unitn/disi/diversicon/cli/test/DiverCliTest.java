@@ -241,13 +241,12 @@ public class DiverCliTest extends DiverCliTestBase {
      */
     @Test
     public void testCustomConfFolderExisting() throws IOException {
-
-        Path existingPath = Internals.createTempDir(DiverCli.CMD + "-test");
+        
 
         Internals.copyDirFromResource(DiverCli.class, 
-                DiverCli.GLOBAL_CONF_TEMPLATE_DIR, existingPath.toFile());
+                DiverCli.GLOBAL_CONF_TEMPLATE_DIR, DiverCli.globalConfDirPath());
 
-        DiverCli.of("--prj", existingPath.toString());
+        DiverCli.of().run();
     }
 
     /**
