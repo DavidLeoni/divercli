@@ -39,6 +39,7 @@ import it.unitn.disi.diversicon.cli.commands.LogCommand;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliException;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliIoException;
 import it.unitn.disi.diversicon.data.DivWn31;
+import static it.unitn.disi.diversicon.cli.test.CliTester.initWn31;;
 
 /**
  * Creates documentation from executions of DiverCli
@@ -402,15 +403,10 @@ public class DocsGenIT extends DiverCliTestBase {
         
     }
     
-    private void restoreWn31(){
-        DiverCli.of(InitCommand.CMD, "--db", DivWn31.H2DB_URI, 
-                "--target", testEnv.getTestWorkingDir() + File.separator + DiverCli.DEFAULT_H2_FILE_DB_PATH)
-        .run();
-    }
     
     @Test
     public void log() {
-        restoreWn31();
+        initWn31();
         
         exec("log", LogCommand.CMD);
                         

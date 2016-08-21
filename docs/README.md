@@ -11,6 +11,8 @@ You can download Diver CLI <a href="../releases/download/divercli-#{version}/div
 
 To see usage commands:
 
+TODO review
+
 In Linux / Mac, from terminal just type
 
 ```
@@ -34,9 +36,27 @@ From the client you can get a full command list:
 $eval{help}
 ```
 
-### Configuration
+### Your first project
 
-By default, DiverCli connects to the H2 database `$eval{it.unitn.disi.diversicon.cli.DEFAULT_H2_FILE_DB_PATH}`. H2 databases if not present are created upon first connection in the directory from which DiverCli is launched. Default username is `$eval{it.unitn.disi.diversicon.Diversicons.DEFAULT_H2_USER}` and password is `$eval{it.unitn.disi.diversicon.Diversicons.DEFAULT_H2_PASSWORD}`. To determine to which database to connect, DiverCli uses configuration file located in `$eval{it.unitn.disi.diversicon.cli.DiverCli.CONF_PATH}` inside user home, which you can edit to connect to the database of choice. 
+In DiverCli, a project is a folder with configuration to connect to a database and possibly the database itself and other scripts you created, so it might look like this :
+
+```
+divercli.ini
+my-diversicon.db.h2
+my-custom-script.sql
+...
+``` 
+
+DiverCli comes with full support for <a href="http://h2database.com" target="_blank"> H2 database </a>, which is shipped with DiverCli and doesn't require separate installation. So let's create our first H2 file-based empty database:
+
+```
+mkdir my-db
+cd my-db
+$eval{initEmpty}
+$eval{dirEmpty}
+```
+   
+Default username is `$eval{it.unitn.disi.diversicon.Diversicons.DEFAULT_H2_USER}` and password is `$eval{it.unitn.disi.diversicon.Diversicons.DEFAULT_H2_PASSWORD}`. To determine to which database to connect, DiverCli uses configuration file located in `$eval{it.unitn.disi.diversicon.cli.DiverCli.CONF_PATH}` inside user home, which you can edit to connect to the database of choice. 
 
 
 #### Resetting configuration

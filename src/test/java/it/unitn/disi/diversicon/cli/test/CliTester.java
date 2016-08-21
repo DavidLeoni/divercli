@@ -8,7 +8,9 @@ import java.nio.file.Paths;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import it.unitn.disi.diversicon.cli.DiverCli;
+import it.unitn.disi.diversicon.cli.commands.InitCommand;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliIoException;
+import it.unitn.disi.diversicon.data.DivWn31;
 import it.unitn.disi.diversicon.internal.Internals;
 
 /**
@@ -19,7 +21,7 @@ public class CliTester {
 
     private static final Logger LOG = LoggerFactory.getLogger(CliTester.class);
 
-    
+    public static final String WORKING = "working";
     
     /**
      * @since 0.1.0
@@ -30,7 +32,7 @@ public class CliTester {
             Path testHome = Internals.createTempDir("divercli-test-home");
 
             TestEnv ret = new TestEnv(testHome,
-                    Files.createDirectories(Paths.get(testHome.toString(), "working")),
+                    Files.createDirectories(Paths.get(testHome.toString(), WORKING)),
                     Paths.get(testHome.toString(), ".config", "divercli"));
 
 
@@ -63,4 +65,28 @@ public class CliTester {
         System.setProperty(DiverCli.SYSTEM_PROPERTY_TESTING, "");
     }
 
+    /**
+     * Makes default db project in directory {@code working/ }
+     * so to have 
+     * <pre>
+     *    working/divercli.ini 
+     *    working/working.h2.db
+     *    ... 
+     * </pre>
+     * 
+     * @since 0.1.0
+     */
+    public static DiverCli initEmpty() {        
+        DiverCli cli = DiverCli.of(InitCommand.CMD);
+        cli.run();
+        return cli;
+    }
+    
+    public static DiverCli initWn31(){
+        DiverCli cli = DiverCli.of(InitCommand.CMD, "--db", DivWn31.H2DB_URI);
+        cli.run();
+        
+        return cli;
+    }
+    
 }

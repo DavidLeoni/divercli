@@ -30,25 +30,20 @@ public class DiverCliIT extends DiverCliTestBase {
      * @since 0.1.0
      */
     @Test
-    public void testRestoreDbFromWordnetDb() throws IOException {
-
-        Path dir = Internals.createTempDir("divercli-test");
-
-        String target = dir.toString() + "/my-wn31";
-        
-        DiverCli cli = DiverCli.of(InitCommand.CMD,
-                "--prj", target, 
-                "--db", DivWn31.H2DB_URI,
-                "--set-default");
+    public void testInitDbFromWordnetDb() throws IOException {                      
+                
+        DiverCli cli = DiverCli.of(
+                InitCommand.CMD,                
+                "--db", DivWn31.H2DB_URI);
 
         cli.run();
 
-        File outf = new File(target + "/my-wn31.h2.db");
+        File outf = new File(testEnv.getTestWorkingDir() + "/" + CliTester.WORKING + ".h2.db");
 
         assertTrue(outf.exists());
         assertTrue(outf.length() > 0);
 
-        File outIni = new File(target + "/" + DiverCli.DIVERCLI_INI);
+        File outIni = new File(testEnv.getTestWorkingDir() + "/" + DiverCli.DIVERCLI_INI);
 
         assertTrue(outIni.exists());
         assertTrue(outIni.length() > 0);

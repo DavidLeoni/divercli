@@ -42,6 +42,7 @@ import it.unitn.disi.diversicon.cli.exceptions.DiverCliTerminatedException;
 import it.unitn.disi.diversicon.internal.Internals;
 import it.unitn.disi.diversicon.test.DivTester;
 import static it.unitn.disi.diversicon.cli.MainCommand.PRJ_OPTION;
+import static it.unitn.disi.diversicon.cli.test.CliTester.initEmpty;
 
 /**
  * @since 0.1.0
@@ -50,33 +51,8 @@ public class DiverCliTest extends DiverCliTestBase {
 
     private static final Logger LOG = LoggerFactory.getLogger(DiverCliTest.class);         
 
-    /*
-     * Makes cli prepending {@code --prj test-prj} to the args
-     * 
-     * @since 0.1.0
-     */    
-    /*public static DiverCli makeCli(String... args) {
-        ArrayList<String> arr = new ArrayList<>();
-        arr.addAll(Arrays.asList(args));
-        return DiverCli.of(arr.toArray(args));   
-    }*/
 
-    /**
-     * Makes default db project in directory {@code working/ }
-     * so to have 
-     * <pre>
-     *    working/divercli.ini 
-     *    working/working.h2.db
-     *    ... 
-     * </pre>
-     * 
-     * @since 0.1.0
-     */
-    public static DiverCli makePrj() {        
-        DiverCli cli = DiverCli.of(InitCommand.CMD);
-        cli.run();
-        return cli;
-    }
+
     
     /**
      * 
@@ -373,7 +349,7 @@ public class DiverCliTest extends DiverCliTestBase {
     @Test
     public void testImportXml() {
         
-        makePrj();
+        initEmpty();
         
         File xmlFile = DivTester.writeXml(DivTester.GRAPH_1_HYPERNYM);
 
@@ -397,7 +373,7 @@ public class DiverCliTest extends DiverCliTestBase {
      */
     @Test
     public void testLog() {
-        makePrj();
+        initEmpty();
         DiverCli cli2 = DiverCli.of(LogCommand.CMD);
         cli2.run();
         // todo how to improve?
@@ -408,7 +384,7 @@ public class DiverCliTest extends DiverCliTestBase {
      */
     @Test
     public void testImportShow() {
-        makePrj();
+        initEmpty();
         File xmlFile = DivTester.writeXml(DivTester.GRAPH_1_HYPERNYM);
         DiverCli cli1 = DiverCli.of(ImportXmlCommand.CMD, xmlFile.getAbsolutePath(), "--author", "Test author",
                 "--description", "Test description");
@@ -430,7 +406,7 @@ public class DiverCliTest extends DiverCliTestBase {
     @Test
     public void testDbAugment() {
         
-        makePrj();
+        initEmpty();
         
         LexicalResource res = lmf().lexicon()
                                    .synset()
@@ -465,7 +441,7 @@ public class DiverCliTest extends DiverCliTestBase {
 
     @Test
     public void testExportXmlMissingXmlPath() {
-        makePrj();
+        initEmpty();
         try {
             DiverCli cli = DiverCli.of(ExportXmlCommand.CMD);
             cli.run();
@@ -478,7 +454,7 @@ public class DiverCliTest extends DiverCliTestBase {
     @Test
     public void testExportXmlMissingLexicalResourceName() throws IOException {
         
-        makePrj();
+        initEmpty();
         
         Path out = Internals.createTempDir("divercli-test");
 
@@ -494,7 +470,7 @@ public class DiverCliTest extends DiverCliTestBase {
     @Test
     public void testExportXmlWrongLexicalResource() throws IOException {
 
-        makePrj();
+        initEmpty();
         
         Path out = Internals.createTempDir("divercli-test");
 
@@ -510,7 +486,7 @@ public class DiverCliTest extends DiverCliTestBase {
     @Test
     public void testExportXmlExistingXml() throws IOException {
 
-        makePrj();
+        initEmpty();
         
         importLexRes(DivTester.GRAPH_1_HYPERNYM);
 
@@ -530,7 +506,7 @@ public class DiverCliTest extends DiverCliTestBase {
     @Test
     public void testExportXml() throws IOException {
 
-        makePrj();
+        initEmpty();
         
         File outF = getNonExistingFile("xml");
 
@@ -548,7 +524,7 @@ public class DiverCliTest extends DiverCliTestBase {
     
     @Test
     public void testExportXmlCompressed() throws IOException {
-        makePrj();
+        initEmpty();
         
         File outF = getNonExistingFile("zip");
 
@@ -569,7 +545,7 @@ public class DiverCliTest extends DiverCliTestBase {
 
     @Test
     public void testExportSqlMissingSqlPath() {
-        makePrj();
+        initEmpty();
         
         try {
             DiverCli cli = DiverCli.of(ExportSqlCommand.CMD);
@@ -582,7 +558,7 @@ public class DiverCliTest extends DiverCliTestBase {
 
     @Test
     public void testExportSqlExistingSql() throws IOException {
-        makePrj();
+        initEmpty();
         
         importLexRes(DivTester.GRAPH_1_HYPERNYM);
 
@@ -601,7 +577,7 @@ public class DiverCliTest extends DiverCliTestBase {
 
     @Test
     public void testExportSql() throws IOException {
-        makePrj();
+        initEmpty();
         
         File outF = getNonExistingFile("sql");
 
@@ -621,7 +597,7 @@ public class DiverCliTest extends DiverCliTestBase {
      */
     @Test
     public void testExportSqlCompressed() throws IOException {
-        makePrj();
+        initEmpty();
 
         File outF = getNonExistingFile(".sql.zip");
         importLexRes(DivTester.GRAPH_1_HYPERNYM);
@@ -646,7 +622,7 @@ public class DiverCliTest extends DiverCliTestBase {
     @Test
     public void testDbInitWrongSql_1(){
         
-        makePrj();
+        initEmpty();
         
         DiverCli cli1 = DiverCli.of(                
                 InitCommand.CMD,
@@ -666,7 +642,7 @@ public class DiverCliTest extends DiverCliTestBase {
     @Test
     public void testDbInitWrongSql_2(){
         
-        makePrj();        
+        initEmpty();        
         
         DiverCli cli = DiverCli.of(
                 InitCommand.CMD,
@@ -686,7 +662,7 @@ public class DiverCliTest extends DiverCliTestBase {
     @Test
     public void testDbReset(){
         
-        makePrj();
+        initEmpty();
         
         DiverCli cli1 = DiverCli.of(DbResetCommand.CMD);
         
