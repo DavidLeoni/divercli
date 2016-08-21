@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import it.unitn.disi.diversicon.Diversicon;
 import it.unitn.disi.diversicon.cli.DiverCli;
-import it.unitn.disi.diversicon.cli.commands.DbRestoreCommand;
+import it.unitn.disi.diversicon.cli.commands.InitCommand;
 import it.unitn.disi.diversicon.cli.commands.LogCommand;
 import it.unitn.disi.diversicon.data.DivWn31;
 import it.unitn.disi.diversicon.internal.Internals;
@@ -33,51 +33,33 @@ public class DiverCliIT extends DiverCliTestBase {
     public void testRestoreDbFromWordnetDb() throws IOException {
 
         Path dir = Internals.createTempDir("divercli-test");
-        String target = dir.toString() + "/test";
 
-        DiverCli cli = DiverCli.of(DbRestoreCommand.CMD,
+        String target = dir.toString() + "/my-wn31";
+        
+        DiverCli cli = DiverCli.of(InitCommand.CMD,
+                "--prj", target, 
                 "--db", DivWn31.H2DB_URI,
-                "--target", target,
                 "--set-default");
 
         cli.run();
 
-        File outf = new File(target + ".h2.db");
+        File outf = new File(target + "/my-wn31.h2.db");
 
         assertTrue(outf.exists());
         assertTrue(outf.length() > 0);
 
+        File outIni = new File(target + "/" + DiverCli.DIVERCLI_INI);
+
+        assertTrue(outIni.exists());
+        assertTrue(outIni.length() > 0);
+        
+        
         Diversicon div = Diversicon.connectToDb(cli.getDbConfig());
         div.getSession()
            .close();
     }
     
-    /**
-     * @since 0.1.0
-     */
-    @Test
-    public void testRestoreDbFromWordnetDbCreateConf() throws IOException {
-
-        Path dir = Internals.createTempDir("divercli-test");
-        String target = dir.toString() + "/test";
-
-        DiverCli cli = DiverCli.of(DbRestoreCommand.CMD,
-                "--db", DivWn31.H2DB_URI,
-                "--target", target,
-                "--create-conf");
-
-        cli.run();
-
-        File outf = new File(target + ".h2.db");
-              
-        assertTrue(outf.exists());
-        assertTrue(outf.length() > 0);
-
-        DiverCli.of(
-                "--conf", target + "-conf/",
-                LogCommand.CMD).run();        
-        
-    }
+   
 
 
 }

@@ -31,7 +31,7 @@ import it.unitn.disi.diversicon.Diversicon;
 import it.unitn.disi.diversicon.ImportJob;
 import it.unitn.disi.diversicon.cli.DiverCli;
 import it.unitn.disi.diversicon.cli.commands.DbResetCommand;
-import it.unitn.disi.diversicon.cli.commands.DbRestoreCommand;
+import it.unitn.disi.diversicon.cli.commands.InitCommand;
 import it.unitn.disi.diversicon.cli.commands.HelpCommand;
 import it.unitn.disi.diversicon.cli.commands.ImportShowCommand;
 import it.unitn.disi.diversicon.cli.commands.ImportXmlCommand;
@@ -390,20 +390,20 @@ public class DocsGenIT extends DiverCliTestBase {
     public void dbRestore() {
         exec("wn31Restore",
                 "--create-conf",
-                DbRestoreCommand.CMD, "--db", DivWn31.H2DB_URI, 
+                InitCommand.CMD, "--db", DivWn31.H2DB_URI, 
                 "--target", testEnv.getTestWorkingDir() + File.separator + "db/my-wn31");
         exec("wn31RestoreMakeDefault",
-                DbRestoreCommand.CMD, "--set-default", "--db", DivWn31.H2DB_URI, 
+                InitCommand.CMD, "--set-default", "--db", DivWn31.H2DB_URI, 
                 "--target", testEnv.getTestWorkingDir() + File.separator + "db/my-wn31");
         
         exec("dbRestore",
-                DbRestoreCommand.CMD, "--db", DivWn31.H2DB_URI, 
+                InitCommand.CMD, "--db", DivWn31.H2DB_URI, 
                 "--target", testEnv.getTestWorkingDir() + File.separator + DiverCli.DEFAULT_H2_FILE_DB_PATH);
         
     }
     
     private void restoreWn31(){
-        DiverCli.of(DbRestoreCommand.CMD, "--db", DivWn31.H2DB_URI, 
+        DiverCli.of(InitCommand.CMD, "--db", DivWn31.H2DB_URI, 
                 "--target", testEnv.getTestWorkingDir() + File.separator + DiverCli.DEFAULT_H2_FILE_DB_PATH)
         .run();
     }

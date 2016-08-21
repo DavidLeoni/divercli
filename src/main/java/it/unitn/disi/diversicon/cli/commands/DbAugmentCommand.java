@@ -27,12 +27,12 @@ public class DbAugmentCommand implements DiverCliCommand {
         this.diverCli = diverCli;
     }
 
-        /**
+    /**
      * {@inheritDoc}
      * @since 0.1.0
      */
 @Override
-    public void configure(){
+    public void configure(){        
         // empty, for now diversicon will do the checks
     }
     

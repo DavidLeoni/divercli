@@ -28,8 +28,7 @@ public class DiverCliTestBase {
     public void beforeMethod() throws IOException {
 
        testEnv = CliTester.createTestEnv();
-
-        FileUtils.deleteDirectory(new File("db/"));
+        
     }
 
     @After

@@ -49,7 +49,7 @@ public class TestEnv {
      * @since 0.1.0
      *
      */    
-    public Path getTestConfDir() {
+    public Path getTestGlobalConfDir() {
         return testConfDir;
     }       
     
