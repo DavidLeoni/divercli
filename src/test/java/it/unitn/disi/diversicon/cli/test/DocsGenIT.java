@@ -346,7 +346,7 @@ public class DocsGenIT extends DiverCliTestBase {
      * 
      * @since 0.1.0
      */
-    private void exec(String key, String... args) { 
+    private void execCli(String key, String... args) { 
         
         startCaptureSlf4j();
         
@@ -364,7 +364,7 @@ public class DocsGenIT extends DiverCliTestBase {
 
         String val = "```bash\n"
                 + "> " + DIVERCLI + " " + sbStr.toString() + "\n"
-                + cap.replace(testEnv.getTestHome().toString() + File.separator + "divercli" + File.separator, "") + "\n"
+                + cap.replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR), "") + "\n"
                 + "```\n";
 
         if (evals.containsKey(key)){
@@ -381,25 +381,25 @@ public class DocsGenIT extends DiverCliTestBase {
 
     @Test
     public void help() {
-        exec("help",  HelpCommand.CMD, ImportXmlCommand.CMD);
+        execCli("help",  HelpCommand.CMD, ImportXmlCommand.CMD);
         
-        exec("helpImportXml", 
+        execCli("helpImportXml", 
                 HelpCommand.CMD, ImportXmlCommand.CMD);
     }
 
     @Test
     public void dbRestore() {
-        exec("wn31Restore",
-                "--create-conf",
-                InitCommand.CMD, "--db", DivWn31.H2DB_URI, 
-                "--target", testEnv.getTestWorkingDir() + File.separator + "db/my-wn31");
-        exec("wn31RestoreMakeDefault",
-                InitCommand.CMD, "--set-default", "--db", DivWn31.H2DB_URI, 
-                "--target", testEnv.getTestWorkingDir() + File.separator + "db/my-wn31");
+
         
-        exec("dbRestore",
-                InitCommand.CMD, "--db", DivWn31.H2DB_URI, 
-                "--target", testEnv.getTestWorkingDir() + File.separator + DiverCli.DEFAULT_H2_FILE_DB_PATH);
+        
+        execCli("initWn31",
+                "--prj", "my-wn31",
+                InitCommand.CMD, "--db", DivWn31.H2DB_URI 
+                );
+        
+        execCli("initEmpty",
+                "--prj", "my-db",
+                InitCommand.CMD, "--db", DivWn31.H2DB_URI);
         
     }
     
@@ -408,7 +408,7 @@ public class DocsGenIT extends DiverCliTestBase {
     public void log() {
         initWn31();
         
-        exec("log", LogCommand.CMD);
+        execCli("log", LogCommand.CMD);
                         
         DiverCli cli = DiverCli.of();               
         cli.run();
@@ -417,12 +417,12 @@ public class DocsGenIT extends DiverCliTestBase {
         assertEquals(1, jobs.size());
         long id = jobs.get(0).getId();
         
-        exec("importShow", ImportShowCommand.CMD, Long.toString(id));
+        execCli("importShow", ImportShowCommand.CMD, Long.toString(id));
     }
     
     @Test
     public void reset(){
-        exec("resetConf", "--reset-conf");        
+        execCli("resetConf", "--reset-conf");        
     }
     
     

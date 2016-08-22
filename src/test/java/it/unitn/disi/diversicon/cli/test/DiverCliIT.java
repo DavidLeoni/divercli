@@ -38,12 +38,12 @@ public class DiverCliIT extends DiverCliTestBase {
 
         cli.run();
 
-        File outf = new File(testEnv.getTestWorkingDir() + "/" + CliTester.WORKING + ".h2.db");
+        File outf = new File(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR), WORKING + ".h2.db");
 
         assertTrue(outf.exists());
         assertTrue(outf.length() > 0);
 
-        File outIni = new File(testEnv.getTestWorkingDir() + "/" + DiverCli.DIVERCLI_INI);
+        File outIni = new File(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR), DiverCli.DIVERCLI_INI);
 
         assertTrue(outIni.exists());
         assertTrue(outIni.length() > 0);

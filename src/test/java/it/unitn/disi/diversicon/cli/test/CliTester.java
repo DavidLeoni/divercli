@@ -21,49 +21,15 @@ public class CliTester {
 
     private static final Logger LOG = LoggerFactory.getLogger(CliTester.class);
 
-    public static final String WORKING = "working";
+    
     
     /**
      * @since 0.1.0
      */
-    public static TestEnv createTestEnv() {
+    public static void createTestEnv() {
 
-        try {
-            Path testHome = Internals.createTempDir("divercli-test-home");
-
-            TestEnv ret = new TestEnv(testHome,
-                    Files.createDirectories(Paths.get(testHome.toString(), WORKING)),
-                    Paths.get(testHome.toString(), ".config", "divercli"));
-
-
-            System.setProperty(DiverCli.SYSTEM_PROPERTY_USER_HOME,
-                    ret.getTestHome()
-                       .toString());
-            
-            System.setProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR,
-                    ret.getTestWorkingDir()
-                       .toString());
-            
-            
-            
-            // so it always work even in stupid Eclipse, see see
-            // https://bugs.eclipse.org/bugs/show_bug.cgi?id=388683
-            System.setProperty(DiverCli.SYSTEM_PROPERTY_TESTING, "true");
-
-            return ret;
-        } catch (IOException e) {
-            throw new DiverCliIoException("Something went wrong!", e);
-        }
     }
 
-    /**
-     * @since 0.1.0
-     */
-    public static void resetTestEnv() {
-        System.setProperty(DiverCli.SYSTEM_PROPERTY_USER_HOME, "");
-        System.setProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR, "");
-        System.setProperty(DiverCli.SYSTEM_PROPERTY_TESTING, "");
-    }
 
     /**
      * Makes default db project in directory {@code working/ }
@@ -87,6 +53,15 @@ public class CliTester {
         cli.run();
         
         return cli;
+    }
+
+    /**
+     * @since 0.1.0
+     */
+    public static Path getTestGlobalConfDir() {
+        String prop = System.getProperty(DiverCli.SYSTEM_PROPERTY_USER_HOME);
+        
+        return Paths.get(prop + "/" + DiverCli.GLOBAL_CONF_PATH + DiverCli.DIVERCLI_INI); 
     }
     
 }

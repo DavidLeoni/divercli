@@ -38,25 +38,22 @@ $eval{help}
 
 ### Your first project
 
-In DiverCli, a project is a folder with configuration to connect to a database and possibly the database itself and other scripts you created, so it might look like this :
+In DiverCli, a project is a folder with configuration to connect to a database, plus possibly the database itself and other custom scripts, so it might look like this :
 
 ```
 divercli.ini
 my-diversicon.db.h2
-my-custom-script.sql
+my-script.sql
 ...
 ``` 
 
-DiverCli comes with full support for <a href="http://h2database.com" target="_blank"> H2 database </a>, which is shipped with DiverCli and doesn't require separate installation. So let's create our first H2 file-based empty database:
+DiverCli comes with full support for <a href="http://h2database.com" target="_blank"> H2 database </a>, which is shipped with DiverCli and doesn't require separate installation. So let's create our first H2 file-based database with Wordnet 3.1 inside:
 
 ```
-mkdir my-db
-cd my-db
-$eval{initEmpty}
-$eval{dirEmpty}
+$eval{introWn31}
 ```
    
-Default username is `$eval{it.unitn.disi.diversicon.Diversicons.DEFAULT_H2_USER}` and password is `$eval{it.unitn.disi.diversicon.Diversicons.DEFAULT_H2_PASSWORD}`. To determine to which database to connect, DiverCli uses configuration file located in `$eval{it.unitn.disi.diversicon.cli.DiverCli.CONF_PATH}` inside user home, which you can edit to connect to the database of choice. 
+Default username is `$eval{it.unitn.disi.diversicon.Diversicons.DEFAULT_H2_USER}` and password is `$eval{it.unitn.disi.diversicon.Diversicons.DEFAULT_H2_PASSWORD}`. To determine to which database to connect, DiverCli uses configuration file `$eval{it.unitn.disi.diversicon.cli.DiverCli.DIVERCLI_INI}` inside project directory, which you can edit to connect to the database of choice. 
 
 
 #### Resetting configuration

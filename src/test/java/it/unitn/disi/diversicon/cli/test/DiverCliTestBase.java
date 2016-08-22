@@ -12,6 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 
 import it.unitn.disi.diversicon.cli.DiverCli;
+import it.unitn.disi.diversicon.cli.exceptions.DiverCliIoException;
 import it.unitn.disi.diversicon.internal.Internals;
 
 
@@ -20,20 +21,41 @@ import it.unitn.disi.diversicon.internal.Internals;
  * Base to inherit from for DiverCli tests
  * @since 0.1.0
  */
-public class DiverCliTestBase {
-    
-    TestEnv testEnv;
+public class DiverCliTestBase {       
+    public static final String WORKING = "working";
     
     @Before
     public void beforeMethod() throws IOException {
+       
+        try {
+            Path testHome = Internals.createTempDir("divercli-test-home");
 
-       testEnv = CliTester.createTestEnv();
-        
+
+            Path userHome = Internals.createTempDir("divercli-test-home");
+            Path workingDir = Files.createDirectories(Paths.get(testHome.toString(), WORKING));
+            
+            System.setProperty(DiverCli.SYSTEM_PROPERTY_USER_HOME,
+                    userHome.toString());
+            
+            System.setProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR,
+                    workingDir.toString());                       
+            
+            // so it always work even in stupid Eclipse, see see
+            // https://bugs.eclipse.org/bugs/show_bug.cgi?id=388683
+            System.setProperty(DiverCli.SYSTEM_PROPERTY_TESTING, "true");
+
+        } catch (IOException e) {
+            throw new DiverCliIoException("Something went wrong!", e);
+        }
+
     }
 
     @After
     public void afterMethod() {
-        testEnv = null;
-        CliTester.resetTestEnv();
+
+        System.setProperty(DiverCli.SYSTEM_PROPERTY_USER_HOME, "");
+        System.setProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR, "");
+        System.setProperty(DiverCli.SYSTEM_PROPERTY_TESTING, "");
+
     }
 }

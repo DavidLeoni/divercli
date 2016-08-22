@@ -37,6 +37,7 @@ import it.unitn.disi.diversicon.cli.commands.HelpCommand;
 import it.unitn.disi.diversicon.cli.commands.ImportShowCommand;
 import it.unitn.disi.diversicon.cli.commands.ImportXmlCommand;
 import it.unitn.disi.diversicon.cli.commands.LogCommand;
+import it.unitn.disi.diversicon.cli.exceptions.DiverCliException;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliNotFoundException;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliTerminatedException;
 import it.unitn.disi.diversicon.internal.Internals;
@@ -50,8 +51,6 @@ import static it.unitn.disi.diversicon.cli.test.CliTester.initEmpty;
 public class DiverCliTest extends DiverCliTestBase {
 
     private static final Logger LOG = LoggerFactory.getLogger(DiverCliTest.class);         
-
-
 
     
     /**
@@ -207,7 +206,7 @@ public class DiverCliTest extends DiverCliTestBase {
     public void testReset() {
         DiverCli.of(MainCommand.RESET_GLOBAL_CONFIG_OPTION)
                 .run();
-        assertTrue(testEnv.getTestGlobalConfDir().toFile()
+        assertTrue(CliTester.getTestGlobalConfDir().toFile()
                               .exists());
        
     }
@@ -673,6 +672,21 @@ public class DiverCliTest extends DiverCliTestBase {
         assertTrue(Diversicons.exists(cli1.getDbConfig()));
     }
     
+    /**
+     * @since 0.1.0
+     */
+    @Test
+    public void testInitTwice() throws IOException {
+        
+        initEmpty();
+        
+        try {
+            initEmpty();
+            Assert.fail("Shouldn't be able to init twice!");
+        } catch (DiverCliException ex){
+            
+        };
+    }
     
     /**
      * @since 0.1.0
@@ -716,13 +730,15 @@ public class DiverCliTest extends DiverCliTestBase {
 
         cli.run();
 
-        File outDb = new File(testEnv.getTestWorkingDir() + "/"
-                              + testEnv.getTestWorkingDir().getFileName()+".h2.db");
+        File workingDir = new File(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR));
+        
+        File outDb = new File(workingDir,
+                              workingDir.getName() + ".h2.db");
 
         assertTrue(outDb.exists());
         assertTrue(outDb.length() > 0);
         
-        File outIni = new File(testEnv.getTestWorkingDir() + "/" + DiverCli.DIVERCLI_INI);
+        File outIni = new File(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR), DiverCli.DIVERCLI_INI);
 
         assertTrue(outIni.exists());
         assertTrue(outIni.length() > 0);
