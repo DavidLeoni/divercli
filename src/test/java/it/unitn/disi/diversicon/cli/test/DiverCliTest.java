@@ -270,7 +270,7 @@ public class DiverCliTest extends DiverCliTestBase {
         LOG.info("I logged something!");
         DiverCli cli = DiverCli.of("--debug");
         cli.run();
-        Wini ini = new Wini(cli.findConfigFile(DiverCli.DIVERCLI_INI));
+        Wini ini = new Wini(cli.findConfigFile(DiverCli.INI_FILENAME));
         assertEquals(null, ini.get("666", "666", String.class));
         assertEquals(null, ini.get("Database", "666", String.class));
     }
@@ -359,7 +359,7 @@ public class DiverCliTest extends DiverCliTestBase {
 
         cli.run();
 
-        Diversicon div = Diversicon.connectToDb(cli.getDbConfig());
+        Diversicon div = Diversicon.connectToDb(cli.dbConfig());
         DivTester.checkDb(DivTester.GRAPH_1_HYPERNYM, div);
         div.getSession()
            .close();
@@ -667,9 +667,9 @@ public class DiverCliTest extends DiverCliTestBase {
         
         cli1.run();
         
-        assertTrue(Diversicons.exists(cli1.getDbConfig()));
+        assertTrue(Diversicons.exists(cli1.dbConfig()));
         DiverCli.of(DbResetCommand.CMD).run(); // shouldn't complain
-        assertTrue(Diversicons.exists(cli1.getDbConfig()));
+        assertTrue(Diversicons.exists(cli1.dbConfig()));
     }
     
     /**
@@ -709,12 +709,12 @@ public class DiverCliTest extends DiverCliTestBase {
         assertTrue(outDb.exists());
         assertTrue(outDb.length() > 0);
         
-        File outIni = new File(target + "/" + DiverCli.DIVERCLI_INI);
+        File outIni = new File(target + "/" + DiverCli.INI_FILENAME);
 
         assertTrue(outIni.exists());
         assertTrue(outIni.length() > 0);
                 
-        Diversicon div = Diversicon.connectToDb(cli.getDbConfig());
+        Diversicon div = Diversicon.connectToDb(cli.dbConfig());
         div.getSession()
            .close();
     }
@@ -738,12 +738,12 @@ public class DiverCliTest extends DiverCliTestBase {
         assertTrue(outDb.exists());
         assertTrue(outDb.length() > 0);
         
-        File outIni = new File(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR), DiverCli.DIVERCLI_INI);
+        File outIni = new File(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR), DiverCli.INI_FILENAME);
 
         assertTrue(outIni.exists());
         assertTrue(outIni.length() > 0);
                 
-        Diversicon div = Diversicon.connectToDb(cli.getDbConfig());
+        Diversicon div = Diversicon.connectToDb(cli.dbConfig());
         div.getSession()
            .close();
     }    

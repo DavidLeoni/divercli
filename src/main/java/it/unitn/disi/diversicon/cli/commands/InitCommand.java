@@ -1,7 +1,6 @@
 package it.unitn.disi.diversicon.cli.commands;
 
 import static it.unitn.disi.diversicon.internal.Internals.checkNotBlank;
-import static it.unitn.disi.diversicon.internal.Internals.checkNotEmpty;
 import static it.unitn.disi.diversicon.internal.Internals.checkNotNull;
 
 import java.io.File;
@@ -20,7 +19,7 @@ import it.unitn.disi.diversicon.Diversicons;
 import it.unitn.disi.diversicon.cli.DiverCli;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliException;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliIoException;
-import it.unitn.disi.diversicon.data.DivWn31;
+import it.unitn.disi.diversicon.data.SampleLmf;
 import it.unitn.disi.diversicon.internal.Internals;
 
 /**
@@ -41,12 +40,12 @@ public class InitCommand implements DiverCliCommand {
     private DiverCli cli;
         
     @Parameter(names = { "--sql" },  description = "Initalize the project with a h2 database from a sql dump, "
-            + "which can be compressed and expressed as a URL, like  " + DivWn31.SQL_URI )
+            + "which can be compressed and expressed as a URL, like  " + SampleLmf.SQL_URI )
     String restoreSqlPath;
 
     @Parameter(names = { "--db" },  description = "Initialize the project from a .h2.db dump, "
             + "which can be compressed and expressed as a URL. For Wordnet 3.1 packaged dump, you can use "
-    + DivWn31.H2DB_URI)
+    + SampleLmf.H2DB_URI)
     String restoreH2DbPath;       
     
     private File prjFolder;
@@ -68,15 +67,15 @@ public class InitCommand implements DiverCliCommand {
     public void configure(){        
         
         prjFolder = cli.getProjectDir();
-        iniFile = new File(prjFolder, DiverCli.DIVERCLI_INI);
+        iniFile = new File(prjFolder, DiverCli.INI_FILENAME);
         dbName = prjFolder.getName();
         checkNotBlank("Invalid db name!", dbName);
         
         if (prjFolder.exists()){
             if (prjFolder.isDirectory()){
-                if (new File(prjFolder, DiverCli.DIVERCLI_INI).exists()){
+                if (new File(prjFolder, DiverCli.INI_FILENAME).exists()){
                     throw new DiverCliException("Target directory "+ prjFolder.getAbsolutePath()
-                    + " already contains a " + DiverCli.DIVERCLI_INI + " file!");
+                    + " already contains a " + DiverCli.INI_FILENAME + " file!");
                 }
                 
                 File targetDb = new File(prjFolder , dbName + ".h2.db");

@@ -53,7 +53,7 @@ public class MainCommand implements DiverCliCommand {
     private boolean debug = false;
 
     @Parameter(names = {RESET_GLOBAL_CONFIG_OPTION }, description = "Resets the configuration in USER_DIR/"
-            + DiverCli.GLOBAL_CONF_PATH)
+            + DiverCli.GLOBAL_CONF_DIR)
     private boolean resetGlobalConf = false;
 
     private DiverCli cli;
@@ -63,33 +63,6 @@ public class MainCommand implements DiverCliCommand {
         this.cli = diverCli;
     }
 
-    /**
-     * Loads a configuration file. Doesn't complain if there are missing fields.
-     * 
-     * @see #checkGlobalConfig()
-     * @see #checkProjectConfig()()
-     * @since 0.1.0
-     */
-    private Wini loadIni(File iniFile) {
-        checkNotNull(iniFile);
-        checkNotNull(cli.dbConfig);
-
-        Wini ini;
-        try {
-            ini = new Wini(iniFile);
-        } catch (IOException ex) {
-            throw new DiverCliIoException("Error while loading ini file " + iniFile.getAbsolutePath(), ex);
-        }
-
-        cli.dbConfig.setDb_vendor(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "db_vendor", ini));
-        cli.dbConfig.setJdbc_driver_class(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "jdbc_driver_class", ini));
-        cli.dbConfig.setJdbc_url(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "jdbc_url", ini));
-        cli.dbConfig.setUser(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "user", ini));
-        cli.dbConfig.setPassword(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "password", ini));
-        cli.dbConfig.setShowSQL(false);       
-
-        return ini;
-    }
 
     /**
      * Configures global configuration folder searching in {@link DiverCli#globalConfDirPath()}. 
@@ -127,7 +100,7 @@ public class MainCommand implements DiverCliCommand {
         DiverCli.checkGlobalConfDir(cli.globalConfDir);
 
         try {
-            cli.globalConfIni = loadIni(cli.globalConfDir);
+            cli.globalConfIni = cli.loadIni(cli.globalConfDir);
         } catch (Exception ex) {
             throw new DiverCliException(cli.globalConfigIsCorruptedMessage(), ex);
         }
@@ -138,72 +111,16 @@ public class MainCommand implements DiverCliCommand {
             cli.projectDir = new File(projectDirParam);
         }
 
-        fixConfigIfTesting();
+        cli.fixConfigIfTesting();
 
         checkGlobalConfig();
+        
+        cli.globallyConfigured = true;
     }
 
-    /**
-     * @since 0.1.0
-     */
-    private void fixConfigIfTesting() {
-        if (System.getProperty(DiverCli.SYSTEM_PROPERTY_TESTING) != null) {
-            String workingDir = System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR);
-            checkNotEmpty(workingDir, "When testing working dir shouldn't be empty!");
-
-            cli.projectDir = new File(cli.projectDir.getAbsolutePath()
-                                                    .replace(System.getProperty("user.dir"),
-                                                            workingDir));
-
-            String jdbcUrl = cli.dbConfig.getJdbc_url();
-            if (jdbcUrl != null) {
-                if (jdbcUrl.contains("jdbc:h2:file:")) {
-                    String filePath;
-                    int i = jdbcUrl.indexOf(";");
-                    if (i >= 0) {
-                        filePath = jdbcUrl.substring("jdbc:h2:file:".length(), i);
-                    } else {
-                        filePath = jdbcUrl.substring("jdbc:h2:file:".length());
-                    }
-                    if (new File(filePath).isAbsolute()){
-                        cli.dbConfig.setJdbc_url(jdbcUrl.replace(System.getProperty("user.dir"), workingDir));    
-                    } else {
-                        cli.dbConfig.setJdbc_url(jdbcUrl.replace(filePath, workingDir + "/" + filePath));
-                    }
-                    LOG.debug("Fixed jdbc url:" + cli.dbConfig.getJdbc_url());
-                    
-                }
-
-            }
-
-        }
-
-    }
     
 
-    /**
-     * To be called for commands requiring a project
-     * 
-     * @see {@link #configure()}
-     * 
-     * @since 0.1.0
-     */
-    public void configureProject() {
-
-        DiverCli.checkProjectDir(cli.projectDir);
-
-        try {
-            cli.projectIni = loadIni(cli.findProjectFile(DiverCli.DIVERCLI_INI));
-
-            fixConfigIfTesting();
-            
-            checkProjectConfig();
-
-        } catch (Exception ex) {
-            throw new DiverCliException(cli.projectConfigIsCorruptedMessage(), ex);
-        }
-
-    }
+  
 
     /**
      * @throws InvalidConfigException
@@ -214,40 +131,6 @@ public class MainCommand implements DiverCliCommand {
         // does nothing for now
     }
 
-    /**
-     * 
-     * @throws InvalidConfigException
-     * 
-     * @since 0.1.0
-     */
-    private void checkProjectConfig() {
-
-        if (Internals.isBlank(cli.dbConfig.getDb_vendor())) {
-            throw new InvalidConfigException("Expected db_vendor field in " + DiverCli.DATABASE_SECTION_INI
-                    + " section in " + new File(cli.getProjectDir(), DiverCli.DIVERCLI_INI) + " file!");
-        }
-
-        if (Internals.isBlank(cli.dbConfig.getJdbc_driver_class())) {
-            throw new InvalidConfigException("Expected jdbc_driver_class field in " + DiverCli.DATABASE_SECTION_INI
-                    + " section in " + new File(cli.getProjectDir(), DiverCli.DIVERCLI_INI) + " file!");
-        }
-
-        if (Internals.isBlank(cli.dbConfig.getJdbc_url())) {
-            throw new InvalidConfigException("Expected jdbc_url field in " + DiverCli.DATABASE_SECTION_INI
-                    + " section in " + new File(cli.getProjectDir(), DiverCli.DIVERCLI_INI) + " file!");
-        }
-
-        if (cli.dbConfig.getUser() == null) {
-            throw new InvalidConfigException("Expected user field in " + DiverCli.DATABASE_SECTION_INI + " section in "
-                    + new File(cli.getProjectDir(), DiverCli.DIVERCLI_INI) + " file!");
-        }
-
-        if (cli.dbConfig.getPassword() == null) {
-            throw new InvalidConfigException("Expected password field in " + DiverCli.DATABASE_SECTION_INI
-                    + " section in " + new File(cli.getProjectDir(), DiverCli.DIVERCLI_INI) + " file!");
-        }
-
-    }
 
     /**
      * {@inheritDoc}

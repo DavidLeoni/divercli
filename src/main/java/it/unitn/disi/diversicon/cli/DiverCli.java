@@ -48,6 +48,7 @@ import it.unitn.disi.diversicon.cli.exceptions.DiverCliIllegalStateException;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliIoException;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliNotFoundException;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliTerminatedException;
+import it.unitn.disi.diversicon.cli.exceptions.InvalidConfigException;
 import it.unitn.disi.diversicon.internal.Internals;
 import it.unitn.disi.diversicon.internal.ExtractedStream;
 
@@ -83,12 +84,18 @@ public final class DiverCli {
     /**
      * @since 0.1.0
      */
-    public static final String DIVERCLI_INI = CMD + ".ini";
+    public static final String INI_FILENAME = CMD + ".ini";
 
     /**
      * @since 0.1.0
      */
-    public static final String GLOBAL_CONF_PATH = ".config/" + CMD + "/";
+    public static final String GLOBAL_CONF_DIR = ".config/" + CMD + "/";
+
+    /**
+     * @since 0.1.0
+     */
+    public static final String INI_PATH = GLOBAL_CONF_DIR + INI_FILENAME;
+    
 
     /**
      * @since 0.1.0
@@ -178,9 +185,16 @@ public final class DiverCli {
     // used by MainCommand for initialization, don't make it private
     File globalConfDir = null;
 
+    // used by MainCommand for initialization, don't make it private
+    boolean globallyConfigured;
+    // used by MainCommand for initialization, don't make it private
+    boolean projectConfigured;    
+    
     private String[] args;
 
     private Map<String, DiverCliCommand> commands;
+
+    
 
     /**
      * @since 0.1.0
@@ -190,6 +204,8 @@ public final class DiverCli {
         this.args = s;
         this.commands = new HashMap<>();
         this.dbConfig = new DBConfig();
+        this.globallyConfigured = false;
+        this.projectConfigured = false;
     }
 
     /**
@@ -281,7 +297,7 @@ public final class DiverCli {
     String projectConfigIsCorruptedMessage() {
 
         return "Project configuration \n"
-                + new File(projectDir, DIVERCLI_INI).getAbsolutePath() + "\n"
+                + new File(projectDir, INI_FILENAME).getAbsolutePath() + "\n"
                 + "seems corrupted!";
     }
 
@@ -292,13 +308,11 @@ public final class DiverCli {
      * 
      * @since 0.1.0
      */
-    public DBConfig getDbConfig() {
-        if (dbConfig == null) {
-            throw new DiverCliIllegalStateException(
-                    "Tried to access DbConfig without proper parsing of configuration!");
-        } else {
-            return dbConfig;
-        }
+    public DBConfig dbConfig() {
+        checkProjectConfigured();
+        
+        return dbConfig;
+        
     }
 
     /**
@@ -316,7 +330,8 @@ public final class DiverCli {
      */
     public void run() {
         try {
-
+            LOG.info("");
+            
             MainCommand mainCommand;
 
             mainCommand = new MainCommand(this);
@@ -354,7 +369,7 @@ public final class DiverCli {
                 if (!(null == parsedCmd
                         || HelpCommand.CMD.equals(parsedCmd) 
                         || InitCommand.CMD.equals(parsedCmd))){
-                    mainCommand.configureProject();    
+                    configureProject();    
                 }
                 
                 mainCommand.run();
@@ -389,13 +404,12 @@ public final class DiverCli {
     }
 
     /**
-     * Returns true if DiverCLI has been configured. If not you can run
-     * {@link #configure()}
+     * Returns true if DiverCLI current project has been configured.
      * 
      * @since 0.1.0
      */
-    public boolean isConfigured() {
-        return globalConfDir != null && projectDir != null;
+    public boolean isProjectConfigured() {
+        return isGloballyConfigured() && projectConfigured;
     }
     
     /**
@@ -404,10 +418,145 @@ public final class DiverCli {
      * 
      * @since 0.1.0
      */
-    public boolean isGlobalConfigured() {
-        return globalConfDir != null;
+    public boolean isGloballyConfigured() {        
+        return globallyConfigured;
     }
 
+    /**
+     * To be called for commands requiring a project
+     * 
+     * @see {@link #configure()}
+     * 
+     * @since 0.1.0
+     */
+    // package visibility so we can access from MainCommand
+    void configureProject() {
+
+        LOG.debug("Going to read project configuration ...");
+        
+        DiverCli.checkProjectDir(projectDir);
+
+        try {
+            projectIni = loadIni(findProjectFile(DiverCli.INI_FILENAME));
+
+            fixConfigIfTesting();
+            
+            checkProjectConfig();
+            
+            projectConfigured = true;
+            
+        } catch (Exception ex) {
+            throw new DiverCliException(projectConfigIsCorruptedMessage(), ex);
+        }
+
+    }
+    
+   
+    /**
+     * @since 0.1.0
+     */
+    // package visibility so we can access from MainCommand
+    void fixConfigIfTesting() {
+        if (System.getProperty(DiverCli.SYSTEM_PROPERTY_TESTING) != null) {
+            String workingDir = System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR);
+            checkNotEmpty(workingDir, "When testing working dir shouldn't be empty!");
+
+            projectDir = new File(projectDir.getAbsolutePath()
+                                                    .replace(System.getProperty("user.dir"),
+                                                            workingDir));
+
+            String jdbcUrl = dbConfig.getJdbc_url();
+            if (jdbcUrl != null) {
+                if (jdbcUrl.contains("jdbc:h2:file:")) {
+                    String filePath;
+                    int i = jdbcUrl.indexOf(";");
+                    if (i >= 0) {
+                        filePath = jdbcUrl.substring("jdbc:h2:file:".length(), i);
+                    } else {
+                        filePath = jdbcUrl.substring("jdbc:h2:file:".length());
+                    }
+                    if (new File(filePath).isAbsolute()){
+                        dbConfig.setJdbc_url(jdbcUrl.replace(System.getProperty("user.dir"), workingDir));    
+                    } else {
+                        dbConfig.setJdbc_url(jdbcUrl.replace(filePath, workingDir + "/" + filePath));
+                    }
+                    LOG.debug("Fixed jdbc url:" + dbConfig.getJdbc_url());
+                    
+                }
+
+            }
+
+        }
+
+    }
+    
+    
+    /**
+     * Loads a configuration file. Doesn't complain if there are missing fields.
+     * 
+     * @see #checkGlobalConfig()
+     * @see #checkProjectConfig()()
+     * @since 0.1.0
+     */
+    // package visibility so we can access from MainCommand
+    Wini loadIni(File iniFile) {
+        checkNotNull(iniFile);
+        checkNotNull(dbConfig);
+
+        Wini ini;
+        try {
+            ini = new Wini(iniFile);
+        } catch (IOException ex) {
+            throw new DiverCliIoException("Error while loading ini file " + iniFile.getAbsolutePath(), ex);
+        }
+
+        dbConfig.setDb_vendor(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "db_vendor", ini));
+        dbConfig.setJdbc_driver_class(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "jdbc_driver_class", ini));
+        dbConfig.setJdbc_url(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "jdbc_url", ini));
+        dbConfig.setUser(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "user", ini));
+        dbConfig.setPassword(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "password", ini));
+        dbConfig.setShowSQL(false);       
+
+        return ini;
+    }
+
+    
+    /**
+     * 
+     * @throws InvalidConfigException
+     * 
+     * @since 0.1.0
+     */
+    private void checkProjectConfig() {
+
+        if (Internals.isBlank(dbConfig.getDb_vendor())) {
+            throw new InvalidConfigException("Expected db_vendor field in " + DiverCli.DATABASE_SECTION_INI
+                    + " section in " + new File(getProjectDir(), DiverCli.INI_FILENAME) + " file!");
+        }
+
+        if (Internals.isBlank(dbConfig.getJdbc_driver_class())) {
+            throw new InvalidConfigException("Expected jdbc_driver_class field in " + DiverCli.DATABASE_SECTION_INI
+                    + " section in " + new File(getProjectDir(), DiverCli.INI_FILENAME) + " file!");
+        }
+
+        if (Internals.isBlank(dbConfig.getJdbc_url())) {
+            throw new InvalidConfigException("Expected jdbc_url field in " + DiverCli.DATABASE_SECTION_INI
+                    + " section in " + new File(getProjectDir(), DiverCli.INI_FILENAME) + " file!");
+        }
+
+        if (dbConfig.getUser() == null) {
+            throw new InvalidConfigException("Expected user field in " + DiverCli.DATABASE_SECTION_INI + " section in "
+                    + new File(getProjectDir(), DiverCli.INI_FILENAME) + " file!");
+        }
+
+        if (dbConfig.getPassword() == null) {
+            throw new InvalidConfigException("Expected password field in " + DiverCli.DATABASE_SECTION_INI
+                    + " section in " + new File(getProjectDir(), DiverCli.INI_FILENAME) + " file!");
+        }
+
+    }
+
+    
     /**
      * Connects to Diversicon
      * 
@@ -415,7 +564,9 @@ public final class DiverCli {
      */
     public void connect() {
 
-        checkConfigured();
+        if (!isProjectConfigured()){
+            configureProject();
+        }
 
         if (!isConnected()) {
 
@@ -439,14 +590,28 @@ public final class DiverCli {
     }
 
     /**
+     * @throws DiverCliIllegalStateException
+     * 
      * @since 0.1.0
      */
-    private void checkConfigured() {
-        if (!isConfigured()) {
-            throw new DiverCliIllegalStateException("Divercli was not configured!");
+    private void checkGloballyConfigured() {
+        if (!isGloballyConfigured()) {
+            throw new DiverCliIllegalStateException("Divercli has not read global configuration yet!");
         }
     }
 
+    /**
+     * @throws DiverCliIllegalStateException
+     * 
+     * @since 0.1.0
+     */
+    private void checkProjectConfigured() {
+        if (!isProjectConfigured()) {
+            throw new DiverCliIllegalStateException("Divercli has not read project configuration yet!");
+        }
+    }
+    
+    
     /**
      * Returns the registered commands
      * 
@@ -482,11 +647,11 @@ public final class DiverCli {
      */
     public static File globalConfDirPath() {
         if (System.getProperty(SYSTEM_PROPERTY_TESTING) == null){
-            return new File(System.getProperty("user.home"), GLOBAL_CONF_PATH);            
+            return new File(System.getProperty("user.home"), GLOBAL_CONF_DIR);            
         } else {
             String testHome = System.getProperty(SYSTEM_PROPERTY_USER_HOME);        
             checkNotBlank(testHome, "SYSTEM_PROPERTY_USER_HOME shouldn't be blank when testing!");
-            return new File(testHome, GLOBAL_CONF_PATH);
+            return new File(testHome, GLOBAL_CONF_DIR);
             
         }
         
@@ -525,7 +690,7 @@ public final class DiverCli {
         Diversicons.checkSupportedDatabase(databaseId);
 
         Internals.checkNotEmpty(filepath, "Invalid filepath!");
-        checkConfigured();
+        checkProjectConfigured();
 
         File candFile = new File(projectDir.getAbsolutePath() + File.separator + filepath);
 
@@ -623,7 +788,7 @@ public final class DiverCli {
             Internals.copyDirFromResource(DiverCli.class, "it/unitn/disi/diversicon/cli/templates/global-conf",
                     globalConfDir);                                  
             
-            Path globalIniPath = new File(globalConfDir, DIVERCLI_INI).toPath();
+            Path globalIniPath = new File(globalConfDir, INI_FILENAME).toPath();
             byte[] encoded;
             try {
                 encoded = Files.readAllBytes(globalIniPath);
@@ -663,7 +828,7 @@ public final class DiverCli {
             throw new DiverCliNotFoundException("Project directory is empty: " + projectDir.getAbsolutePath() + "  !");
         }
 
-        File ini = new File(projectDir, DIVERCLI_INI);
+        File ini = new File(projectDir, INI_FILENAME);
 
         if (!ini.exists()) {
             throw new DiverCliNotFoundException("Couldn't find file " + ini.getAbsolutePath());
@@ -701,7 +866,7 @@ public final class DiverCli {
                     "Global configuration directory is empty: " + confDir.getAbsolutePath() + "  !");
         }
 
-        File ini = new File(confDir, DIVERCLI_INI);
+        File ini = new File(confDir, INI_FILENAME);
 
         if (!ini.exists()) {
             throw new DiverCliNotFoundException("Couldn't find file " + ini.getAbsolutePath());
@@ -743,7 +908,7 @@ public final class DiverCli {
      */
     public void saveConfig() {
 
-        checkConfigured();
+        checkGloballyConfigured();
 
         projectIni.put(DATABASE_SECTION_INI, "jdbc_driver_class", dbConfig.getJdbc_driver_class());
         projectIni.put(DATABASE_SECTION_INI, "db_vendor", dbConfig.getDb_vendor());
@@ -755,7 +920,7 @@ public final class DiverCli {
             projectIni.store();
         } catch (IOException ex) {
             throw new DiverCliIoException(
-                    "Error while saving INI file to " + projectDir.getAbsolutePath() + File.separator + DIVERCLI_INI,
+                    "Error while saving INI file to " + projectDir.getAbsolutePath() + File.separator + INI_FILENAME,
                     ex);
         }
     }
@@ -810,7 +975,8 @@ public final class DiverCli {
     public File findProjectFile(String filepath) {
 
         Internals.checkNotEmpty(filepath, "Invalid filepath!");
-        checkConfigured();
+        // better not, may be used during initalization 
+        // checkProjectConfigured();
 
         File candFile = new File(projectDir.getAbsolutePath() + File.separator + filepath);
 
@@ -837,7 +1003,8 @@ public final class DiverCli {
     public File findConfigFile(String filepath) {
 
         Internals.checkNotEmpty(filepath, "Invalid filepath!");
-        checkConfigured();
+        // better not, may be used during initialization 
+        // checkGloballyConfigured();
 
         File candFile = new File(globalConfDir.getAbsolutePath() + File.separator + filepath);
 

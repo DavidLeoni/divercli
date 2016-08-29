@@ -16,7 +16,7 @@ import it.unitn.disi.diversicon.Diversicon;
 import it.unitn.disi.diversicon.cli.DiverCli;
 import it.unitn.disi.diversicon.cli.commands.InitCommand;
 import it.unitn.disi.diversicon.cli.commands.LogCommand;
-import it.unitn.disi.diversicon.data.DivWn31;
+import it.unitn.disi.diversicon.data.SampleLmf;
 import it.unitn.disi.diversicon.internal.Internals;
 
 /**
@@ -34,7 +34,7 @@ public class DiverCliIT extends DiverCliTestBase {
                 
         DiverCli cli = DiverCli.of(
                 InitCommand.CMD,                
-                "--db", DivWn31.H2DB_URI);
+                "--db", SampleLmf.H2DB_URI);
 
         cli.run();
 
@@ -43,13 +43,13 @@ public class DiverCliIT extends DiverCliTestBase {
         assertTrue(outf.exists());
         assertTrue(outf.length() > 0);
 
-        File outIni = new File(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR), DiverCli.DIVERCLI_INI);
+        File outIni = new File(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR), DiverCli.INI_FILENAME);
 
         assertTrue(outIni.exists());
         assertTrue(outIni.length() > 0);
         
         
-        Diversicon div = Diversicon.connectToDb(cli.getDbConfig());
+        Diversicon div = Diversicon.connectToDb(cli.dbConfig());
         div.getSession()
            .close();
     }

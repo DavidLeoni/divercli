@@ -44,7 +44,7 @@ public class ImportXmlCommand implements DiverCliCommand {
     @Parameter(required = true, variableArity = true, description = "a space separated list of XML files in UBY-LMF format."
             + " Lexical resources must have a 'name' attribute. If there are already present resources with the"
             + " same name, content will be merged.")
-    // streamlined behaviour with respect to
+    // streamlined behaviour with respect to UBY names handling
     // https://github.com/DavidLeoni/diversicon/issues/6
     List<String> importXmlPaths = new ArrayList<>();
 

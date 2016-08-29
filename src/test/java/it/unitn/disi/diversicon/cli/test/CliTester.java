@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import it.unitn.disi.diversicon.cli.DiverCli;
 import it.unitn.disi.diversicon.cli.commands.InitCommand;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliIoException;
-import it.unitn.disi.diversicon.data.DivWn31;
+import it.unitn.disi.diversicon.data.Smartphones;
 import it.unitn.disi.diversicon.internal.Internals;
 
 /**
@@ -19,8 +19,7 @@ import it.unitn.disi.diversicon.internal.Internals;
  */
 public class CliTester {
 
-    private static final Logger LOG = LoggerFactory.getLogger(CliTester.class);
-
+    private static final Logger LOG = LoggerFactory.getLogger(CliTester.class);   
     
     
     /**
@@ -49,7 +48,7 @@ public class CliTester {
     }
     
     public static DiverCli initWn31(){
-        DiverCli cli = DiverCli.of(InitCommand.CMD, "--db", DivWn31.H2DB_URI);
+        DiverCli cli = DiverCli.of(InitCommand.CMD, "--db", SampleLmf.H2DB_URI);
         cli.run();
         
         return cli;
@@ -61,7 +60,7 @@ public class CliTester {
     public static Path getTestGlobalConfDir() {
         String prop = System.getProperty(DiverCli.SYSTEM_PROPERTY_USER_HOME);
         
-        return Paths.get(prop + "/" + DiverCli.GLOBAL_CONF_PATH + DiverCli.DIVERCLI_INI); 
+        return Paths.get(prop + "/" + DiverCli.GLOBAL_CONF_DIR + DiverCli.INI_FILENAME); 
     }
     
 }
