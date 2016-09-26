@@ -1,17 +1,12 @@
 package it.unitn.disi.diversicon.cli.test;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import it.unitn.disi.diversicon.cli.DiverCli;
 import it.unitn.disi.diversicon.cli.commands.InitCommand;
-import it.unitn.disi.diversicon.cli.exceptions.DiverCliIoException;
-import it.unitn.disi.diversicon.data.Smartphones;
-import it.unitn.disi.diversicon.internal.Internals;
+import it.unitn.disi.diversicon.data.DivWn31;
 
 /**
  * @since 0.1.0
@@ -48,7 +43,7 @@ public class CliTester {
     }
     
     public static DiverCli initWn31(){
-        DiverCli cli = DiverCli.of(InitCommand.CMD, "--db", SampleLmf.H2DB_URI);
+        DiverCli cli = DiverCli.of(InitCommand.CMD, "--db", DivWn31.H2DB_URI);
         cli.run();
         
         return cli;

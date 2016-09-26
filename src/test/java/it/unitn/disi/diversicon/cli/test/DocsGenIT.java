@@ -45,7 +45,7 @@ import it.unitn.disi.diversicon.cli.commands.LogCommand;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliException;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliIoException;
 import it.unitn.disi.diversicon.data.Smartphones;
-import it.unitn.disi.diversicon.data.SampleLmf;;
+import it.unitn.disi.diversicon.data.DivWn31;
 
 /**
  * Creates documentation from executions of DiverCli
@@ -460,7 +460,7 @@ public class DocsGenIT extends DiverCliTestBase {
         
         diver("wn31.init",
                 "--prj", "wn31",
-                InitCommand.CMD, "--db", SampleLmf.H2DB_URI 
+                InitCommand.CMD, "--db", DivWn31.H2DB_URI 
                 );  
         bash("wn31.dir", "dir");
     }
@@ -477,7 +477,7 @@ public class DocsGenIT extends DiverCliTestBase {
     public void emptyDir(){
         diver("empty.init",
                 "--prj", MYPRJ,
-                InitCommand.CMD, "--db", SampleLmf.H2DB_URI);
+                InitCommand.CMD, "--db", DivWn31.H2DB_URI);
     }       
     
     /**

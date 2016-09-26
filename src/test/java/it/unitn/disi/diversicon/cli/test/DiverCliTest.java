@@ -747,5 +747,9 @@ public class DiverCliTest extends DiverCliTestBase {
         div.getSession()
            .close();
     }    
-    
+
+    @Test
+    public void testValidation(){
+        Internals.readData(Diversicons.DIVERSICON_SCHEMA_1_0_CLASSPATH_URL);
+    }
 }

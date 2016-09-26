@@ -19,7 +19,7 @@ import it.unitn.disi.diversicon.Diversicons;
 import it.unitn.disi.diversicon.cli.DiverCli;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliException;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliIoException;
-import it.unitn.disi.diversicon.data.SampleLmf;
+import it.unitn.disi.diversicon.data.DivWn31;
 import it.unitn.disi.diversicon.internal.Internals;
 
 /**
@@ -40,12 +40,12 @@ public class InitCommand implements DiverCliCommand {
     private DiverCli cli;
         
     @Parameter(names = { "--sql" },  description = "Initalize the project with a h2 database from a sql dump, "
-            + "which can be compressed and expressed as a URL, like  " + SampleLmf.SQL_URI )
+            + "which can be compressed and expressed as a URL, like  " + DivWn31.SQL_URI )
     String restoreSqlPath;
 
     @Parameter(names = { "--db" },  description = "Initialize the project from a .h2.db dump, "
             + "which can be compressed and expressed as a URL. For Wordnet 3.1 packaged dump, you can use "
-    + SampleLmf.H2DB_URI)
+    + DivWn31.H2DB_URI)
     String restoreH2DbPath;       
     
     private File prjFolder;

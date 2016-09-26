@@ -16,7 +16,7 @@ import it.unitn.disi.diversicon.Diversicon;
 import it.unitn.disi.diversicon.cli.DiverCli;
 import it.unitn.disi.diversicon.cli.commands.InitCommand;
 import it.unitn.disi.diversicon.cli.commands.LogCommand;
-import it.unitn.disi.diversicon.data.SampleLmf;
+import it.unitn.disi.diversicon.data.DivWn31;
 import it.unitn.disi.diversicon.internal.Internals;
 
 /**
@@ -34,7 +34,7 @@ public class DiverCliIT extends DiverCliTestBase {
                 
         DiverCli cli = DiverCli.of(
                 InitCommand.CMD,                
-                "--db", SampleLmf.H2DB_URI);
+                "--db", DivWn31.H2DB_URI);
 
         cli.run();
 
