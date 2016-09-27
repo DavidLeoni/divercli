@@ -122,6 +122,13 @@ $eval{dir.wn31}
 
 ### Importing XMLs
 
+#### Preprocessing XMLs
+
+TODO check this
+```
+java -cp  ~/.m2/repository/org/basex/basex/8.5/basex-8.5.jar org.basex.BaseX -bold-prefix=wn31 -bnew-prefix=peppo -binfile=../../../src/testources/experiments/xml/basex-2.xml  -o prova.xml   src/main/resources/rename-prefixes.xql
+```
+
 You can import an LMF xml this way:
 
 $eval{}

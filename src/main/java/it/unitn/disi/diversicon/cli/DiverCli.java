@@ -100,7 +100,7 @@ public final class DiverCli {
     /**
      * @since 0.1.0
      */
-    public static final String TEMPLATES_DIR = "it/unitn/disi/diversicon/cli/templates/";
+    public static final String TEMPLATES_DIR = "templates/";
 
     /**
      * @since 0.1.0
@@ -785,7 +785,7 @@ public final class DiverCli {
         } else {                       
             
             // filter ini to have temp working dir...
-            Internals.copyDirFromResource(DiverCli.class, "it/unitn/disi/diversicon/cli/templates/global-conf",
+            Internals.copyDirFromResource(DiverCli.class, GLOBAL_CONF_TEMPLATE_DIR,
                     globalConfDir);                                  
             
             Path globalIniPath = new File(globalConfDir, INI_FILENAME).toPath();
