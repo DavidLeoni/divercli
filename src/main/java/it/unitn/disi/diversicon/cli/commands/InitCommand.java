@@ -133,7 +133,6 @@ public class InitCommand implements DiverCliCommand {
             ini.put(DiverCli.DATABASE_SECTION_INI, "user", dbCfg.getUser());
             ini.put(DiverCli.DATABASE_SECTION_INI, "password", dbCfg.getPassword());
             ini.store();
-
         } catch (IOException ex) {
             throw new DiverCliIoException(
                     "Error while saving INI file to " + iniFile.getAbsolutePath(),

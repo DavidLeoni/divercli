@@ -378,6 +378,9 @@ public final class DiverCli {
                     DiverCliCommand cmd = commands.get(parsedCmd);                    
                     cmd.configure();
                     cmd.run();
+                    if ( InitCommand.CMD.equals(parsedCmd)){
+                        configureProject();
+                    }
                 }
 
             }

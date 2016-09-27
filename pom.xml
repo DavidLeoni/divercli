@@ -277,7 +277,6 @@
 		</dependency>
 
 
-
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
@@ -294,6 +293,13 @@
 			<artifactId>jline</artifactId>
 			<version>2.12</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>it.unitn.disi</groupId>
+			<artifactId>div-wn31-h2db</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
 
 		<!-- ****************** TEST DEPENDENCIES ****************** -->		
 	
