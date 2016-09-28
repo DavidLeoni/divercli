@@ -374,8 +374,10 @@ public final class DiverCli {
                 
                 mainCommand.run();
                 
-                if (parsedCmd == null && !mainCommand.isResetGlobalConf()) {                    
-                    LOG.error("\n  No command given. Quitting... \n");                    
+                if (parsedCmd == null){
+                    if (!mainCommand.isResetGlobalConf()) {                                    
+                        LOG.error("\n  No command given. Quitting... \n");
+                    }
                 } else {
                     DiverCliCommand cmd = commands.get(parsedCmd);                    
                     cmd.configure();
