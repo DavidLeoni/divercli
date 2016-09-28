@@ -195,8 +195,17 @@ public class DiverCliTest extends DiverCliTestBase {
      * @since 0.1.0
      */
     @Test
-    public void testUsage() throws IOException {
+    public void testUsage()  {
         DiverCli.of().run();
+    }
+    
+    
+    /**
+     * @since 0.1.0
+     */
+    @Test
+    public void testNoCommandGiven()  {
+        DiverCli.of("--prj",".").run();
     }
 
     /**
@@ -405,10 +414,11 @@ public class DiverCliTest extends DiverCliTestBase {
     @Test
     public void testDbAugment() {
         
-        initEmpty();
+        initEmpty();               
         
         LexicalResource res = lmf().lexicon()
                                    .synset()
+                                   .lexicalEntry()
                                    .synset()
                                    .synsetRelation(ERelNameSemantics.HYPONYM, 1)
                                    .build();

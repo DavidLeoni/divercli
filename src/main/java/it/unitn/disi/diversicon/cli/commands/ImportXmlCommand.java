@@ -16,13 +16,15 @@ import com.beust.jcommander.Parameters;
 import it.unitn.disi.diversicon.ImportConfig;
 import it.unitn.disi.diversicon.cli.DiverCli;
 import it.unitn.disi.diversicon.cli.ImportAppender;
+import it.unitn.disi.diversicon.data.Smartphones;
 
 /**
  * 
  * @since 0.1.0
  *
  */
-@Parameters(separators = "=", commandDescription = "Imports into the db lexical resources in UBY-LMF XML format.")
+@Parameters(separators = "=", commandDescription = "Import into the db lexical resources in UBY-LMF XML format."
+        + " Resources can be compressed and expressed as urls like " + Smartphones.XML_URI)
 public class ImportXmlCommand implements DiverCliCommand {
 
     /**

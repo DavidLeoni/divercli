@@ -16,7 +16,7 @@ import it.unitn.disi.diversicon.cli.DiverCli;
  * @since 0.1.0
  *
  */
-@Parameters(separators = "=", commandDescription = "Exports a lexical resource to an XML file in UBY-LMF format.")
+@Parameters(separators = "=", commandDescription = "Export a lexical resource to an XML file in UBY-LMF format.")
 public class ExportXmlCommand implements DiverCliCommand {
 
     

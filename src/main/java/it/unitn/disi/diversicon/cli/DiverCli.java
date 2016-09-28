@@ -374,7 +374,9 @@ public final class DiverCli {
                 
                 mainCommand.run();
                 
-                if (parsedCmd != null) {                    
+                if (parsedCmd == null && !mainCommand.isResetGlobalConf()) {                    
+                    LOG.error("\n  No command given. Quitting... \n");                    
+                } else {
                     DiverCliCommand cmd = commands.get(parsedCmd);                    
                     cmd.configure();
                     cmd.run();
@@ -949,14 +951,14 @@ public final class DiverCli {
                 candidates.add(candidate);
             }
         }
-        LOG.error("");
+        
         if (candidates.size() > 0) {
             LOG.error("Did you mean ... ?");
             for (String s : candidates) {
                 LOG.error(" - " + s);
             }
         } else {
-            LOG.error("Can't recognize the command.");
+            LOG.error("Can't recognize the command '" + commandName + "'");
         }
 
     }

@@ -17,7 +17,7 @@ import it.unitn.disi.diversicon.cli.DiverCli;
  * @since 0.1.0
  *
  */
-@Parameters(separators = "=", commandDescription = "Prints help about a given command")
+@Parameters(separators = "=", commandDescription = "Print help about a given command")
 public class HelpCommand implements DiverCliCommand {
 
     private static final Logger LOG = LoggerFactory.getLogger(HelpCommand.class);

@@ -4,7 +4,13 @@ WARNING: THIS IS ONLY A TEMPLATE FOR THE DOCUMENTATION. <br/>
 RELEASE DOCS ARE ON THE <a href="http://davidleoni.github.io/divercli/" target="_blank">PROJECT WEBSITE</a>
 </p>
 
-# DIVER CLI
+<p class="josman-to-strip" align="center">
+
+<h1> DIVER CLI </h1>
+
+<br/>
+</p>
+
 
 
 #### About
@@ -16,7 +22,7 @@ Java command line client for <a href="https://github.com/DavidLeoni/diversicon" 
 |-----------|---------|-----------|----------------|
 | See [docs](docs) |Business-friendly [Apache License v2.0](LICENSE.txt) | See [project milestones](../../milestones) | See [the wiki](../../wiki)|
 
-**Features:**
+**Features**
   
   * supports <a href="http://www.h2database.com/html/main.html" target="_blank">H2 DB</a>, a pure Java database (both in-memory and on disk, no separate installation is required).
   * dependency handling with Maven    

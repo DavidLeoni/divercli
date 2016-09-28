@@ -40,7 +40,7 @@ public class InitCommand implements DiverCliCommand {
     private DiverCli cli;
         
     @Parameter(names = { "--sql" },  description = "Initalize the project with a h2 database from a sql dump, "
-            + "which can be compressed and expressed as a URL, like  " + DivWn31.SQL_URI )
+            + "which can be compressed and expressed as a URL" ) // todo put smartphones url
     String restoreSqlPath;
 
     @Parameter(names = { "--db" },  description = "Initialize the project from a .h2.db dump, "
@@ -68,7 +68,7 @@ public class InitCommand implements DiverCliCommand {
         
         prjFolder = cli.getProjectDir();
         iniFile = new File(prjFolder, DiverCli.INI_FILENAME);
-        dbName = prjFolder.getName();
+        dbName = new File(prjFolder.getAbsolutePath()).getName();
         checkNotBlank("Invalid db name!", dbName);
         
         if (prjFolder.exists()){

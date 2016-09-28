@@ -1,12 +1,10 @@
 package it.unitn.disi.diversicon.cli;
 
-import static it.unitn.disi.diversicon.internal.Internals.checkNotEmpty;
 import static it.unitn.disi.diversicon.internal.Internals.checkNotNull;
 
 import java.io.File;
 import java.io.IOException;
 
-import org.ini4j.Wini;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +13,6 @@ import com.beust.jcommander.Parameters;
 
 import it.unitn.disi.diversicon.cli.commands.DiverCliCommand;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliException;
-import it.unitn.disi.diversicon.cli.exceptions.DiverCliIoException;
 import it.unitn.disi.diversicon.cli.exceptions.InvalidConfigException;
 import it.unitn.disi.diversicon.internal.Internals;
 
@@ -28,6 +25,9 @@ import it.unitn.disi.diversicon.internal.Internals;
 public class MainCommand implements DiverCliCommand {
 
     public static final String PRJ_OPTION = "--prj"; 
+    
+    // Notice we can't make a command out of this as global configuration must happen 
+    // before commands are executed.  
     public static final String RESET_GLOBAL_CONFIG_OPTION =  "--reset-global-config" ;
     
     
@@ -106,9 +106,13 @@ public class MainCommand implements DiverCliCommand {
         }
 
         if (Internals.isBlank(projectDirParam)) {
-            cli.projectDir = new File("");
-        } else {
-            cli.projectDir = new File(projectDirParam);
+            cli.projectDir =  new File(System.getProperty("user.dir"));
+        } else {            
+            try {
+                cli.projectDir = new File(projectDirParam).getCanonicalFile();
+            } catch (IOException e) {            
+                throw new DiverCliException("invalid project dir: " + projectDirParam, e);
+            }
         }
 
         cli.fixConfigIfTesting();
@@ -156,4 +160,22 @@ public class MainCommand implements DiverCliCommand {
         return CMD;
     }
 
+
+    /**
+     * @since 0.1.0
+     */
+    public boolean isResetGlobalConf() {
+        return resetGlobalConf;
+    }
+
+    /**
+     * @since 0.1.0
+     */
+    public boolean isDebug() {
+        return debug;
+    }
+    
+    
+
+    
 }
