@@ -12,7 +12,7 @@ import it.unitn.disi.diversicon.cli.DiverCli;
  * @since 0.1.0
  *
  */
-@Parameters(separators = "=", commandDescription = "Resets current database. If it doesn't exist it is created empty.")
+@Parameters(separators = "=", commandDescription = "Reset current database. If it doesn't exist it is created empty.")
 public class DbResetCommand implements DiverCliCommand {
 
     /**
@@ -44,7 +44,7 @@ public class DbResetCommand implements DiverCliCommand {
      */
     @Override
     public void run() {
-        Diversicons.dropCreateTables(diverCli.getDbConfig());
+        Diversicons.dropCreateTables(diverCli.dbConfig());
     }
 
     /**

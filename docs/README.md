@@ -7,9 +7,12 @@ This release allows to perform basic import / export of XML in IBY-LMF format an
 
 ### Getting started
 
-You can download Diver CLI <a href="../releases/download/divercli-#{version}/divercli-#{version}.zip" target="_blank"> from here</a>, then unzip somewhere on your system.
+You can download Diver CLI <a href="../releases/download/divercli-#{version}/divercli-#{version}.zip" target="_blank"> from here</a>, then unzip somewhere on your system. In case updates are available, version numbers follow <a href="http://semver.org/" target="_blank">semantic versioning</a> rules. 
+This manual assumes you have added `bin/divercli` to the path. 
 
 To see usage commands:
+
+TODO review
 
 In Linux / Mac, from terminal just type
 
@@ -23,69 +26,131 @@ In Windows, click on Start menu, run command `cmd` and in the console type
 bin\divercli.bat
 ```
 
-In case updates are available, version numbers follow <a href="http://semver.org/" target="_blank">semantic versioning</a> rules.
-
-
-### Commands list
-
-From the client you can get a full command list:
+You should see a command list like this:
 
 ```
 $eval{help}
 ```
 
+To get mre help about a specific command (say `import-xml`), you can issue something like 
+    
+$eval{helpImportXml}    
+
+### Your first project
+
+In DiverCli, a project is a folder with configuration to connect to a database, plus possibly the database itself and other custom scripts, so it might look like this :
+
+```
+divercli.ini
+my-diversicon.db.h2
+my-script.sql
+...
+``` 
+
+DiverCli comes with full support for <a href="http://h2database.com" target="_blank"> H2 database </a>, which is shipped with DiverCli and doesn't require separate installation. 
+
+Let's create our first H2 file-based database with Wordnet 3.1 inside:
+
+$eval{init.wn31}
+
+`--prj wn31` told DiverCLI in which folder to put the project, `init` was the actual comand given to DiverCli and `--db` specified to `init` command where to take the db. In this case Wordnet 3.1 is pre-packaged in the DiverCLI distribution so we picked it with the special `classpath:` url. Notice that `--prj` must always go _before_ commands. Let's see which files where generated:
+
+```
+> cd wn31
+$eval{dir.wn31}      
+        
+```
+
+The `divercli.ini` file will tell DiverCli where to connect when we launch DiverCli from this project directory. In this particular case the database is in the same folder, but it could be anywhere, even a remote connection. You can check things are working by issuing the `log` command, you can then see a status of the database and a log of the imports done into it so far:
+
+$eval{log.wn31}
+
+   
 ### Configuration
 
-By default, DiverCli connects to the H2 database `$eval{it.unitn.disi.diversicon.cli.DEFAULT_H2_FILE_DB_PATH}`. H2 databases if not present are created upon first connection in the directory from which DiverCli is launched. Default username is `$eval{it.unitn.disi.diversicon.Diversicons.DEFAULT_H2_USER}` and password is `$eval{it.unitn.disi.diversicon.Diversicons.DEFAULT_H2_PASSWORD}`. To determine to which database to connect, DiverCli uses configuration file located in `$eval{it.unitn.disi.diversicon.cli.DiverCli.CONF_PATH}` inside user home, which you can edit to connect to the database of choice. 
+
+To determine to which database to connect, DiverCli uses configuration file `$eval{it.unitn.disi.diversicon.cli.DiverCli.INI_FILENAME}` inside project directory, which you can edit to connect to the database of choice. Currently only H2 databases are supported (DiverCli uses H2 v1.3.160). 
 
 
-#### Resetting configuration
+When a database is created default username is `$eval{it.unitn.disi.diversicon.Diversicons.DEFAULT_USER}` and password is `$eval{it.unitn.disi.diversicon.Diversicons.DEFAULT_PASSWORD}`. 
 
-In case configuration gets messed up, you can reset it by issuing:
 
-$eval{resetConf}
+#### Global configuration
 
-#### Connecting to many databases
+There is also global config in `USER_HOME/$eval{it.unitn.disi.diversicon.cli.DiverCli.INI_PATH}` shared by all projects. Settings there will be overridden by individual project settings. 
 
-If you need to connect to many databases, you can create a different configuration folder for each database you want to connect to. Then just specify from the command line the folder you want to use with `--conf PUT_FOLDER_PATH` parameter:
+In case global configuration gets messed up, you can reset it by issuing:
+
+$eval{resetGlobalConf}
 
 
 #### Java options
 
 To set Java options  in Linux / Mac (for example to give DiverCli more memory), you can do something like:
 ```
-JAVA_OPTS="-Xms1g -Xmx3g -XX:-UseGCOverheadLimit" ./divercli db-augment
+JAVA_OPTS="-Xms1g -Xmx3g -XX:-UseGCOverheadLimit" divercli db-augment
 ```
 
-  
-### Getting help
-
-To get some help about a specific command (say `import-xml`), you can issue something like 
-    
-$eval{helpImportXml}    
               
-### Restoring packaged Wordnet
+### Creating databases
 
-Wordnet 3.1 is packaged within DiverCli, in the format of a <a href="http://www.h2database.com" target="_blank">H2 database</a>, as a SQL dump, and as an LMF XML file. You can unpack the database where you like (i.e. db/my-wn31) by issuing:
+Currently you can create H2 databases which can be empty or already containing Wordnet 3.1 or a sample 
+database called 'sample-lmf'. 
 
-$eval{wn31Restore}
+#### Create empty H2 database
 
-To keep DiverCli using that database in the following commands, you can use the `--make-default` flag:
+You can create an empty database in directory 'myprj' by issuing `divercli --prj myprj init`:
 
-$eval{wn31RestoreMakeDefault}
-$eval{wn31Restore}
+$eval{empty.init}
 
-              
+```bash
+> cd myprj
+$eval{empty.dir}
+```
+
+#### Creating database with Wordnet 3.1
+
+Wordnet 3.1 is packaged within DiverCli, in the format of a <a href="http://www.h2database.com" target="_blank">H2 database</a>, as a SQL dump, and as an LMF XML file. You can unpack the database where you like (i.e. `wn31/` directory) by issuing:
+
+$eval{init.wn31}
+
+```
+> cd wn31
+$eval{dir.wn31} 
+```
+
+
+### Importing XMLs
+
+#### Preprocessing XMLs
+
+TODO check this
+```
+java -cp  ~/.m2/repository/org/basex/basex/8.5/basex-8.5.jar org.basex.BaseX -bold-prefix=wn31 -bnew-prefix=peppo -binfile=../../../src/testources/experiments/xml/basex-2.xml  -o prova.xml   src/main/resources/rename-prefixes.xql
+```
+
+You can import an LMF xml this way:
+
+$eval{}
+
+### Exporting XMLs
+
 ### Showing import logs
 
 For each resource imported via DiverCli, you can see an import log. For example, here we show the Wordnet 3.1 log :
  
-$eval{dbRestore}
-$eval{log}
+ 
+$eval{wn31.init}
+
+```bash
+cd wn31
+```
+
+$eval{wn31.log}
 
 Note each import has a numerical identifier. To get more details about a single import (like warnings occurred during the import), you can use this command:
 
-$eval{importShow}
+$eval{wn31.importShow}
 
 
 ### Logging

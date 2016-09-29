@@ -1,14 +1,12 @@
 package it.unitn.disi.diversicon.cli.test;
 
 import static it.unitn.disi.diversicon.internal.Internals.checkNotBlank;
-import static it.unitn.disi.diversicon.internal.Internals.checkNotNull;
 import static it.unitn.disi.diversicon.test.LmfBuilder.lmf;
 import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -29,26 +27,32 @@ import it.unitn.disi.diversicon.Diversicon;
 import it.unitn.disi.diversicon.Diversicons;
 import it.unitn.disi.diversicon.ImportJob;
 import it.unitn.disi.diversicon.cli.DiverCli;
+import it.unitn.disi.diversicon.cli.MainCommand;
 import it.unitn.disi.diversicon.cli.commands.DbAugmentCommand;
 import it.unitn.disi.diversicon.cli.commands.DbResetCommand;
-import it.unitn.disi.diversicon.cli.commands.DbRestoreCommand;
+import it.unitn.disi.diversicon.cli.commands.InitCommand;
 import it.unitn.disi.diversicon.cli.commands.ExportSqlCommand;
 import it.unitn.disi.diversicon.cli.commands.ExportXmlCommand;
 import it.unitn.disi.diversicon.cli.commands.HelpCommand;
 import it.unitn.disi.diversicon.cli.commands.ImportShowCommand;
 import it.unitn.disi.diversicon.cli.commands.ImportXmlCommand;
 import it.unitn.disi.diversicon.cli.commands.LogCommand;
+import it.unitn.disi.diversicon.cli.exceptions.DiverCliException;
+import it.unitn.disi.diversicon.cli.exceptions.DiverCliNotFoundException;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliTerminatedException;
 import it.unitn.disi.diversicon.internal.Internals;
 import it.unitn.disi.diversicon.test.DivTester;
+import static it.unitn.disi.diversicon.cli.MainCommand.PRJ_OPTION;
+import static it.unitn.disi.diversicon.cli.test.CliTester.initEmpty;
 
 /**
  * @since 0.1.0
  */
 public class DiverCliTest extends DiverCliTestBase {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DiverCliTest.class);
-   
+    private static final Logger LOG = LoggerFactory.getLogger(DiverCliTest.class);         
+
+    
     /**
      * 
      * Imports provided lexical resource and returns its xml file.
@@ -86,7 +90,6 @@ public class DiverCliTest extends DiverCliTestBase {
     
     /**
      * @since 0.1.0
-     * @param zipFile
      */
     private void readZipped(File zipFile) {
 
@@ -192,8 +195,17 @@ public class DiverCliTest extends DiverCliTestBase {
      * @since 0.1.0
      */
     @Test
-    public void testUsage() throws IOException {
+    public void testUsage()  {
         DiverCli.of().run();
+    }
+    
+    
+    /**
+     * @since 0.1.0
+     */
+    @Test
+    public void testNoCommandGiven()  {
+        DiverCli.of("--prj",".").run();
     }
 
     /**
@@ -201,10 +213,11 @@ public class DiverCliTest extends DiverCliTestBase {
      */
     @Test
     public void testReset() {
-        DiverCli.of("--reset-conf")
+        DiverCli.of(MainCommand.RESET_GLOBAL_CONFIG_OPTION)
                 .run();
-        assertTrue(testEnv.getTestConfDir().toFile()
+        assertTrue(CliTester.getTestGlobalConfDir().toFile()
                               .exists());
+       
     }
 
     /**
@@ -212,26 +225,26 @@ public class DiverCliTest extends DiverCliTestBase {
      */
     @Test
     public void testCustomConfFolderExisting() throws IOException {
+        
 
-        Path existingPath = Internals.createTempDir(DiverCli.CMD + "-test");
+        Internals.copyDirFromResource(DiverCli.class, 
+                DiverCli.GLOBAL_CONF_TEMPLATE_DIR, DiverCli.globalConfDirPath());
 
-        Internals.copyDirFromResource(DiverCli.class, DiverCli.CONF_TEMPLATE_DIR, existingPath.toFile());
-
-        DiverCli.of("--conf", existingPath.toString());
+        DiverCli.of().run();
     }
 
     /**
      * @since 0.1.0
      */
     @Test
-    public void testCustomConfFolderNonExisting() throws IOException {
-        System.setProperty(DiverCli.SYSTEM_PROPERTY_CONF_DIR, "");
+    public void testProjectNonExistingDir() throws IOException {        
 
         try {
-            DiverCli.of("--conf", "666")
+            DiverCli.of(MainCommand.PRJ_OPTION, "666",
+                        LogCommand.CMD)
                     .run();
             Assert.fail("Shouldn't arrive here!");
-        } catch (Exception ex) {
+        } catch (DiverCliNotFoundException ex) {
 
         }
 
@@ -241,15 +254,16 @@ public class DiverCliTest extends DiverCliTestBase {
      * @since 0.1.0
      */
     @Test
-    public void testCustomConfFolderEmptyDir() throws IOException {
+    public void testProjectEmptyDir() throws IOException {
 
         Path emptyDir = Internals.createTempDir(DiverCli.CMD + "-test");
 
         try {
-            DiverCli.of("--conf ", emptyDir.toString())
+            DiverCli.of("--prj ", emptyDir.toString(),
+                        LogCommand.CMD)
                     .run();
             Assert.fail("Shouldn't arrive here!");
-        } catch (Exception ex) {
+        } catch (DiverCliNotFoundException ex) {
 
         }
 
@@ -265,10 +279,9 @@ public class DiverCliTest extends DiverCliTestBase {
         LOG.info("I logged something!");
         DiverCli cli = DiverCli.of("--debug");
         cli.run();
-        Wini ini = new Wini(cli.findConfFile(DiverCli.DIVERCLI_INI, false));
+        Wini ini = new Wini(cli.findConfigFile(DiverCli.INI_FILENAME));
         assertEquals(null, ini.get("666", "666", String.class));
         assertEquals(null, ini.get("Database", "666", String.class));
-        assertEquals("root", ini.get("Database", "user", String.class));
     }
 
     /**
@@ -276,7 +289,8 @@ public class DiverCliTest extends DiverCliTestBase {
      */
     @Test
     public void testImportXmlBadParams() {
-
+        DiverCli.of(PRJ_OPTION, "db", InitCommand.CMD).run();
+        
         File xmlFile = DivTester.writeXml(DivTester.GRAPH_1_HYPERNYM);
 
         try {
@@ -342,8 +356,11 @@ public class DiverCliTest extends DiverCliTestBase {
 
     @Test
     public void testImportXml() {
-
+        
+        initEmpty();
+        
         File xmlFile = DivTester.writeXml(DivTester.GRAPH_1_HYPERNYM);
+
         DiverCli cli = DiverCli.of(ImportXmlCommand.CMD,
                 "--author", "a",
                 "--description", "d",
@@ -351,7 +368,7 @@ public class DiverCliTest extends DiverCliTestBase {
 
         cli.run();
 
-        Diversicon div = Diversicon.connectToDb(cli.getDbConfig());
+        Diversicon div = Diversicon.connectToDb(cli.dbConfig());
         DivTester.checkDb(DivTester.GRAPH_1_HYPERNYM, div);
         div.getSession()
            .close();
@@ -364,8 +381,9 @@ public class DiverCliTest extends DiverCliTestBase {
      */
     @Test
     public void testLog() {
-        DiverCli cli = DiverCli.of(LogCommand.CMD);
-        cli.run();
+        initEmpty();
+        DiverCli cli2 = DiverCli.of(LogCommand.CMD);
+        cli2.run();
         // todo how to improve?
     }
 
@@ -374,6 +392,7 @@ public class DiverCliTest extends DiverCliTestBase {
      */
     @Test
     public void testImportShow() {
+        initEmpty();
         File xmlFile = DivTester.writeXml(DivTester.GRAPH_1_HYPERNYM);
         DiverCli cli1 = DiverCli.of(ImportXmlCommand.CMD, xmlFile.getAbsolutePath(), "--author", "Test author",
                 "--description", "Test description");
@@ -394,8 +413,12 @@ public class DiverCliTest extends DiverCliTestBase {
      */
     @Test
     public void testDbAugment() {
+        
+        initEmpty();               
+        
         LexicalResource res = lmf().lexicon()
                                    .synset()
+                                   .lexicalEntry()
                                    .synset()
                                    .synsetRelation(ERelNameSemantics.HYPONYM, 1)
                                    .build();
@@ -427,6 +450,7 @@ public class DiverCliTest extends DiverCliTestBase {
 
     @Test
     public void testExportXmlMissingXmlPath() {
+        initEmpty();
         try {
             DiverCli cli = DiverCli.of(ExportXmlCommand.CMD);
             cli.run();
@@ -438,7 +462,9 @@ public class DiverCliTest extends DiverCliTestBase {
 
     @Test
     public void testExportXmlMissingLexicalResourceName() throws IOException {
-
+        
+        initEmpty();
+        
         Path out = Internals.createTempDir("divercli-test");
 
         try {
@@ -453,6 +479,8 @@ public class DiverCliTest extends DiverCliTestBase {
     @Test
     public void testExportXmlWrongLexicalResource() throws IOException {
 
+        initEmpty();
+        
         Path out = Internals.createTempDir("divercli-test");
 
         try {
@@ -467,6 +495,8 @@ public class DiverCliTest extends DiverCliTestBase {
     @Test
     public void testExportXmlExistingXml() throws IOException {
 
+        initEmpty();
+        
         importLexRes(DivTester.GRAPH_1_HYPERNYM);
 
         Path out = Internals.createTempFile("divercli-test", "xml");
@@ -485,6 +515,8 @@ public class DiverCliTest extends DiverCliTestBase {
     @Test
     public void testExportXml() throws IOException {
 
+        initEmpty();
+        
         File outF = getNonExistingFile("xml");
 
         importLexRes(DivTester.GRAPH_1_HYPERNYM);
@@ -501,7 +533,8 @@ public class DiverCliTest extends DiverCliTestBase {
     
     @Test
     public void testExportXmlCompressed() throws IOException {
-
+        initEmpty();
+        
         File outF = getNonExistingFile("zip");
 
         importLexRes(DivTester.GRAPH_1_HYPERNYM);
@@ -521,6 +554,8 @@ public class DiverCliTest extends DiverCliTestBase {
 
     @Test
     public void testExportSqlMissingSqlPath() {
+        initEmpty();
+        
         try {
             DiverCli cli = DiverCli.of(ExportSqlCommand.CMD);
             cli.run();
@@ -532,7 +567,8 @@ public class DiverCliTest extends DiverCliTestBase {
 
     @Test
     public void testExportSqlExistingSql() throws IOException {
-
+        initEmpty();
+        
         importLexRes(DivTester.GRAPH_1_HYPERNYM);
 
         Path out = Internals.createTempFile("divercli-test", "sql");
@@ -550,7 +586,8 @@ public class DiverCliTest extends DiverCliTestBase {
 
     @Test
     public void testExportSql() throws IOException {
-
+        initEmpty();
+        
         File outF = getNonExistingFile("sql");
 
         importLexRes(DivTester.GRAPH_1_HYPERNYM);
@@ -569,6 +606,7 @@ public class DiverCliTest extends DiverCliTestBase {
      */
     @Test
     public void testExportSqlCompressed() throws IOException {
+        initEmpty();
 
         File outF = getNonExistingFile(".sql.zip");
         importLexRes(DivTester.GRAPH_1_HYPERNYM);
@@ -585,47 +623,47 @@ public class DiverCliTest extends DiverCliTestBase {
 
     }
 
-    
-    /**
-     * @since 0.1.0
-     */    
-    @Test
-    public void testDbRestoreNothing(){
-        DiverCli cli = DiverCli.of(DbRestoreCommand.CMD, "-t", getNonExistingFile("test").getAbsolutePath());
-        try {
-            cli.run();
-            Assert.fail("Shouldn't arrive here!");
-        } catch (ParameterException ex){
-            LOG.debug("caught exception", ex);
-        }
-    }
-    
-    /**
-     * @since 0.1.0
-     */    
-    @Test
-    public void testDbRestoreWrongSql(){
 
-        DiverCli cli1 = DiverCli.of(DbRestoreCommand.CMD,
-                "--sql", "-t", getNonExistingFile("test").getAbsolutePath());
+    
+    /**
+     * @since 0.1.0
+     */    
+    @Test
+    public void testDbInitWrongSql_1(){
+        
+        initEmpty();
+        
+        DiverCli cli1 = DiverCli.of(                
+                InitCommand.CMD,
+                "--sql");
         try {
             cli1.run();
             Assert.fail("Shouldn't arrive here!");
         } catch (ParameterException ex){
             
-        }        
+        }                      
+               
+    }
+
+    /**
+     * @since 0.1.0
+     */    
+    @Test
+    public void testDbInitWrongSql_2(){
         
-        DiverCli cli2 = DiverCli.of(DbRestoreCommand.CMD,
-                "--sql", "", "-t", getNonExistingFile("test").getAbsolutePath());
+        initEmpty();        
+        
+        DiverCli cli = DiverCli.of(
+                InitCommand.CMD,
+                "--sql", "");
         try {        
-            cli2.run();
+            cli.run();
             Assert.fail("Shouldn't arrive here!");
         } catch (Exception ex){
             
-        }
-        
-               
+        }                      
     }
+    
     
     /**
      * @since 0.1.0
@@ -633,19 +671,95 @@ public class DiverCliTest extends DiverCliTestBase {
     @Test
     public void testDbReset(){
         
+        initEmpty();
+        
         DiverCli cli1 = DiverCli.of(DbResetCommand.CMD);
         
         cli1.run();
         
-        assertTrue(Diversicons.exists(cli1.getDbConfig()));
+        assertTrue(Diversicons.exists(cli1.dbConfig()));
         DiverCli.of(DbResetCommand.CMD).run(); // shouldn't complain
-        assertTrue(Diversicons.exists(cli1.getDbConfig()));
+        assertTrue(Diversicons.exists(cli1.dbConfig()));
     }
     
+    /**
+     * @since 0.1.0
+     */
     @Test
-    public void testExamples(){
-        // better not
-        // System.out.println("\n ******   WHAT I GOT: ******* \n" + CliTester.log());
+    public void testInitTwice() throws IOException {
+        
+        initEmpty();
+        
+        try {
+            initEmpty();
+            Assert.fail("Shouldn't be able to init twice!");
+        } catch (DiverCliException ex){
+            
+        };
     }
+    
+    /**
+     * @since 0.1.0
+     */
+    @Test
+    public void testInitToDirectory() throws IOException {
 
+        Path dir = Internals.createTempDir("divercli-test");
+
+        String target = dir.toString() + "/test";
+        
+        DiverCli cli = DiverCli.of(
+                "--prj", target,
+                InitCommand.CMD);
+
+        cli.run();
+
+        File outDb = new File(target + "/test.h2.db");
+
+        assertTrue(outDb.exists());
+        assertTrue(outDb.length() > 0);
+        
+        File outIni = new File(target + "/" + DiverCli.INI_FILENAME);
+
+        assertTrue(outIni.exists());
+        assertTrue(outIni.length() > 0);
+                
+        Diversicon div = Diversicon.connectToDb(cli.dbConfig());
+        div.getSession()
+           .close();
+    }
+    
+    
+    /**
+     * @since 0.1.0
+     */
+    @Test
+    public void testInitToCurrentDirectory() throws IOException {        
+        
+        DiverCli cli = DiverCli.of(InitCommand.CMD);
+
+        cli.run();
+
+        File workingDir = new File(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR));
+        
+        File outDb = new File(workingDir,
+                              workingDir.getName() + ".h2.db");
+
+        assertTrue(outDb.exists());
+        assertTrue(outDb.length() > 0);
+        
+        File outIni = new File(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR), DiverCli.INI_FILENAME);
+
+        assertTrue(outIni.exists());
+        assertTrue(outIni.length() > 0);
+                
+        Diversicon div = Diversicon.connectToDb(cli.dbConfig());
+        div.getSession()
+           .close();
+    }    
+
+    @Test
+    public void testValidation(){
+        Internals.readData(Diversicons.DIVERSICON_SCHEMA_1_0_CLASSPATH_URL);
+    }
 }

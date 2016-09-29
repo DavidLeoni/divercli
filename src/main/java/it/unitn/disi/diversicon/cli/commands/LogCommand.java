@@ -15,53 +15,58 @@ import it.unitn.disi.diversicon.cli.DiverCli;
  *
  */
 @Parameters(separators = "=", commandDescription = "Show imports done so far.")
-public class LogCommand implements  DiverCliCommand {
+public class LogCommand implements DiverCliCommand {
 
     /**
      * @since 0.1.0
      */
     public static final String CMD = "log";
-    
+
     private static final Logger LOG = LoggerFactory.getLogger(LogCommand.class);
 
     private DiverCli diverCli;
-        
-   /**
-    * @since 0.1.0
-    */
-    public LogCommand(DiverCli diverCli){
+
+    /**
+     * @since 0.1.0
+     */
+    public LogCommand(DiverCli diverCli) {
         checkNotNull(diverCli);
         this.diverCli = diverCli;
     }
-    
-        /**
+
+    /**
      * {@inheritDoc}
+     * 
      * @since 0.1.0
      */
-@Override
-    public void configure(){       
-                
+    @Override
+    public void configure() {
+
     }
-    
-        /**
+
+    /**
      * {@inheritDoc}
+     * 
      * @since 0.1.0
      */
-@Override
-    public void run(){
-        
+    @Override
+    public void run() {
+
         diverCli.connect();
         LOG.info("\n");
-        LOG.info(diverCli.getDiversicon().formatDbStatus(true));
+        LOG.info(diverCli.getDiversicon()
+                         .formatDbStatus(true));
         LOG.info("\n");
-        LOG.info(diverCli.getDiversicon().formatImportJobs(false));        
+        LOG.info(diverCli.getDiversicon()
+                         .formatImportJobs(false));
     }
-    
-        /**
+
+    /**
      * {@inheritDoc}
+     * 
      * @since 0.1.0
      */
-@Override
+    @Override
     public String getName() {
         return CMD;
     }

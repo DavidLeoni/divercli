@@ -11,7 +11,7 @@ import it.unitn.disi.diversicon.cli.DiverCli;
  * @since 0.1.0
  *
  */
-@Parameters(separators = "=", commandDescription = "Augments the db graph to speed up "
+@Parameters(separators = "=", commandDescription = "Augment the db graph to speed up "
         + " operations requiring the transitive closure.")
 public class DbAugmentCommand implements DiverCliCommand {
     
@@ -27,12 +27,12 @@ public class DbAugmentCommand implements DiverCliCommand {
         this.diverCli = diverCli;
     }
 
-        /**
+    /**
      * {@inheritDoc}
      * @since 0.1.0
      */
 @Override
-    public void configure(){
+    public void configure(){        
         // empty, for now diversicon will do the checks
     }
     

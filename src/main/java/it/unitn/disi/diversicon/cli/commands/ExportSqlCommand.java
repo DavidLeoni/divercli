@@ -15,7 +15,7 @@ import it.unitn.disi.diversicon.cli.DiverCli;
  * @since 0.1.0
  *
  */
-@Parameters(separators = "=", commandDescription = "Exports the database into a sql dump")
+@Parameters(separators = "=", commandDescription = "Export the database into a sql dump")
 public class ExportSqlCommand implements DiverCliCommand {
 
     /**

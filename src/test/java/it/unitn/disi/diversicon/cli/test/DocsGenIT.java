@@ -1,5 +1,6 @@
 package it.unitn.disi.diversicon.cli.test;
 
+import static it.unitn.disi.diversicon.internal.Internals.checkNotBlank;
 import static it.unitn.disi.diversicon.internal.Internals.checkNotEmpty;
 import static it.unitn.disi.diversicon.internal.Internals.checkNotNull;
 import static org.junit.Assert.assertEquals;
@@ -18,7 +19,12 @@ import java.util.Map;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.exec.CommandLine;
+import org.apache.commons.exec.DefaultExecutor;
+import org.apache.commons.exec.PumpStreamHandler;
 import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,17 +33,18 @@ import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.joran.spi.JoranException;
 import ch.qos.logback.core.util.StatusPrinter;
-import it.unitn.disi.diversicon.Diversicon;
+import it.unitn.disi.diversicon.BuildInfo;
 import it.unitn.disi.diversicon.ImportJob;
 import it.unitn.disi.diversicon.cli.DiverCli;
-import it.unitn.disi.diversicon.cli.commands.DbResetCommand;
-import it.unitn.disi.diversicon.cli.commands.DbRestoreCommand;
+import it.unitn.disi.diversicon.cli.MainCommand;
+import it.unitn.disi.diversicon.cli.commands.InitCommand;
 import it.unitn.disi.diversicon.cli.commands.HelpCommand;
 import it.unitn.disi.diversicon.cli.commands.ImportShowCommand;
 import it.unitn.disi.diversicon.cli.commands.ImportXmlCommand;
 import it.unitn.disi.diversicon.cli.commands.LogCommand;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliException;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliIoException;
+import it.unitn.disi.diversicon.data.Smartphones;
 import it.unitn.disi.diversicon.data.DivWn31;
 
 /**
@@ -45,11 +52,25 @@ import it.unitn.disi.diversicon.data.DivWn31;
  *
  * @since 0.1.0
  */
+
+// Options to show a command on database: 
+
+// mkdir my-wn31
+// cd my-wn31
+// divercli init --db classpath:/.....div-wn31
+// divercli log
+//
+//   OR
+//
+// divercli --prj wn31  init --db classpath:/.....div-wn31
+// cd wn31
+// divercli log
+
 public class DocsGenIT extends DiverCliTestBase {
 
     private static final Logger LOG = LoggerFactory.getLogger(DocsGenIT.class);    
 
-    private final static String DIVERCLI = "./divercli";
+    private final static String DIVERCLI = "divercli";
     
     private static DocAppender docAppender;
     private static ch.qos.logback.classic.Logger logger;
@@ -101,6 +122,21 @@ public class DocsGenIT extends DiverCliTestBase {
      */
     public static final CSVFormat EVAL_CSV_FORMAT = CSVFormat.DEFAULT.withRecordSeparator("\n");
 
+    private static final String MYPRJ = "myprj";
+
+    /**
+     * @since 0.1.0
+     */
+    private String origWorkingDir;
+
+    @Before
+    public void beforeMethod() throws IOException {        
+        super.beforeMethod();
+        origWorkingDir = System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR);
+        DiverCli.of(MainCommand.RESET_GLOBAL_CONFIG_OPTION).run();
+    }    
+    
+    
     /**
      * @since 0.1.0    
      */    
@@ -110,6 +146,7 @@ public class DocsGenIT extends DiverCliTestBase {
         saveEvalMap(evals, new File("target/apidocs/resources/josman-eval.csv"));
     }
 
+    
     /**
      * (Copied from Josmans)
      * 
@@ -330,6 +367,32 @@ public class DocsGenIT extends DiverCliTestBase {
         return ret;
     }
 
+    /**
+     * Execs a bash command
+     *  
+     * @since 0.1.0
+     */
+    private void bash(String key, String line){
+        
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        CommandLine cmdLine = CommandLine.parse(line);
+        DefaultExecutor executor = new DefaultExecutor();
+        executor.setWorkingDirectory(new File(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR)));
+        PumpStreamHandler streamHandler = new PumpStreamHandler(outputStream);
+        executor.setStreamHandler(streamHandler);
+        
+        try {
+            int exitValue = executor.execute(cmdLine);
+            if (exitValue > 0){
+                Assert.fail("Command returned value greater than 0:  "+ exitValue);
+            }
+            evals.put(key, "> " + line + "\n\n" + outputStream.toString());
+        } catch (IOException e) { 
+            throw new Error("Failure while executing bash command!", e);
+        }        
+    }
+
 
     /**
      * 
@@ -345,12 +408,12 @@ public class DocsGenIT extends DiverCliTestBase {
      * 
      * @since 0.1.0
      */
-    private void exec(String key, String... args) { 
+    private DiverCli diver(String key, String... args) { 
         
         startCaptureSlf4j();
         
-        DiverCli.of(args)
-                .run();
+        DiverCli cli = DiverCli.of(args);
+        cli.run();                
         
         StringBuilder sbStr = new StringBuilder();
         for (int i = 0, il = args.length; i < il; i++) {
@@ -363,7 +426,11 @@ public class DocsGenIT extends DiverCliTestBase {
 
         String val = "```bash\n"
                 + "> " + DIVERCLI + " " + sbStr.toString() + "\n"
-                + cap.replace(testEnv.getTestHome().toString() + File.separator + "divercli" + File.separator, "") + "\n"
+                + cap.replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR) + "/", "")
+                     .replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR), "")
+                     .replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_USER_HOME) + "/", "/home/divergeek/")
+                     .replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_USER_HOME), "/home/divergeek/")
+                + "\n"
                 + "```\n";
 
         if (evals.containsKey(key)){
@@ -374,61 +441,97 @@ public class DocsGenIT extends DiverCliTestBase {
             }
         }
         evals.put(key, val);
+        
+        return cli;
     }
 
     
 
     @Test
     public void help() {
-        exec("help",  HelpCommand.CMD, ImportXmlCommand.CMD);
+        diver("help",  HelpCommand.CMD, ImportXmlCommand.CMD);
         
-        exec("helpImportXml", 
+        diver("helpImportXml", 
                 HelpCommand.CMD, ImportXmlCommand.CMD);
     }
 
     @Test
-    public void dbRestore() {
-        exec("wn31Restore",
-                "--create-conf",
-                DbRestoreCommand.CMD, "--db", DivWn31.H2DB_URI, 
-                "--target", testEnv.getTestWorkingDir() + File.separator + "db/my-wn31");
-        exec("wn31RestoreMakeDefault",
-                DbRestoreCommand.CMD, "--set-default", "--db", DivWn31.H2DB_URI, 
-                "--target", testEnv.getTestWorkingDir() + File.separator + "db/my-wn31");
+    public void wn31Init() {       
         
-        exec("dbRestore",
-                DbRestoreCommand.CMD, "--db", DivWn31.H2DB_URI, 
-                "--target", testEnv.getTestWorkingDir() + File.separator + DiverCli.DEFAULT_H2_FILE_DB_PATH);
-        
-    }
-    
-    private void restoreWn31(){
-        DiverCli.of(DbRestoreCommand.CMD, "--db", DivWn31.H2DB_URI, 
-                "--target", testEnv.getTestWorkingDir() + File.separator + DiverCli.DEFAULT_H2_FILE_DB_PATH)
-        .run();
+        diver("wn31.init",
+                "--prj", "wn31",
+                InitCommand.CMD, "--db", DivWn31.H2DB_URI 
+                );  
+        bash("wn31.dir", "dir");
     }
     
     @Test
-    public void log() {
-        restoreWn31();
+    public void emptyInit(){
+        diver("empty.init",
+                "--prj", MYPRJ,
+                InitCommand.CMD);
+        bash("empty.dir", "dir");
+    }
+    
+    @Test
+    public void emptyDir(){
+        diver("empty.init",
+                "--prj", MYPRJ,
+                InitCommand.CMD, "--db", DivWn31.H2DB_URI);
+    }       
+    
+    /**
+     * Sets working dir with respect to {@link #origWorkingDir} 
+     *
+     * @since 0.1.0
+     */
+    private void cd(String subdir){
+        checkNotBlank(subdir, "Invalid sub dir");
+        String post;
+                
+        String pre;
+        if (origWorkingDir.endsWith("/")){
+            pre = "";
+        } else {
+            pre = "/";
+        }
         
-        exec("log", LogCommand.CMD);
-                        
-        DiverCli cli = DiverCli.of();               
-        cli.run();
+        if (subdir.endsWith("/")){
+            post = "";
+        } else {
+            post = "/";            
+        }       
+
+        System.setProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR, 
+                origWorkingDir + pre + subdir + post);
+    }
+    
+    @Test
+    public void log() throws IOException {
+               
+        wn31Init();
+        cd("wn31");
+                
+        DiverCli cli = diver("wn31.log", LogCommand.CMD);               
         cli.connect();
         List<ImportJob> jobs = cli.getDiversicon().getImportJobs();
         assertEquals(1, jobs.size());
         long id = jobs.get(0).getId();
         
-        exec("importShow", ImportShowCommand.CMD, Long.toString(id));
+        diver("wn31.importShow", ImportShowCommand.CMD, Long.toString(id));
     }
     
     @Test
     public void reset(){
-        exec("resetConf", "--reset-conf");        
+        diver("resetGlobalConfig", MainCommand.RESET_GLOBAL_CONFIG_OPTION);        
     }
-    
-    
-    
+          
+    @Test
+    public void importSampleXml(){
+        
+        emptyInit();
+        cd(MYPRJ);       
+        diver(ImportXmlCommand.CMD, Smartphones.of().getSqlUri());
+        
+    }
 }

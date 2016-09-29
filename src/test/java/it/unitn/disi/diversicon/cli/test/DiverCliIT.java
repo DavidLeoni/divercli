@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import it.unitn.disi.diversicon.Diversicon;
 import it.unitn.disi.diversicon.cli.DiverCli;
-import it.unitn.disi.diversicon.cli.commands.DbRestoreCommand;
+import it.unitn.disi.diversicon.cli.commands.InitCommand;
 import it.unitn.disi.diversicon.cli.commands.LogCommand;
 import it.unitn.disi.diversicon.data.DivWn31;
 import it.unitn.disi.diversicon.internal.Internals;
@@ -30,54 +30,31 @@ public class DiverCliIT extends DiverCliTestBase {
      * @since 0.1.0
      */
     @Test
-    public void testRestoreDbFromWordnetDb() throws IOException {
-
-        Path dir = Internals.createTempDir("divercli-test");
-        String target = dir.toString() + "/test";
-
-        DiverCli cli = DiverCli.of(DbRestoreCommand.CMD,
-                "--db", DivWn31.H2DB_URI,
-                "--target", target,
-                "--set-default");
+    public void testInitDbFromWordnetDb() throws IOException {                      
+                
+        DiverCli cli = DiverCli.of(
+                InitCommand.CMD,                
+                "--db", DivWn31.H2DB_URI);
 
         cli.run();
 
-        File outf = new File(target + ".h2.db");
+        File outf = new File(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR), WORKING + ".h2.db");
 
         assertTrue(outf.exists());
         assertTrue(outf.length() > 0);
 
-        Diversicon div = Diversicon.connectToDb(cli.getDbConfig());
+        File outIni = new File(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR), DiverCli.INI_FILENAME);
+
+        assertTrue(outIni.exists());
+        assertTrue(outIni.length() > 0);
+        
+        
+        Diversicon div = Diversicon.connectToDb(cli.dbConfig());
         div.getSession()
            .close();
     }
     
-    /**
-     * @since 0.1.0
-     */
-    @Test
-    public void testRestoreDbFromWordnetDbCreateConf() throws IOException {
-
-        Path dir = Internals.createTempDir("divercli-test");
-        String target = dir.toString() + "/test";
-
-        DiverCli cli = DiverCli.of(DbRestoreCommand.CMD,
-                "--db", DivWn31.H2DB_URI,
-                "--target", target,
-                "--create-conf");
-
-        cli.run();
-
-        File outf = new File(target + ".h2.db");
-              
-        assertTrue(outf.exists());
-        assertTrue(outf.length() > 0);
-
-        DiverCli.of(
-                "--conf", target + "-conf/",
-                LogCommand.CMD).run();        
-        
-    }
+   
 
 
 }
