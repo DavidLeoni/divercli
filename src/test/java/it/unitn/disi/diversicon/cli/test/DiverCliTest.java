@@ -14,6 +14,7 @@ import java.util.zip.ZipInputStream;
 import org.ini4j.InvalidFileFormatException;
 import org.ini4j.Wini;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ import com.beust.jcommander.ParameterException;
 
 import de.tudarmstadt.ukp.lmf.model.core.LexicalResource;
 import de.tudarmstadt.ukp.lmf.model.enums.ERelNameSemantics;
+import it.unitn.disi.diversicon.BuildInfo;
 import it.unitn.disi.diversicon.Diversicon;
 import it.unitn.disi.diversicon.Diversicons;
 import it.unitn.disi.diversicon.ImportJob;
@@ -40,6 +42,7 @@ import it.unitn.disi.diversicon.cli.commands.LogCommand;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliException;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliNotFoundException;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliTerminatedException;
+import it.unitn.disi.diversicon.data.DivWn31;
 import it.unitn.disi.diversicon.internal.Internals;
 import it.unitn.disi.diversicon.test.DivTester;
 import static it.unitn.disi.diversicon.cli.MainCommand.PRJ_OPTION;
@@ -758,8 +761,26 @@ public class DiverCliTest extends DiverCliTestBase {
            .close();
     }    
 
+    /**
+     * @since 0.1.0
+     */
     @Test
+    @Ignore
     public void testValidation(){
         Internals.readData(Diversicons.DIVERSICON_SCHEMA_1_0_CLASSPATH_URL);
+    }
+    
+    /**
+     * @since 0.1.0
+     */
+    @Test
+    public void diversiconBuildInfo(){
+        BuildInfo bfDiv = BuildInfo.of(Diversicon.class);
+        LOG.debug(bfDiv.getScmUrl());
+        assertTrue(bfDiv.getScmUrl().toLowerCase().contains("diversicon"));
+        
+        BuildInfo bfWn31 = BuildInfo.of(DivWn31.class);
+        LOG.debug(bfWn31.getScmUrl());
+        assertTrue(bfWn31.getScmUrl().toLowerCase().contains("div-wn31"));
     }
 }

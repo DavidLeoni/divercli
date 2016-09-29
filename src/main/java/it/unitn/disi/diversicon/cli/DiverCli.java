@@ -242,7 +242,7 @@ public final class DiverCli {
             exit(1);
 
         } catch (ParameterException ex) {
-            LOG.error("ERROR: " + ex.getMessage());
+            LOG.error(ex.getMessage());
             exit(1);
         } catch (Exception ex) {
             LOG.error("Internal error occurred! Details:", ex);
