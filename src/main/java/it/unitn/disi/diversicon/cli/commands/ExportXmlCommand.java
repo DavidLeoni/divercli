@@ -8,8 +8,8 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
 import com.beust.jcommander.Parameters;
 
-import it.disi.unitn.diversicon.exceptions.DivNotFoundException;
 import it.unitn.disi.diversicon.cli.DiverCli;
+import it.unitn.disi.diversicon.exceptions.DivNotFoundException;
 
 /** 
  * 

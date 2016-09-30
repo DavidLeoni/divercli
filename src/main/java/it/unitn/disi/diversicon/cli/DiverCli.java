@@ -29,7 +29,6 @@ import com.beust.jcommander.ParameterException;
 import com.github.lalyos.jfiglet.FigletFont;
 
 import de.tudarmstadt.ukp.lmf.transform.DBConfig;
-import it.disi.unitn.diversicon.exceptions.DivIoException;
 import it.unitn.disi.diversicon.Diversicon;
 import it.unitn.disi.diversicon.Diversicons;
 import it.unitn.disi.diversicon.ImportJob;
@@ -49,6 +48,7 @@ import it.unitn.disi.diversicon.cli.exceptions.DiverCliIoException;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliNotFoundException;
 import it.unitn.disi.diversicon.cli.exceptions.DiverCliTerminatedException;
 import it.unitn.disi.diversicon.cli.exceptions.InvalidConfigException;
+import it.unitn.disi.diversicon.exceptions.DivIoException;
 import it.unitn.disi.diversicon.internal.Internals;
 import it.unitn.disi.diversicon.internal.ExtractedStream;
 
