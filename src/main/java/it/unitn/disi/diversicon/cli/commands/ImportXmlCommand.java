@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
+import it.unitn.disi.diversicon.Diversicons;
 import it.unitn.disi.diversicon.ImportConfig;
 import it.unitn.disi.diversicon.cli.DiverCli;
 import it.unitn.disi.diversicon.cli.ImportAppender;
@@ -77,7 +78,7 @@ public class ImportXmlCommand implements DiverCliCommand {
         importConfig = new ImportConfig();
         importConfig.setAuthor(author);
         importConfig.setDescription(description);
-        importConfig.setSkipAugment(skipAugment);
+        importConfig.setSkipAugment(skipAugment);        
 
         for (String fileUrl : importXmlPaths) {
             importConfig.addLexicalResource(fileUrl);

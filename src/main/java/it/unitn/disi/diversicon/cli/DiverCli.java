@@ -75,7 +75,7 @@ public final class DiverCli {
     private static final Logger LOG = LoggerFactory.getLogger(DiverCli.class);
 
     private static final int SUGGESTION_EDIT_DISTANCE = 3;
-
+    
     /**
      * @since 0.1.0
      */

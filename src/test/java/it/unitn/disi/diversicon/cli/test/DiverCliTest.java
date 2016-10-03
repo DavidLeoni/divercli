@@ -767,7 +767,7 @@ public class DiverCliTest extends DiverCliTestBase {
     @Test
     @Ignore
     public void testValidation(){
-        Internals.readData(Diversicons.DIVERSICON_SCHEMA_1_0_CLASSPATH_URL);
+        Internals.readData(Diversicons.SCHEMA_1_0_CLASSPATH_URL);
     }
     
     /**
