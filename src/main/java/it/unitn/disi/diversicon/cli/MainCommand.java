@@ -174,8 +174,16 @@ public class MainCommand implements DiverCliCommand {
     public boolean isDebug() {
         return debug;
     }
-    
-    
 
+
+    /**
+     * @since 0.1.0
+     */
+    public boolean isHelp() {
+        return help;
+    }
+    
+    
+    
     
 }

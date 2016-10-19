@@ -165,8 +165,16 @@ public class DiverCliTest extends DiverCliTestBase {
      * @since 0.1.0
      */
     @Test
-    public void testHelpNoArgs(){
+    public void testHelpNoArgs_1(){
         DiverCli.of(HelpCommand.CMD).run();
+    }
+    
+    /**
+     * @since 0.1.0
+     */
+    @Test
+    public void testHelpNoArgs_2(){
+        DiverCli.of("--" + HelpCommand.CMD).run();
     }
     
     /**

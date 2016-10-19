@@ -367,7 +367,8 @@ public final class DiverCli {
                 String parsedCmd = jcom.getParsedCommand();                
                 
                 if (!(null == parsedCmd
-                        || HelpCommand.CMD.equals(parsedCmd) 
+                        || HelpCommand.CMD.equals(parsedCmd)
+                        || mainCommand.isHelp() // so it still behaves in a handy way with '--help'
                         || InitCommand.CMD.equals(parsedCmd))){
                     configureProject();    
                 }
@@ -375,9 +376,19 @@ public final class DiverCli {
                 mainCommand.run();
                 
                 if (parsedCmd == null){
-                    if (!mainCommand.isResetGlobalConf()) {                                    
-                        LOG.error("\n  No command given. Quitting... \n");
+                    
+                    if (!mainCommand.isResetGlobalConf()) {
+                        if (mainCommand.isHelp()){
+                            // so it still behaves in a handy way with '--help'
+                            HelpCommand hc = new HelpCommand(this);
+                            hc.configure();
+                            hc.run();
+                        } else {
+                            LOG.error("\n  No command given. Quitting... \n");
+                        }
+                        
                     }
+                    
                 } else {
                     DiverCliCommand cmd = commands.get(parsedCmd);                    
                     cmd.configure();
