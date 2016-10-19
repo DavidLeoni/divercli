@@ -774,13 +774,13 @@ public class DiverCliTest extends DiverCliTestBase {
      * @since 0.1.0
      */
     @Test
-    public void diversiconBuildInfo(){
+    public void testDiversiconBuildInfo(){
         BuildInfo bfDiv = BuildInfo.of(Diversicon.class);
         LOG.debug(bfDiv.getScmUrl());
         assertTrue(bfDiv.getScmUrl().toLowerCase().contains("diversicon"));
         
         BuildInfo bfWn31 = BuildInfo.of(DivWn31.class);
         LOG.debug(bfWn31.getScmUrl());
-        assertTrue(bfWn31.getScmUrl().toLowerCase().contains("div-wn31"));
+        assertTrue(bfWn31.getScmUrl().toLowerCase().contains("diversicon-wordnet-3.1"));
     }
 }
