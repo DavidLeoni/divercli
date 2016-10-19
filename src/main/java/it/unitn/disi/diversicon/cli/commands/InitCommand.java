@@ -105,7 +105,7 @@ public class InitCommand implements DiverCliCommand {
         
         String targetDbPath = prjFolder.getAbsolutePath() + "/" + dbName;
         
-        DBConfig dbCfg = Diversicons.makeDefaultH2FileDbConfig(
+        DBConfig dbCfg = Diversicons.h2MakeDefaultFileDbConfig(
                 targetDbPath, false);                         
                 
         cli.setDbConfig(dbCfg);
@@ -113,7 +113,7 @@ public class InitCommand implements DiverCliCommand {
         if (!Internals.isBlank(restoreH2DbPath)){            
             Diversicons.restoreH2Db(restoreH2DbPath, targetDbPath);    
         } else if (!Internals.isBlank(restoreSqlPath)){        
-            Diversicons.restoreH2Sql(restoreSqlPath, dbCfg);    
+            Diversicons.h2RestoreSql(restoreSqlPath, dbCfg);    
         }  else {
             Diversicons.dropCreateTables(dbCfg);
         }                                                                               
