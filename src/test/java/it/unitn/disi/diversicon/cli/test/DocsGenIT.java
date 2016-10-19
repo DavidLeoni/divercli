@@ -122,7 +122,15 @@ public class DocsGenIT extends DiverCliTestBase {
      */
     public static final CSVFormat EVAL_CSV_FORMAT = CSVFormat.DEFAULT.withRecordSeparator("\n");
 
+    /**
+     * @since 0.1.0
+     */
     private static final String MYPRJ = "myprj";
+    
+    /**
+     * @since 0.1.0
+     */
+    private static final String WN31 = "wn31";
 
     /**
      * @since 0.1.0
@@ -142,7 +150,14 @@ public class DocsGenIT extends DiverCliTestBase {
      */    
     @AfterClass
     public static void afterClass() {
-                
+        evals.put("it.unitn.disi.diversicon.Diversicons.DEFAULT_USER",
+                it.unitn.disi.diversicon.Diversicons.DEFAULT_USER);
+        evals.put("it.unitn.disi.diversicon.Diversicons.DEFAULT_PASSWORD",
+                it.unitn.disi.diversicon.Diversicons.DEFAULT_PASSWORD);
+        evals.put("it.unitn.disi.diversicon.cli.DiverCli.INI_FILENAME",
+                it.unitn.disi.diversicon.cli.DiverCli.INI_FILENAME);
+        evals.put("it.unitn.disi.diversicon.cli.DiverCli.INI_PATH",
+                it.unitn.disi.diversicon.cli.DiverCli.INI_PATH);
         saveEvalMap(evals, new File("target/apidocs/resources/josman-eval.csv"));
     }
 
@@ -367,6 +382,8 @@ public class DocsGenIT extends DiverCliTestBase {
         return ret;
     }
 
+        
+    
     /**
      * Execs a bash command
      *  
@@ -387,12 +404,16 @@ public class DocsGenIT extends DiverCliTestBase {
             if (exitValue > 0){
                 Assert.fail("Command returned value greater than 0:  "+ exitValue);
             }
-            evals.put(key, "> " + line + "\n\n" + outputStream.toString());
+            String val = "> " + line + "\n\n" + outputStream.toString();
+            LOG.info("\n" + val);
+            evals.put(key, val);
         } catch (IOException e) { 
             throw new Error("Failure while executing bash command!", e);
         }        
     }
 
+    
+    
 
     /**
      * 
@@ -413,6 +434,11 @@ public class DocsGenIT extends DiverCliTestBase {
         startCaptureSlf4j();
         
         DiverCli cli = DiverCli.of(args);
+        
+        if (evals.containsKey(key)){
+            LOG.debug("Found already evaluated cli command key '" + key + "', recalculating...");
+        } 
+        
         cli.run();                
         
         StringBuilder sbStr = new StringBuilder();
@@ -432,14 +458,7 @@ public class DocsGenIT extends DiverCliTestBase {
                      .replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_USER_HOME), "/home/divergeek/")
                 + "\n"
                 + "```\n";
-
-        if (evals.containsKey(key)){
-            if (val.equals(evals.get(key))){
-                LOG.warn("Executed twice evaluation on same key:" + key);
-            } else {
-                throw new DiverCliException("Tried to put twice a key and new value is different!\n---Existing value is:\n"+evals.get(key) + "\n---new value is:\n" + val);
-            }
-        }
+        
         evals.put(key, val);
         
         return cli;
@@ -449,19 +468,20 @@ public class DocsGenIT extends DiverCliTestBase {
 
     @Test
     public void help() {
-        diver("help",  HelpCommand.CMD, ImportXmlCommand.CMD);
+        diver("help",  HelpCommand.CMD);
         
-        diver("helpImportXml", 
+        diver("help.importXml", 
                 HelpCommand.CMD, ImportXmlCommand.CMD);
     }
 
     @Test
     public void wn31Init() {       
-        
+                
         diver("wn31.init",
                 "--prj", "wn31",
                 InitCommand.CMD, "--db", DivWn31.H2DB_URI 
                 );  
+        cd("wn31.cd", "wn31");
         bash("wn31.dir", "dir");
     }
     
@@ -470,15 +490,40 @@ public class DocsGenIT extends DiverCliTestBase {
         diver("empty.init",
                 "--prj", MYPRJ,
                 InitCommand.CMD);
+        
+        cd("empty.cd", MYPRJ);
         bash("empty.dir", "dir");
     }
-    
+
+    /*
     @Test
     public void emptyDir(){
-        diver("empty.init",
+        diver("empty.dir",
                 "--prj", MYPRJ,
                 InitCommand.CMD, "--db", DivWn31.H2DB_URI);
-    }       
+    } */      
+    
+    
+    
+    /**
+     * Sets working dir with respect to {@link #origWorkingDir} 
+     * and saves the cd command in the key.
+     *
+     * @since 0.1.0
+     */
+    private void cd(String key, String subdir){
+        checkNotBlank(key, "Invalid key");
+        checkNotBlank(subdir, "Invalid dir!");
+        
+        cd(subdir);
+        
+        String val = "> cd " + subdir;
+        
+        LOG.info("\n" + val);
+                        
+        
+        evals.put(key, val);
+    }
     
     /**
      * Sets working dir with respect to {@link #origWorkingDir} 

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   viewBox="0 0 720 720"
+   stroke-miterlimit="10"
+   id="svg2"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="divercli.svg"
+   width="720"
+   height="720"
+   style="fill:none;stroke:none;stroke-linecap:square;stroke-miterlimit:10"
+   inkscape:export-filename="/home/da/Da/prj/divercli/prj/docs/img/divercli-100px.png"
+   inkscape:export-xdpi="12.5"
+   inkscape:export-ydpi="12.5">
+  <metadata
+     id="metadata31">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs29" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="739"
+     id="namedview27"
+     showgrid="false"
+     inkscape:zoom="0.16388889"
+     inkscape:cx="214.31533"
+     inkscape:cy="624.81906"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g7" />
+  <clipPath
+     id="p.0">
+    <path
+       d="M 0,0 960,0 960,720 0,720 0,0 Z"
+       id="path5"
+       inkscape:connector-curvature="0"
+       style="clip-rule:nonzero" />
+  </clipPath>
+  <g
+     clip-path="url(#p.0)"
+     id="g7"
+     transform="translate(-102.74577,9.1525423)">
+    <path
+       d="m 12,10 960,0 0,720 -960,0 z"
+       id="path9"
+       inkscape:connector-curvature="0"
+       style="fill:#000000;fill-opacity:0;fill-rule:nonzero" />
+    <path
+       d="m 176.35049,416.05711 289.52997,0 0,44.64395 -289.52997,0 z"
+       id="path11"
+       inkscape:connector-curvature="0"
+       style="fill:#d0e0e3;fill-rule:nonzero" />
+    <path
+       d="m 176.35049,416.05711 289.52997,0 0,44.64395 -289.52997,0 z"
+       id="path13"
+       inkscape:connector-curvature="0"
+       style="fill:#fff926;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.91499996;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       d="m 265.28264,583.39294 74.71076,-408.48719 48.82881,7.44178 -74.7108,408.48717 z"
+       id="path15"
+       inkscape:connector-curvature="0"
+       style="fill:#b3b3b3;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:3.73000002;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       d="m 179.53781,318.79087 289.52997,0 0,44.64398 -289.52997,0 z"
+       id="path23"
+       inkscape:connector-curvature="0"
+       style="fill:#d0e0e3;fill-rule:nonzero" />
+    <path
+       d="m 179.53781,318.79087 289.52997,0 0,44.64398 -289.52997,0 z"
+       id="path25"
+       inkscape:connector-curvature="0"
+       style="fill:#fff926;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.91499996;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       style="fill:#b6b6b6;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:7.20599985;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+       d="M 427.25861,10.800247 719.77923,406.45428 373.97414,698.75394 274.29107,650.55029 623.63506,386.12149 342.92944,90.7639 Z"
+       id="path4185"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccc" />
+  </g>
+</svg>
