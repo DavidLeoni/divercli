@@ -465,15 +465,20 @@ public class DocsGenIT extends DiverCliTestBase {
     }
 
     
-
+    /**
+     * @since 0.1.0
+     */
     @Test
     public void help() {
-        diver("help",  HelpCommand.CMD);
+        diver("help");
         
         diver("help.importXml", 
                 HelpCommand.CMD, ImportXmlCommand.CMD);
     }
 
+    /**
+     * @since 0.1.0
+     */    
     @Test
     public void wn31Init() {       
                 
@@ -484,7 +489,10 @@ public class DocsGenIT extends DiverCliTestBase {
         cd("wn31.cd", "wn31");
         bash("wn31.dir", "dir");
     }
-    
+
+    /**
+     * @since 0.1.0
+     */    
     @Test
     public void emptyInit(){
         diver("empty.init",
@@ -495,14 +503,6 @@ public class DocsGenIT extends DiverCliTestBase {
         bash("empty.dir", "dir");
     }
 
-    /*
-    @Test
-    public void emptyDir(){
-        diver("empty.dir",
-                "--prj", MYPRJ,
-                InitCommand.CMD, "--db", DivWn31.H2DB_URI);
-    } */      
-    
     
     
     /**
@@ -551,11 +551,13 @@ public class DocsGenIT extends DiverCliTestBase {
                 origWorkingDir + pre + subdir + post);
     }
     
+    /**
+     * @since 0.1.0
+     */
     @Test
     public void log() throws IOException {
                
-        wn31Init();
-        cd("wn31");
+        wn31Init();        
                 
         DiverCli cli = diver("wn31.log", LogCommand.CMD);               
         cli.connect();
@@ -566,11 +568,17 @@ public class DocsGenIT extends DiverCliTestBase {
         diver("wn31.importShow", ImportShowCommand.CMD, Long.toString(id));
     }
     
+    /**
+     * @since 0.1.0
+     */
     @Test
     public void reset(){
         diver("resetGlobalConfig", MainCommand.RESET_GLOBAL_CONFIG_OPTION);        
     }
-          
+    
+    /**
+     * @since 0.1.0
+     */
     @Test
     public void importSampleXml(){
         
@@ -578,5 +586,13 @@ public class DocsGenIT extends DiverCliTestBase {
         cd(MYPRJ);       
         diver(ImportXmlCommand.CMD, Smartphones.of().getSqlUri());
         
+    }
+    
+    /**
+     * @since 0.1.0
+     */
+    @Test
+    public void wn31Manual(){
+        evals.put("wn31.manualWebsite", BuildInfo.of(DivWn31.class).getManualWebsite());
     }
 }

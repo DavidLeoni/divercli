@@ -12,8 +12,6 @@ This manual assumes you have added `bin/divercli` to the path.
 
 To see usage commands:
 
-TODO review
-
 In Linux / Mac, from terminal just type
 
 ```
@@ -31,13 +29,13 @@ You should see a command list like this:
 $eval{help}
 
 
-To get more help about a specific command (say `import-xml`), you can issue something like 
+To get more help about a specific command (say `import-xml`), you can issue `help` command: 
     
 $eval{help.importXml}    
 
 ### Your first project
 
-In DiverCli, a project is a folder with configuration to connect to a database, plus possibly the database itself and other custom scripts. It might look like this :
+In DiverCli, a project is a folder with configuration for connecting to a database, plus possibly the database itself and other custom scripts. It might look like this :
 
 ```
 divercli.ini
@@ -55,15 +53,15 @@ Let's create our first H2 file-based database with Wordnet 3.1 inside:
 
 $eval{wn31.init}
 
-This is the parameter meaning:
+In detail:
  
-* `--prj wn31` told DiverCLI in which folder to put the project
-* `init` was the actual comand given to DiverCli
-* `--db` specified to `init` command where to take the db. In this case Wordnet 3.1 is pre-packaged in the DiverCLI distribution so we picked it with the special url beginning with `classpath:`. 
+* `--prj wn31` tells DiverCLI in which folder to put the project
+* `init` is the actual comand given to DiverCli
+* `--db` specifies to `init` command where to take the db. In this case Wordnet 3.1 is pre-packaged in the DiverCLI distribution so we picked it with the special URL beginning with `classpath:`. 
 
-Notice that `--prj` must always go _before_ commands. 
+Notice that `--prj` always goes _before_ commands. 
 
-Let's see which files where generated:
+These files where generated:
 
 ```
 $eval{wn31.cd}
@@ -71,7 +69,7 @@ $eval{wn31.dir}
         
 ```
 
-The `divercli.ini` file tells DiverCli where to connect when we launch DiverCli from this project directory. In this particular case the database is in the same folder, but it could be anywhere, even a remote connection. 
+The file `divercli.ini` tells DiverCli where to connect when we launch the tool from the project directory. In this particular case the database is in the same folder, but it could be anywhere, even a remote connection. 
 
 You can check things are working by issuing the `log` command, which will show a status of the database and a log of the imports done so far:
 
@@ -106,22 +104,22 @@ JAVA_OPTS="-Xms1g -Xmx3g -XX:-UseGCOverheadLimit" divercli db-augment
               
 ### Creating databases
 
-Currently you can create H2 databases which can be empty or already containing Wordnet 3.1 . 
+Currently you can create H2 databases which can be empty or already containing Wordnet 3.1. Let's see how to do it. 
 
-#### Create empty H2 database
+#### Creating empty database
 
 You can create an empty database in directory 'myprj' by issuing `divercli --prj myprj init`:
 
 $eval{empty.init}
 
 ```bash
-$eval{wn31.cd}
+$eval{empty.cd}
 $eval{empty.dir}
 ```
 
-#### Creating database with Wordnet 3.1
+#### Creating Wordnet 3.1 database
 
-Wordnet 3.1 is packaged within DiverCli, in the format of a <a href="http://www.h2database.com" target="_blank">H2 database</a>, as a SQL dump, and as an LMF XML file. You can unpack the database where you like (i.e. `wn31/` directory) by issuing:
+Wordnet 3.1 is packaged within DiverCli, in the format of a <a href="http://www.h2database.com" target="_blank">H2 database</a>. You can also [find it]($exec{wn31.manualWebsite}) in LMF XML and SQL dump formats. You can unpack the database where you like (i.e. `wn31/` directory) by issuing:
 
 $eval{wn31.init}
 
@@ -129,7 +127,6 @@ $eval{wn31.init}
 $eval{wn31.cd}
 $eval{wn31.dir} 
 ```
-
 
 ### Importing XMLs
 
@@ -140,24 +137,30 @@ TODO check this
 java -cp  ~/.m2/repository/org/basex/basex/8.5/basex-8.5.jar org.basex.BaseX -bold-prefix=wn31 -bnew-prefix=peppo -binfile=../../../src/testources/experiments/xml/basex-2.xml  -o prova.xml   src/main/resources/rename-prefixes.xql
 ```
 
-
 You can import an LMF xml this way:
 
 TODO
 
 ### Exporting XMLs
 
-TODO
+You can export a _LexicalResource_ by issuing this command 
+
+$eval{empty.init}
+
+```bash
+$eval{empty.cd}
+```
+
 
 ### Import logs
 
-For each resource imported via DiverCli, you can see an import log. For example, here we show the Wordnet 3.1 log :
+For each resource imported via DiverCli, an import log is available. For example, here we show the log for Wordnet 3.1:
  
  
 $eval{wn31.init}
 
 ```bash
-cd wn31
+$eval{wn31.cd}
 ```
 
 $eval{wn31.log}
