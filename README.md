@@ -5,9 +5,7 @@ RELEASE DOCS ARE ON THE <a href="http://davidleoni.github.io/divercli/" target="
 </p>
 
 <p class="josman-to-strip" align="center">
-
-<h1> DIVER CLI </h1>
-
+<img alt="DiverCLI" src="docs/img/divercli-200px.png" width="150px">
 <br/>
 </p>
 
