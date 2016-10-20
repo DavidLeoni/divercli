@@ -79,15 +79,15 @@ $eval{wn31.log}
 ### Configuration
 
 
-To determine to which database to connect, DiverCli uses configuration file `$eval{it.unitn.disi.diversicon.cli.DiverCli.INI_FILENAME}` inside project directory. You can edit the file to connect to the database of choice, but note currently only <a href="http://www.h2database.com" target="_blank">H2 databases </a> are supported (DiverCli uses H2 v1.3.160). 
+To determine to which database to connect, DiverCli uses configuration file `$eval{eu.kidf.diversicon.cli.DiverCli.INI_FILENAME}` inside project directory. You can edit the file to connect to the database of choice, but note currently only <a href="http://www.h2database.com" target="_blank">H2 databases </a> are supported (DiverCli uses H2 v1.3.160). 
 
 
-When a database is created default username is `$eval{it.unitn.disi.diversicon.Diversicons.DEFAULT_USER}` and password is `$eval{it.unitn.disi.diversicon.Diversicons.DEFAULT_PASSWORD}`. 
+When a database is created default username is `$eval{eu.kidf.diversicon.core.Diversicons.DEFAULT_USER}` and password is `$eval{eu.kidf.diversicon.core.Diversicons.DEFAULT_PASSWORD}`. 
 
 
 #### Global configuration
 
-There is also global config in `USER_HOME/$eval{it.unitn.disi.diversicon.cli.DiverCli.INI_PATH}` shared by all projects. Settings there will be overridden by individual project settings. 
+There is also global config in `USER_HOME/$eval{eu.kidf.diversicon.cli.DiverCli.INI_PATH}` shared by all projects. Settings there will be overridden by individual project settings. 
 
 In case global configuration gets messed up, you can reset it by issuing:
 
