@@ -135,6 +135,29 @@ public final class DiverCli {
     /**
      * @since 0.1.0
      */
+    public static final String SCRIPTS_PATH = "scripts/";
+    
+    /**
+     * @since 0.1.0
+     */
+    public static final String SCRIPTS_XML_PATH = SCRIPTS_PATH + "xml/";
+
+    /**
+     * @since 0.1.0
+     */
+    public static final String SCRIPTS_SQL_PATH = SCRIPTS_PATH + "sql/";
+
+    /**
+     * @since 0.1.0
+     */
+    public static final String SAMPLES_PATH = "samples/";
+
+    
+    
+    
+    /**
+     * @since 0.1.0
+     */
     public static final String DATABASE_SECTION_INI = "Database";
 
     /**

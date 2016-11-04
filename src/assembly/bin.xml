@@ -43,7 +43,10 @@
 			<directoryMode>0755</directoryMode>
 			<fileMode>0644</fileMode>
 		</fileSet>
-
+		<fileSet>
+			<directory>${project.basedir}/bin</directory>
+			<outputDirectory>bin</outputDirectory>
+		</fileSet>
 	</fileSets>
 	<files>
 

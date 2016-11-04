@@ -158,6 +158,17 @@ public class DocsGenIT extends DiverCliTestBase {
                 eu.kidf.diversicon.cli.DiverCli.INI_FILENAME);
         evals.put("eu.kidf.diversicon.cli.DiverCli.INI_PATH",
                 eu.kidf.diversicon.cli.DiverCli.INI_PATH);
+        
+        evals.put("eu.kidf.diversicon.cli.DiverCli.SCRIPTS_XML_PATH",
+                eu.kidf.diversicon.cli.DiverCli.SCRIPTS_XML_PATH);
+
+        evals.put("eu.kidf.diversicon.cli.DiverCli.SCRIPTS_SQL_PATH",
+                eu.kidf.diversicon.cli.DiverCli.SCRIPTS_SQL_PATH);
+
+        evals.put("eu.kidf.diversicon.cli.DiverCli.SAMPLES_PATH",
+                eu.kidf.diversicon.cli.DiverCli.SAMPLES_PATH);
+        
+        
         saveEvalMap(evals, new File("target/apidocs/resources/josman-eval.csv"));
     }
 

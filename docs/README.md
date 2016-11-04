@@ -43,11 +43,10 @@ my-diversicon.db.h2
 my-script.sql
  . 
  .
- .
 
 ``` 
 
-DiverCli comes with full support for <a href="http://h2database.com" target="_blank"> H2 database </a>, which is shipped with DiverCli and doesn't require separate installation. 
+DiverCli comes with full support for <a href="http://h2database.com" target="_blank"> H2 database </a>, which is shipped with DiverCli and doesn't require separate installation (for info on browsing databases, see [Tools page](Tools#h2)). 
 
 Let's create our first H2 file-based database with Wordnet 3.1 inside:
 
@@ -132,14 +131,6 @@ $eval{wn31.dir}
 
 #### Preprocessing XMLs
 
-TODO check this
-```
-java -cp  ~/.m2/repository/org/basex/basex/8.5/basex-8.5.jar org.basex.BaseX -bold-prefix=wn31 -bnew-prefix=peppo -binfile=../../../src/testources/experiments/xml/basex-2.xml  -o prova.xml   src/main/resources/rename-prefixes.xql
-```
-
-You can import an LMF xml this way:
-
-TODO
 
 ### Exporting XMLs
 
