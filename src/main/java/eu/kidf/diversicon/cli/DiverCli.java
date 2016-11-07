@@ -45,11 +45,12 @@ import eu.kidf.diversicon.cli.exceptions.DiverCliIoException;
 import eu.kidf.diversicon.cli.exceptions.DiverCliNotFoundException;
 import eu.kidf.diversicon.cli.exceptions.DiverCliTerminatedException;
 import eu.kidf.diversicon.cli.exceptions.InvalidConfigException;
+import eu.kidf.diversicon.core.DivConfig;
 import eu.kidf.diversicon.core.Diversicon;
 import eu.kidf.diversicon.core.Diversicons;
 import eu.kidf.diversicon.core.ImportJob;
 import eu.kidf.diversicon.core.exceptions.DivIoException;
-import eu.kidf.diversicon.core.internal.ExtractedStream;
+import eu.kidf.diversicon.core.ExtractedStream;
 import eu.kidf.diversicon.core.internal.Internals;
 
 /**
@@ -136,6 +137,11 @@ public final class DiverCli {
      * @since 0.1.0
      */
     public static final String DATABASE_SECTION_INI = "Database";
+    
+    /**
+     * @since 0.1.0
+     */
+    public static final String FETCHER_SECTION_INI = "Fetcher";    
 
     /**
      * @since 0.1.0
@@ -169,7 +175,7 @@ public final class DiverCli {
 
     // used by MainCommand for initialization, don't make it private
     @Nullable
-    DBConfig dbConfig;
+    DivConfig divConfig;
 
     // used by MainCommand for initialization, don't make it private
     @Nullable
@@ -203,7 +209,7 @@ public final class DiverCli {
         String[] s = {};
         this.args = s;
         this.commands = new HashMap<>();
-        this.dbConfig = new DBConfig();
+        this.divConfig = DivConfig.of();
         this.globallyConfigured = false;
         this.projectConfigured = false;
     }
@@ -302,16 +308,16 @@ public final class DiverCli {
     }
 
     /**
-     * Returns db configuration of UBY.
+     * Returns configuration of Diversicon.
      * 
      * @throws DiverCliIllegalStateException
      * 
      * @since 0.1.0
      */
-    public DBConfig dbConfig() {
+    public DivConfig divConfig() {
         checkProjectConfigured();
         
-        return dbConfig;
+        return divConfig;
         
     }
 
@@ -482,7 +488,7 @@ public final class DiverCli {
             projectDir = new File(projectDir.getAbsolutePath()
                                                     .replace(System.getProperty("user.dir"),
                                                             workingDir));
-
+            DBConfig dbConfig = divConfig.getDbConfig();
             String jdbcUrl = dbConfig.getJdbc_url();
             if (jdbcUrl != null) {
                 if (jdbcUrl.contains("jdbc:h2:file:")) {
@@ -500,6 +506,7 @@ public final class DiverCli {
                     }
                     LOG.debug("Fixed jdbc url:" + dbConfig.getJdbc_url());
                     
+                    divConfig = divConfig.withDbConfig(dbConfig);
                 }
 
             }
@@ -519,7 +526,7 @@ public final class DiverCli {
     // package visibility so we can access from MainCommand
     Wini loadIni(File iniFile) {
         checkNotNull(iniFile);
-        checkNotNull(dbConfig);
+        checkNotNull(divConfig);
 
         Wini ini;
         try {
@@ -528,6 +535,8 @@ public final class DiverCli {
             throw new DiverCliIoException("Error while loading ini file " + iniFile.getAbsolutePath(), ex);
         }
 
+        DBConfig dbConfig = divConfig.getDbConfig();
+        
         dbConfig.setDb_vendor(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "db_vendor", ini));
         dbConfig.setJdbc_driver_class(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "jdbc_driver_class", ini));
         dbConfig.setJdbc_url(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "jdbc_url", ini));
@@ -535,6 +544,8 @@ public final class DiverCli {
         dbConfig.setPassword(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "password", ini));
         dbConfig.setShowSQL(false);       
 
+        divConfig = divConfig.withDbConfig(dbConfig);
+        
         return ini;
     }
 
@@ -547,6 +558,8 @@ public final class DiverCli {
      */
     private void checkProjectConfig() {
 
+        DBConfig dbConfig = divConfig.getDbConfig();
+        
         if (Internals.isBlank(dbConfig.getDb_vendor())) {
             throw new InvalidConfigException("Expected db_vendor field in " + DiverCli.DATABASE_SECTION_INI
                     + " section in " + new File(getProjectDir(), DiverCli.INI_FILENAME) + " file!");
@@ -588,12 +601,12 @@ public final class DiverCli {
 
         if (!isConnected()) {
 
-            if (Diversicons.isH2Db(dbConfig) && Diversicons.isEmpty(dbConfig)) {
+            if (Diversicons.isH2Db(divConfig.getDbConfig()) && Diversicons.isEmpty(divConfig.getDbConfig())) {
 
-                Diversicons.dropCreateTables(dbConfig);
+                Diversicons.dropCreateTables(divConfig.getDbConfig());
             }
 
-            diversicon = Diversicon.connectToDb(dbConfig);
+            diversicon = Diversicon.connectToDb(divConfig);
 
             LOG.info("");
             LOG.info(" Welcome to");
@@ -719,7 +732,7 @@ public final class DiverCli {
             LOG.debug("Couldn't find project file " + filepath + ", attempting copy from templates...");
 
             try {
-                ExtractedStream stream = Internals.readData(
+                ExtractedStream stream = Diversicons.readData(
                         TEMPLATES_DIR + databaseId + File.separator + filepath,
                         false);
                 return stream.toTempFile();
@@ -928,11 +941,16 @@ public final class DiverCli {
 
         checkGloballyConfigured();
 
-        projectIni.put(DATABASE_SECTION_INI, "jdbc_driver_class", dbConfig.getJdbc_driver_class());
-        projectIni.put(DATABASE_SECTION_INI, "db_vendor", dbConfig.getDb_vendor());
-        projectIni.put(DATABASE_SECTION_INI, "jdbc_url", dbConfig.getJdbc_url());
-        projectIni.put(DATABASE_SECTION_INI, "user", dbConfig.getUser());
-        projectIni.put(DATABASE_SECTION_INI, "password", dbConfig.getPassword());
+        projectIni.put(DiverCli.FETCHER_SECTION_INI, "timeout", divConfig.getTimeout());
+        projectIni.put(DiverCli.FETCHER_SECTION_INI, "http_proxy", divConfig.getHttpProxy());
+
+        DBConfig dbCfg = divConfig.getDbConfig();
+        
+        projectIni.put(DATABASE_SECTION_INI, "jdbc_driver_class", dbCfg.getJdbc_driver_class());
+        projectIni.put(DATABASE_SECTION_INI, "db_vendor", dbCfg.getDb_vendor());
+        projectIni.put(DATABASE_SECTION_INI, "jdbc_url", dbCfg.getJdbc_url());
+        projectIni.put(DATABASE_SECTION_INI, "user", dbCfg.getUser());
+        projectIni.put(DATABASE_SECTION_INI, "password", dbCfg.getPassword());
 
         try {
             projectIni.store();
@@ -949,7 +967,7 @@ public final class DiverCli {
     public void setDbConfig(DBConfig dbCfg) {
         checkNotNull(dbCfg);
         disconnect();
-        this.dbConfig = dbCfg;
+        this.divConfig = divConfig.withDbConfig(dbCfg);
     }
 
     public JCommander getJCommander() {

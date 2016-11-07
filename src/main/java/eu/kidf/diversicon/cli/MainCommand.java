@@ -14,6 +14,7 @@ import com.beust.jcommander.Parameters;
 import eu.kidf.diversicon.cli.commands.DiverCliCommand;
 import eu.kidf.diversicon.cli.exceptions.DiverCliException;
 import eu.kidf.diversicon.cli.exceptions.InvalidConfigException;
+import eu.kidf.diversicon.core.DivConfig;
 import eu.kidf.diversicon.core.internal.Internals;
 
 /**
@@ -24,7 +25,20 @@ import eu.kidf.diversicon.core.internal.Internals;
 @Parameters()
 public class MainCommand implements DiverCliCommand {
 
-    public static final String PRJ_OPTION = "--prj"; 
+    /**
+     * @since 0.1.0
+     */
+    public static final String PRJ_OPTION = "--prj";
+    
+    /**
+     * @since 0.1.0
+     */    
+    public static final String TIMEOUT_OPTION = "--timeout";
+    
+    /**
+     * @since 0.1.0
+     */    
+    public static final String HTTP_PROXY_OPTION = "--http-proxy";
     
     // Notice we can't make a command out of this as global configuration must happen 
     // before commands are executed.  
@@ -46,6 +60,13 @@ public class MainCommand implements DiverCliCommand {
     @Parameter(names = { PRJ_OPTION}, description = "Path to the project directory. Defaults to current directory.")
     private String projectDirParam = null;
 
+    @Parameter(names = TIMEOUT_OPTION,description="timeout in milliseconds")
+    private int timeout = DivConfig.DEFAULT_TIMEOUT;
+
+    @Parameter(names = HTTP_PROXY_OPTION,description="http proxy")
+    private String httpProxy;
+    
+    
     @Parameter(names = "--help", help = true)
     private boolean help = false;
 

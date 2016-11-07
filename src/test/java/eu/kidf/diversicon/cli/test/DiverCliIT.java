@@ -49,7 +49,7 @@ public class DiverCliIT extends DiverCliTestBase {
         assertTrue(outIni.length() > 0);
         
         
-        Diversicon div = Diversicon.connectToDb(cli.dbConfig());
+        Diversicon div = Diversicon.connectToDb(cli.divConfig());
         div.getSession()
            .close();
     }

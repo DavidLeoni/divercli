@@ -113,7 +113,7 @@ public class InitCommand implements DiverCliCommand {
         if (!Internals.isBlank(restoreH2DbPath)){            
             Diversicons.restoreH2Db(restoreH2DbPath, targetDbPath);    
         } else if (!Internals.isBlank(restoreSqlPath)){        
-            Diversicons.h2RestoreSql(restoreSqlPath, dbCfg);    
+            Diversicons.h2RestoreSql(restoreSqlPath, cli.divConfig());    
         }  else {
             Diversicons.dropCreateTables(dbCfg);
         }                                                                               
@@ -127,6 +127,9 @@ public class InitCommand implements DiverCliCommand {
 
             Wini ini = new Wini(iniFile);
 
+            ini.put(DiverCli.FETCHER_SECTION_INI, "timeout", cli.divConfig().getTimeout());
+            ini.put(DiverCli.FETCHER_SECTION_INI, "http_proxy", cli.divConfig().getHttpProxy());
+            
             ini.put(DiverCli.DATABASE_SECTION_INI, "jdbc_driver_class", dbCfg.getJdbc_driver_class());
             ini.put(DiverCli.DATABASE_SECTION_INI, "db_vendor", dbCfg.getDb_vendor());
             ini.put(DiverCli.DATABASE_SECTION_INI, "jdbc_url", dbCfg.getJdbc_url());

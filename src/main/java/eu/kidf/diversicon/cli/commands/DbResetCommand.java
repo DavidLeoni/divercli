@@ -44,7 +44,7 @@ public class DbResetCommand implements DiverCliCommand {
      */
     @Override
     public void run() {
-        Diversicons.dropCreateTables(diverCli.dbConfig());
+        Diversicons.dropCreateTables(diverCli.divConfig().getDbConfig());
     }
 
     /**

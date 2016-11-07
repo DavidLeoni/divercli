@@ -380,7 +380,7 @@ public class DiverCliTest extends DiverCliTestBase {
 
         cli.run();
 
-        Diversicon div = Diversicon.connectToDb(cli.dbConfig());
+        Diversicon div = Diversicon.connectToDb(cli.divConfig());
         DivTester.checkDb(DivTester.GRAPH_1_HYPERNYM, div);
         div.getSession()
            .close();
@@ -689,9 +689,9 @@ public class DiverCliTest extends DiverCliTestBase {
         
         cli1.run();
         
-        assertTrue(Diversicons.exists(cli1.dbConfig()));
+        assertTrue(Diversicons.exists(cli1.divConfig().getDbConfig()));
         DiverCli.of(DbResetCommand.CMD).run(); // shouldn't complain
-        assertTrue(Diversicons.exists(cli1.dbConfig()));
+        assertTrue(Diversicons.exists(cli1.divConfig().getDbConfig()));
     }
     
     /**
@@ -736,7 +736,7 @@ public class DiverCliTest extends DiverCliTestBase {
         assertTrue(outIni.exists());
         assertTrue(outIni.length() > 0);
                 
-        Diversicon div = Diversicon.connectToDb(cli.dbConfig());
+        Diversicon div = Diversicon.connectToDb(cli.divConfig());
         div.getSession()
            .close();
     }
@@ -765,7 +765,7 @@ public class DiverCliTest extends DiverCliTestBase {
         assertTrue(outIni.exists());
         assertTrue(outIni.length() > 0);
                 
-        Diversicon div = Diversicon.connectToDb(cli.dbConfig());
+        Diversicon div = Diversicon.connectToDb(cli.divConfig());
         div.getSession()
            .close();
     }    
@@ -776,7 +776,7 @@ public class DiverCliTest extends DiverCliTestBase {
     @Test
     @Ignore
     public void testValidation(){
-        Internals.readData(Diversicons.SCHEMA_1_0_CLASSPATH_URL);
+        Diversicons.readData(Diversicons.SCHEMA_1_0_CLASSPATH_URL);
     }
     
     /**
