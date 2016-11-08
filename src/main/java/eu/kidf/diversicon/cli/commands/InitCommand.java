@@ -18,6 +18,7 @@ import de.tudarmstadt.ukp.lmf.transform.DBConfig;
 import eu.kidf.diversicon.cli.DiverCli;
 import eu.kidf.diversicon.cli.exceptions.DiverCliException;
 import eu.kidf.diversicon.cli.exceptions.DiverCliIoException;
+import eu.kidf.diversicon.core.DivConfig;
 import eu.kidf.diversicon.core.Diversicons;
 import eu.kidf.diversicon.core.internal.Internals;
 import eu.kidf.diversicon.data.DivWn31;
@@ -49,7 +50,7 @@ public class InitCommand implements DiverCliCommand {
     String restoreH2DbPath;       
     
     private File prjFolder;
-    private File iniFile;
+    private File prjIniFile;
     private String dbName;
     
 
@@ -67,7 +68,7 @@ public class InitCommand implements DiverCliCommand {
     public void configure(){        
         
         prjFolder = cli.getProjectDir();
-        iniFile = new File(prjFolder, DiverCli.INI_FILENAME);
+        prjIniFile = new File(prjFolder, DiverCli.INI_FILENAME);
         dbName = new File(prjFolder.getAbsolutePath()).getName();
         checkNotBlank("Invalid db name!", dbName);
         
@@ -125,20 +126,17 @@ public class InitCommand implements DiverCliCommand {
 
         try {
 
-            Wini ini = new Wini(iniFile);
+            Wini prjIni = new Wini(prjIniFile);
 
-            ini.put(DiverCli.FETCHER_SECTION_INI, "timeout", cli.divConfig().getTimeout());
-            ini.put(DiverCli.FETCHER_SECTION_INI, "http_proxy", cli.divConfig().getHttpProxy());
-            
-            ini.put(DiverCli.DATABASE_SECTION_INI, "jdbc_driver_class", dbCfg.getJdbc_driver_class());
-            ini.put(DiverCli.DATABASE_SECTION_INI, "db_vendor", dbCfg.getDb_vendor());
-            ini.put(DiverCli.DATABASE_SECTION_INI, "jdbc_url", dbCfg.getJdbc_url());
-            ini.put(DiverCli.DATABASE_SECTION_INI, "user", dbCfg.getUser());
-            ini.put(DiverCli.DATABASE_SECTION_INI, "password", dbCfg.getPassword());
-            ini.store();
+            prjIni.put(DiverCli.DATABASE_SECTION_INI, "jdbc_driver_class", dbCfg.getJdbc_driver_class());
+            prjIni.put(DiverCli.DATABASE_SECTION_INI, "db_vendor", dbCfg.getDb_vendor());
+            prjIni.put(DiverCli.DATABASE_SECTION_INI, "jdbc_url", dbCfg.getJdbc_url());
+            prjIni.put(DiverCli.DATABASE_SECTION_INI, "user", dbCfg.getUser());
+            prjIni.put(DiverCli.DATABASE_SECTION_INI, "password", dbCfg.getPassword());
+            prjIni.store();
         } catch (IOException ex) {
             throw new DiverCliIoException(
-                    "Error while saving INI file to " + iniFile.getAbsolutePath(),
+                    "Error while saving INI file to " + prjIniFile.getAbsolutePath(),
                     ex);
         }
         

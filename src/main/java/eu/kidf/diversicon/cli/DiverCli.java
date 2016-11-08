@@ -141,7 +141,18 @@ public final class DiverCli {
     /**
      * @since 0.1.0
      */
-    public static final String FETCHER_SECTION_INI = "Fetcher";    
+    public static final String FETCHER_SECTION_INI = "Fetcher";
+    
+    /**
+     * @since 0.1.0
+     */
+    public static final String TIMOUT_PROPERTY = "timeout";    
+
+    /**
+     * @since 0.1.0
+     */
+    public static final String HTTP_PROXY_PROPERTY = "http_proxy";    
+    
 
     /**
      * @since 0.1.0
@@ -528,23 +539,52 @@ public final class DiverCli {
         checkNotNull(iniFile);
         checkNotNull(divConfig);
 
+        checkArgument(iniFile.exists(), "Provided ini does not exist!" + iniFile.getAbsolutePath());
+        
+        checkArgument(iniFile.isFile(), "Provided ini is not a file!" + iniFile.getAbsolutePath());
+        
         Wini ini;
         try {
             ini = new Wini(iniFile);
         } catch (IOException ex) {
             throw new DiverCliIoException("Error while loading ini file " + iniFile.getAbsolutePath(), ex);
         }
-
-        DBConfig dbConfig = divConfig.getDbConfig();
         
+        DivConfig.Builder b = DivConfig.builder(divConfig);
+        
+        DBConfig dbConfig;
+        if (divConfig.getDbConfig() == null){
+            dbConfig = new DBConfig();
+        } else {
+            dbConfig = divConfig.getDbConfig(); 
+        }
+                        
         dbConfig.setDb_vendor(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "db_vendor", ini));
         dbConfig.setJdbc_driver_class(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "jdbc_driver_class", ini));
         dbConfig.setJdbc_url(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "jdbc_url", ini));
         dbConfig.setUser(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "user", ini));
         dbConfig.setPassword(DiverCli.extract(DiverCli.DATABASE_SECTION_INI, "password", ini));
         dbConfig.setShowSQL(false);       
+       
+        b.setDbConfig(dbConfig);
+        
+        String timeoutString = (DiverCli.extract(
+                DiverCli.FETCHER_SECTION_INI, 
+                DiverCli.TIMOUT_PROPERTY, 
+                ini));
+        if (!Internals.isBlank(timeoutString)){
+            b.setTimeout(Integer.parseInt(timeoutString));
+        }
+        
+        String httpProxyString = (DiverCli.extract(
+                DiverCli.FETCHER_SECTION_INI, 
+                DiverCli.HTTP_PROXY_PROPERTY, 
+                ini));
+        if (!Internals.isBlank(httpProxyString)){
+            b.setHttpProxy(httpProxyString);
+        }        
 
-        divConfig = divConfig.withDbConfig(dbConfig);
+        divConfig = b.build();
         
         return ini;
     }
@@ -940,10 +980,7 @@ public final class DiverCli {
     public void saveConfig() {
 
         checkGloballyConfigured();
-
-        projectIni.put(DiverCli.FETCHER_SECTION_INI, "timeout", divConfig.getTimeout());
-        projectIni.put(DiverCli.FETCHER_SECTION_INI, "http_proxy", divConfig.getHttpProxy());
-
+       
         DBConfig dbCfg = divConfig.getDbConfig();
         
         projectIni.put(DATABASE_SECTION_INI, "jdbc_driver_class", dbCfg.getJdbc_driver_class());

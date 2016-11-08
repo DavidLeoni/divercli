@@ -56,6 +56,10 @@ public class DiverCliTest extends DiverCliTestBase {
 
     private static final Logger LOG = LoggerFactory.getLogger(DiverCliTest.class);         
 
+    /**
+     * @since 0.1.0
+     */
+    private static final String GLOBAL_CONF_CUSTOM = "global-conf-custom/";
     
     /**
      * 
@@ -228,23 +232,34 @@ public class DiverCliTest extends DiverCliTestBase {
         DiverCli.of(MainCommand.RESET_GLOBAL_CONFIG_OPTION)
                 .run();
         assertTrue(CliTester.getTestGlobalConfDir().toFile()
-                              .exists());
-       
+                              .exists());       
     }
 
     /**
      * @since 0.1.0
      */
     @Test
-    public void testCustomConfFolderExisting() throws IOException {
+    public void testGlobalTemplateConfFolderExisting() throws IOException {
         
-
         Internals.copyDirFromResource(DiverCli.class, 
                 DiverCli.GLOBAL_CONF_TEMPLATE_DIR, DiverCli.globalConfDirPath());
 
         DiverCli.of().run();
     }
 
+    /**
+     * @since 0.1.0
+     */
+    @Test
+    public void testGlobalCustomConfFolderExisting() throws IOException {
+        
+        Internals.copyDirFromResource(DiverCli.class, 
+                GLOBAL_CONF_CUSTOM, DiverCli.globalConfDirPath());
+
+        DiverCli.of().run();
+    }
+    
+    
     /**
      * @since 0.1.0
      */

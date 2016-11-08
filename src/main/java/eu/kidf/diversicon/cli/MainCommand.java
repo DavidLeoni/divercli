@@ -121,7 +121,7 @@ public class MainCommand implements DiverCliCommand {
         DiverCli.checkGlobalConfDir(cli.globalConfDir);
 
         try {
-            cli.globalConfIni = cli.loadIni(cli.globalConfDir);
+            cli.globalConfIni = cli.loadIni(new File(cli.globalConfDir, DiverCli.INI_FILENAME));
         } catch (Exception ex) {
             throw new DiverCliException(cli.globalConfigIsCorruptedMessage(), ex);
         }
