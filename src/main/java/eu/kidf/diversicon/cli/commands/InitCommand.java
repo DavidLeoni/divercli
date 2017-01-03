@@ -5,6 +5,8 @@ import static eu.kidf.diversicon.core.internal.Internals.checkNotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 
 import org.ini4j.Wini;
 import org.slf4j.Logger;
@@ -14,11 +16,13 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
 import com.beust.jcommander.Parameters;
 
+import ch.qos.logback.classic.Level;
 import de.tudarmstadt.ukp.lmf.transform.DBConfig;
 import eu.kidf.diversicon.cli.DiverCli;
 import eu.kidf.diversicon.cli.exceptions.DiverCliException;
 import eu.kidf.diversicon.cli.exceptions.DiverCliIoException;
 import eu.kidf.diversicon.core.DivConfig;
+import eu.kidf.diversicon.core.Diversicon;
 import eu.kidf.diversicon.core.Diversicons;
 import eu.kidf.diversicon.core.internal.Internals;
 import eu.kidf.diversicon.data.DivWn31;
@@ -116,7 +120,24 @@ public class InitCommand implements DiverCliCommand {
         } else if (!Internals.isBlank(restoreSqlPath)){        
             Diversicons.h2RestoreSql(restoreSqlPath, cli.divConfig());    
         }  else {
+            // Output change needed because drop create is importing 
+            // div-upper, see https://github.com/diversicon-kb/diversicon-core/issues/33
+ 
+            
+            PrintStream savedOut = System.out;           
+
+            LOG.info("Recreating tables in database  " + dbCfg.getJdbc_url() + " ...");
+
+            System.setOut(new PrintStream(
+                    new OutputStream() { @Override public void write(int b) { }}
+            ));
+            // because of UBY printlns, just setting log level isn enough :-/
+            // ch.qos.logback.classic.Logger LOG = (ch.qos.logback.classic.Logger) org.slf4j.LoggerFactory.getLogger(Diversicon.class.getName());
+            // Level savedLevel = LOG.getLevel();
+            // LOG.setLevel(Level.WARN);            
             Diversicons.dropCreateTables(dbCfg);
+            ///LOG.setLevel(savedLevel);
+            System.setOut(savedOut);
         }                                                                               
                
         
