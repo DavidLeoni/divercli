@@ -43,6 +43,7 @@ my-diversicon.db.h2
 my-script.sql
  . 
  .
+ .
 
 ``` 
 
@@ -79,6 +80,7 @@ $eval{wn31.log}
 
 
 To determine to which database to connect, DiverCli uses configuration file `$eval{eu.kidf.diversicon.cli.DiverCli.INI_FILENAME}` inside project directory. You can edit the file to connect to the database of choice, but note currently only <a href="http://www.h2database.com" target="_blank">H2 databases </a> are supported (DiverCli uses H2 v1.3.160). 
+
 
 
 When a database is created default username is `$eval{eu.kidf.diversicon.core.Diversicons.DEFAULT_USER}` and password is `$eval{eu.kidf.diversicon.core.Diversicons.DEFAULT_PASSWORD}`. 
@@ -133,6 +135,15 @@ $eval{wn31.dir}
 
 
 ### Exporting XMLs
+
+You can export a _LexicalResource_ by issuing this command 
+
+$eval{empty.init}
+
+```bash
+$eval{empty.cd}
+```
+
 
 You can export a _LexicalResource_ by issuing this command 
 
