@@ -128,16 +128,23 @@ public class InitCommand implements DiverCliCommand {
 
             LOG.info("Recreating tables in database  " + dbCfg.getJdbc_url() + " ...");
 
-            System.setOut(new PrintStream(
-                    new OutputStream() { @Override public void write(int b) { }}
-            ));
+            
+            
             // because of UBY printlns, just setting log level isn enough :-/
             // ch.qos.logback.classic.Logger LOG = (ch.qos.logback.classic.Logger) org.slf4j.LoggerFactory.getLogger(Diversicon.class.getName());
             // Level savedLevel = LOG.getLevel();
-            // LOG.setLevel(Level.WARN);            
-            Diversicons.dropCreateTables(dbCfg);
-            ///LOG.setLevel(savedLevel);
-            System.setOut(savedOut);
+
+            try {
+                // LOG.setLevel(Level.WARN);
+                System.setOut(new PrintStream(
+                        new OutputStream() { @Override public void write(int b) { }}
+                        ));
+                Diversicons.dropCreateTables(dbCfg);
+            } catch (Exception ex){
+                ///LOG.setLevel(savedLevel);
+                System.setOut(savedOut);
+                throw ex;
+            }
         }                                                                               
                
         
