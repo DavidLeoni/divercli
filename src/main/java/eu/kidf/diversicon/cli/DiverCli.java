@@ -39,6 +39,7 @@ import eu.kidf.diversicon.cli.commands.ImportShowCommand;
 import eu.kidf.diversicon.cli.commands.ImportXmlCommand;
 import eu.kidf.diversicon.cli.commands.InitCommand;
 import eu.kidf.diversicon.cli.commands.LogCommand;
+import eu.kidf.diversicon.cli.commands.ValidateCommand;
 import eu.kidf.diversicon.cli.exceptions.DiverCliException;
 import eu.kidf.diversicon.cli.exceptions.DiverCliIllegalStateException;
 import eu.kidf.diversicon.cli.exceptions.DiverCliIoException;
@@ -369,6 +370,7 @@ public final class DiverCli {
             addCommand(new ImportXmlCommand(this));
             addCommand(new DbAugmentCommand(this));
             addCommand(new HelpCommand(this));
+            addCommand(new ValidateCommand(this));
 
             jcom.parse(args);
 
@@ -385,6 +387,7 @@ public final class DiverCli {
                 
                 if (!(null == parsedCmd
                         || HelpCommand.CMD.equals(parsedCmd)
+                        || ValidateCommand.CMD.equals(parsedCmd)
                         || mainCommand.isHelp() // so it still behaves in a handy way with '--help'
                         || InitCommand.CMD.equals(parsedCmd))){
                     configureProject();    
