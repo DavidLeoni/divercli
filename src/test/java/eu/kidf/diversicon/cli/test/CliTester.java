@@ -17,13 +17,6 @@ public class CliTester {
 
     private static final Logger LOG = LoggerFactory.getLogger(CliTester.class);   
     
-    
-    /**
-     * @since 0.1.0
-     */
-    public static void createTestEnv() {
-
-    }
 
 
     /**

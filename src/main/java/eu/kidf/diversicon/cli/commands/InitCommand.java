@@ -16,13 +16,10 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
 import com.beust.jcommander.Parameters;
 
-import ch.qos.logback.classic.Level;
 import de.tudarmstadt.ukp.lmf.transform.DBConfig;
 import eu.kidf.diversicon.cli.DiverCli;
 import eu.kidf.diversicon.cli.exceptions.DiverCliException;
 import eu.kidf.diversicon.cli.exceptions.DiverCliIoException;
-import eu.kidf.diversicon.core.DivConfig;
-import eu.kidf.diversicon.core.Diversicon;
 import eu.kidf.diversicon.core.Diversicons;
 import eu.kidf.diversicon.core.internal.Internals;
 import eu.kidf.diversicon.data.DivWn31;

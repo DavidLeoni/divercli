@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 
 import com.beust.jcommander.MissingCommandException;
 import com.beust.jcommander.ParameterException;
-
 import de.tudarmstadt.ukp.lmf.model.core.LexicalResource;
 import de.tudarmstadt.ukp.lmf.model.enums.ERelNameSemantics;
 import eu.kidf.diversicon.cli.DiverCli;
@@ -807,4 +806,6 @@ public class DiverCliTest extends DiverCliTestBase {
         LOG.debug(bfWn31.getScmUrl());
         assertTrue(bfWn31.getScmUrl().toLowerCase().contains("diversicon-wordnet-3.1"));
     }
+
+
 }
