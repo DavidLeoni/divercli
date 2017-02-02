@@ -18,7 +18,6 @@ import de.tudarmstadt.ukp.lmf.transform.DBConfig;
 import eu.kidf.diversicon.cli.DiverCli;
 import eu.kidf.diversicon.cli.exceptions.DiverCliException;
 import eu.kidf.diversicon.cli.exceptions.DiverCliIoException;
-import eu.kidf.diversicon.core.DivConfig;
 import eu.kidf.diversicon.core.Diversicons;
 import eu.kidf.diversicon.core.internal.Internals;
 import eu.kidf.diversicon.data.DivWn31;

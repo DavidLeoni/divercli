@@ -81,7 +81,7 @@ public class ImportXmlCommand implements DiverCliCommand {
         importConfig.setSkipAugment(skipAugment);        
 
         for (String fileUrl : importXmlPaths) {
-            importConfig.addLexicalResource(fileUrl);
+            importConfig.addLexResFileUrl(fileUrl);
         }
 
     }
