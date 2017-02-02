@@ -32,6 +32,7 @@ import eu.kidf.diversicon.cli.commands.ImportShowCommand;
 import eu.kidf.diversicon.cli.commands.ImportXmlCommand;
 import eu.kidf.diversicon.cli.commands.InitCommand;
 import eu.kidf.diversicon.cli.commands.LogCommand;
+import eu.kidf.diversicon.cli.commands.ValidateCommand;
 import eu.kidf.diversicon.cli.exceptions.DiverCliException;
 import eu.kidf.diversicon.cli.exceptions.DiverCliNotFoundException;
 import eu.kidf.diversicon.cli.exceptions.DiverCliTerminatedException;
@@ -39,9 +40,12 @@ import eu.kidf.diversicon.core.BuildInfo;
 import eu.kidf.diversicon.core.Diversicon;
 import eu.kidf.diversicon.core.Diversicons;
 import eu.kidf.diversicon.core.ImportJob;
+import eu.kidf.diversicon.core.exceptions.InvalidXmlException;
 import eu.kidf.diversicon.core.internal.Internals;
 import eu.kidf.diversicon.core.test.DivTester;
+import eu.kidf.diversicon.data.DivUpper;
 import eu.kidf.diversicon.data.DivWn31;
+import eu.kidf.diversicon.data.Examplicon;
 
 import static eu.kidf.diversicon.cli.MainCommand.PRJ_OPTION;
 import static eu.kidf.diversicon.cli.test.CliTester.initEmpty;
@@ -787,11 +791,55 @@ public class DiverCliTest extends DiverCliTestBase {
     /**
      * @since 0.1.0
      */
-    @Test
-    @Ignore
+    @Test    
     public void testValidation(){
-        Diversicons.readData(Diversicons.SCHEMA_1_0_CLASSPATH_URL);
+        DiverCli cli = DiverCli.of(ValidateCommand.CMD, DivUpper.XML_URI);
+        cli.run();
     }
+
+    /**
+     * @since 0.1.0
+     */
+    @Test    
+    public void testValidationDefaultNonStrict(){
+        File xml = DivTester.writeXml(DivTester.GRAPH_WARNING,
+                DivTester.createLexResPackage(DivTester.GRAPH_WARNING, DivTester.TOO_LONG_PREFIX));
+        DiverCli cli = DiverCli.of(ValidateCommand.CMD, xml.getAbsolutePath());
+        cli.run();
+        
+    }
+
+    /**
+     * @since 0.1.0
+     */
+    @Test    
+    public void testValidationStrict(){
+        File xml = DivTester.writeXml(DivTester.GRAPH_WARNING,
+                DivTester.createLexResPackage(DivTester.GRAPH_WARNING, DivTester.TOO_LONG_PREFIX));
+        DiverCli cli = DiverCli.of(ValidateCommand.CMD, "--strict", xml.getAbsolutePath());
+        try {
+            cli.run();
+        } catch (InvalidXmlException ex){
+            LOG.debug("Caught expected exception: ", ex);
+        }
+    }
+    
+
+    
+    /**
+     * @since 0.1.0
+     */
+    @Test    
+    public void testValidationBadExamplicon(){        
+        DiverCli cli = DiverCli.of(ValidateCommand.CMD, "classpath:/bad-examplicon.xml");
+        try {
+            cli.run();
+            Assert.fail("Shouldn't arrive here!");
+        } catch (InvalidXmlException ex){
+            LOG.debug("Caught expected exception: ", ex);
+        }
+    }
+    
     
     /**
      * @since 0.1.0

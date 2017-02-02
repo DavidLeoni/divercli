@@ -15,7 +15,6 @@ import com.beust.jcommander.Parameters;
 
 import eu.kidf.diversicon.cli.DiverCli;
 import eu.kidf.diversicon.cli.ImportAppender;
-import eu.kidf.diversicon.core.Diversicons;
 import eu.kidf.diversicon.core.ImportConfig;
 import eu.kidf.diversicon.data.Smartphones;
 
