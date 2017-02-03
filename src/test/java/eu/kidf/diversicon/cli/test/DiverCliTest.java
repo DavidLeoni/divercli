@@ -819,10 +819,12 @@ public class DiverCliTest extends DiverCliTestBase {
         DiverCli cli = DiverCli.of(ValidateCommand.CMD, "--strict", xml.getAbsolutePath());
         try {
             cli.run();
+            Assert.fail("Shouldn't arrive here!");
         } catch (InvalidXmlException ex){
             LOG.debug("Caught expected exception: ", ex);
         }
     }
+
     
 
     
