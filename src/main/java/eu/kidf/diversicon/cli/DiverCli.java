@@ -921,12 +921,12 @@ public final class DiverCli {
         File ini = new File(projectDir, INI_FILENAME);
 
         if (!ini.exists()) {
-            throw new DiverCliNotFoundException("Couldn't find file " + ini.getAbsolutePath());
+            throw new DiverCliNotFoundException("Project directory should contain configuration file " + INI_FILENAME + " but couldn't find it! Looked in: " + ini.getAbsolutePath());
         }
 
         if (ini.isDirectory()) {
             throw new DiverCliIoException(
-                    "Expected a file a configuration file, found a directory instead:" + ini.getAbsolutePath());
+                    "Project directory should contain configuration file " + INI_FILENAME + ", but found a directory instead: " + ini.getAbsolutePath());
         }
 
     }
