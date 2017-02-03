@@ -136,11 +136,9 @@ public class InitCommand implements DiverCliCommand {
                 System.setOut(new PrintStream(
                         new OutputStream() { @Override public void write(int b) { }}
                         ));
-                Diversicons.dropCreateTables(dbCfg);
-            } catch (Exception ex){
-                ///LOG.setLevel(savedLevel);
+                Diversicons.dropCreateTables(dbCfg);            
+            } finally {
                 System.setOut(savedOut);
-                throw ex;
             }
         }                                                                               
                

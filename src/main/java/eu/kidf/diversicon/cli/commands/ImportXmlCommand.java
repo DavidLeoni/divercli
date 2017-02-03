@@ -42,6 +42,12 @@ public class ImportXmlCommand implements DiverCliCommand {
     @Parameter(names = { "--skip-augment", "-s" }, description = "Skips augmenting the db graph to speed up "
             + " operations requiring the transitive closure.")
     boolean skipAugment = false;
+    
+    @Parameter(names = { "--dry-run", "-r" }, description = "A dry run simulates the import without writing anything into the database.")
+    boolean dryRun = false;    
+    
+    @Parameter(names = { "--force", "-f" }, description = "Forces import even on warnings (in particular, missing external references).")
+    boolean force = false;
 
     @Parameter(required = true, variableArity = true, description = "a space separated list of XML files in UBY-LMF format."
             + " Lexical resources must have a 'name' attribute. If there are already present resources with the"
@@ -74,10 +80,12 @@ public class ImportXmlCommand implements DiverCliCommand {
         checkNotBlank(author, "Tried to import files without '--author' parameter! ");
 
         checkNotBlank(description, "Tried to import files without '--description' parameter! ");
-        importConfig = new ImportConfig();
-        importConfig.setAuthor(author);
-        importConfig.setDescription(description);
-        importConfig.setSkipAugment(skipAugment);        
+        importConfig = new ImportConfig()
+                            .setAuthor(author)
+                            .setDescription(description)
+                            .setSkipAugment(skipAugment)
+                            .setForce(force)
+                            .setDryRun(dryRun);
 
         for (String fileUrl : importXmlPaths) {
             importConfig.addLexResFileUrl(fileUrl);
