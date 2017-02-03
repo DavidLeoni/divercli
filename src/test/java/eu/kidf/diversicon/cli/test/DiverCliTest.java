@@ -372,6 +372,18 @@ public class DiverCliTest extends DiverCliTestBase {
         }
 
     }
+    
+    @Test
+    public void testImportXmlForce(){
+        File xml = DivTester.writeXml(DivTester.GRAPH_WARNING,
+                DivTester.createLexResPackage(DivTester.GRAPH_WARNING, DivTester.TOO_LONG_PREFIX));
+        DiverCli cli = DiverCli.of(ImportXmlCommand.CMD, "--force", xml.getAbsolutePath());
+        try {
+            cli.run();
+        } catch (InvalidXmlException ex){
+            LOG.debug("Caught expected exception: ", ex);
+        }        
+    }
 
     /**
      * This also tests MainCommand is working
@@ -854,6 +866,6 @@ public class DiverCliTest extends DiverCliTestBase {
         LOG.debug(bfWn31.getScmUrl());
         assertTrue(bfWn31.getScmUrl().toLowerCase().contains("diversicon-wordnet-3.1"));
     }
-
+    
 
 }
