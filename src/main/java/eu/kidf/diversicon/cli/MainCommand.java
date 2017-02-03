@@ -15,6 +15,7 @@ import eu.kidf.diversicon.cli.commands.DiverCliCommand;
 import eu.kidf.diversicon.cli.exceptions.DiverCliException;
 import eu.kidf.diversicon.cli.exceptions.InvalidConfigException;
 import eu.kidf.diversicon.core.DivConfig;
+import eu.kidf.diversicon.core.BuildInfo;
 import eu.kidf.diversicon.core.internal.Internals;
 
 /**
@@ -166,7 +167,12 @@ public class MainCommand implements DiverCliCommand {
     public void run() {
 
         if (debug) {
+            LOG.info("");
             LOG.info("\n * * * *    DEBUG MODE IS ON    * * * * * \n");
+            LOG.info("");
+            BuildInfo bi = BuildInfo.of(DiverCli.class);
+            LOG.info(bi.toString());
+            LOG.info("");            
         }
 
     }
