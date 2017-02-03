@@ -12,7 +12,6 @@ import java.util.zip.ZipInputStream;
 import org.ini4j.InvalidFileFormatException;
 import org.ini4j.Wini;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,12 +39,12 @@ import eu.kidf.diversicon.core.BuildInfo;
 import eu.kidf.diversicon.core.Diversicon;
 import eu.kidf.diversicon.core.Diversicons;
 import eu.kidf.diversicon.core.ImportJob;
+import eu.kidf.diversicon.core.exceptions.InvalidImportException;
 import eu.kidf.diversicon.core.exceptions.InvalidXmlException;
 import eu.kidf.diversicon.core.internal.Internals;
 import eu.kidf.diversicon.core.test.DivTester;
 import eu.kidf.diversicon.data.DivUpper;
 import eu.kidf.diversicon.data.DivWn31;
-import eu.kidf.diversicon.data.Examplicon;
 
 import static eu.kidf.diversicon.cli.MainCommand.PRJ_OPTION;
 import static eu.kidf.diversicon.cli.test.CliTester.initEmpty;
@@ -319,12 +318,12 @@ public class DiverCliTest extends DiverCliTestBase {
      */
     @Test
     public void testImportXmlBadParams() {
-        DiverCli.of(PRJ_OPTION, "db", InitCommand.CMD).run();
+        DiverCli.of(PRJ_OPTION, "db", InitCommand.CMD).run();               
         
         File xmlFile = DivTester.writeXml(DivTester.GRAPH_1_HYPERNYM);
 
         try {
-            DiverCli.of("--import ", xmlFile.getAbsolutePath())
+            DiverCli.of(ImportXmlCommand.CMD, xmlFile.getAbsolutePath())
                     .run();
             Assert.fail("Should need author!");
         } catch (Exception ex) {
@@ -332,7 +331,7 @@ public class DiverCliTest extends DiverCliTestBase {
         }
 
         try {
-            DiverCli.of("--import ", xmlFile.getAbsolutePath(), "--author", " ")
+            DiverCli.of(ImportXmlCommand.CMD, xmlFile.getAbsolutePath(), "--author", " ")
                     .run();
             Assert.fail("Should need author!");
         } catch (Exception ex) {
@@ -340,7 +339,7 @@ public class DiverCliTest extends DiverCliTestBase {
         }
 
         try {
-            DiverCli.of("--import ", xmlFile.getAbsolutePath(), "--author", "")
+            DiverCli.of(ImportXmlCommand.CMD, xmlFile.getAbsolutePath(), "--author", "")
                     .run();
             Assert.fail("Should need author!");
         } catch (Exception ex) {
@@ -348,7 +347,7 @@ public class DiverCliTest extends DiverCliTestBase {
         }
 
         try {
-            DiverCli.of("--import ", xmlFile.getAbsolutePath(), "--author", "a")
+            DiverCli.of(ImportXmlCommand.CMD, xmlFile.getAbsolutePath(), "--author", "a")
                     .run();
             Assert.fail("Need description!");
         } catch (Exception ex) {
@@ -356,7 +355,7 @@ public class DiverCliTest extends DiverCliTestBase {
         }
 
         try {
-            DiverCli.of("--import ", xmlFile.getAbsolutePath(), "--author", "a", "--description", "")
+            DiverCli.of(ImportXmlCommand.CMD, xmlFile.getAbsolutePath(), "--author", "a", "--description", "")
                     .run();
             Assert.fail("Need description!");
         } catch (Exception ex) {
@@ -373,17 +372,39 @@ public class DiverCliTest extends DiverCliTestBase {
 
     }
     
+    /**
+     * @since 0.1.0
+     */
     @Test
-    public void testImportXmlForce(){
+    public void testImportXmlWarning(){
+        initEmpty();
+        
         File xml = DivTester.writeXml(DivTester.GRAPH_WARNING,
                 DivTester.createLexResPackage(DivTester.GRAPH_WARNING, DivTester.TOO_LONG_PREFIX));
-        DiverCli cli = DiverCli.of(ImportXmlCommand.CMD, "--force", xml.getAbsolutePath());
+        DiverCli cli = DiverCli.of(ImportXmlCommand.CMD, "-a", "a", "-d","d", xml.getAbsolutePath());
         try {
             cli.run();
-        } catch (InvalidXmlException ex){
+            Assert.fail("Shouldn't arrive here!");
+        } catch (InvalidImportException ex){
             LOG.debug("Caught expected exception: ", ex);
         }        
     }
+    
+    /**
+     * @since 0.1.0
+     */
+    @Test
+    public void testImportXmlWarningForce(){
+        initEmpty();
+        
+        File xml = DivTester.writeXml(DivTester.GRAPH_WARNING,
+                DivTester.createLexResPackage(DivTester.GRAPH_WARNING, DivTester.TOO_LONG_PREFIX));
+        DiverCli cli = DiverCli.of(ImportXmlCommand.CMD, "-a", "a", "-d","d", "--force", xml.getAbsolutePath());
+        
+        cli.run();
+            
+    }
+    
 
     /**
      * This also tests MainCommand is working
@@ -396,6 +417,9 @@ public class DiverCliTest extends DiverCliTestBase {
         cli.run();
     }
 
+    /**
+     * @since 0.1.0
+     */    
     @Test
     public void testImportXml() {
         
@@ -416,6 +440,29 @@ public class DiverCliTest extends DiverCliTestBase {
            .close();
     }
 
+    /**
+     * @since 0.1.0
+     */    
+    @Test
+    public void testImportXmlDry() {
+        initEmpty();
+        
+        File xmlFile = DivTester.writeXml(DivTester.GRAPH_1_HYPERNYM);
+
+        DiverCli cli = DiverCli.of(ImportXmlCommand.CMD,
+                "--author", "a",
+                "--description", "d",
+                "--dry-run",
+                xmlFile.getAbsolutePath());
+
+        cli.run();
+
+        Diversicon div = Diversicon.connectToDb(cli.divConfig());
+        assertEquals(null, div.getLexicalResource(DivTester.GRAPH_1_HYPERNYM.getName()));
+        div.getSession()
+           .close();
+        
+    }
    
 
     /**
@@ -490,6 +537,9 @@ public class DiverCliTest extends DiverCliTestBase {
         cli2.disconnect();
     }
 
+    /**
+     * @since 0.1.0
+     */    
     @Test
     public void testExportXmlMissingXmlPath() {
         initEmpty();
@@ -502,6 +552,9 @@ public class DiverCliTest extends DiverCliTestBase {
         }
     }
 
+    /**
+     * @since 0.1.0
+     */
     @Test
     public void testExportXmlMissingLexicalResourceName() throws IOException {
         
@@ -518,6 +571,9 @@ public class DiverCliTest extends DiverCliTestBase {
         }
     }
 
+    /**
+     * @since 0.1.0
+     */
     @Test
     public void testExportXmlWrongLexicalResource() throws IOException {
 
@@ -534,6 +590,9 @@ public class DiverCliTest extends DiverCliTestBase {
         }
     }
 
+    /**
+     * @since 0.1.0
+     */
     @Test
     public void testExportXmlExistingXml() throws IOException {
 
@@ -554,6 +613,9 @@ public class DiverCliTest extends DiverCliTestBase {
         }
     }
 
+    /**
+     * @since 0.1.0
+     */
     @Test
     public void testExportXml() throws IOException {
 
@@ -573,6 +635,9 @@ public class DiverCliTest extends DiverCliTestBase {
 
     }
     
+    /**
+     * @since 0.1.0
+     */
     @Test
     public void testExportXmlCompressed() throws IOException {
         initEmpty();
@@ -594,6 +659,9 @@ public class DiverCliTest extends DiverCliTestBase {
 
     }
 
+    /**
+     * @since 0.1.0
+     */
     @Test
     public void testExportSqlMissingSqlPath() {
         initEmpty();
@@ -607,6 +675,9 @@ public class DiverCliTest extends DiverCliTestBase {
         }
     }
 
+    /**
+     * @since 0.1.0
+     */
     @Test
     public void testExportSqlExistingSql() throws IOException {
         initEmpty();
@@ -626,6 +697,9 @@ public class DiverCliTest extends DiverCliTestBase {
         }
     }
 
+    /**
+     * @since 0.1.0
+     */
     @Test
     public void testExportSql() throws IOException {
         initEmpty();
