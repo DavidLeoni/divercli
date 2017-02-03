@@ -76,6 +76,13 @@ public final class DiverCli {
      */
     private static final Logger LOG = LoggerFactory.getLogger(DiverCli.class);
 
+    /**
+     * Here we put geeky stuff like stacktraces.
+     * 
+     * @since 0.1.0
+     */    
+    private static final Logger LOG_DETAILS = LoggerFactory.getLogger(DiverCli.class.getCanonicalName()+ ".details");
+
     private static final int SUGGESTION_EDIT_DISTANCE = 3;
     
     /**
@@ -83,6 +90,11 @@ public final class DiverCli {
      */
     public static final String CMD = "divercli";
 
+    /**
+     * @since 0.1.0
+     */
+    public static final String LOGFILE = "divercli.log";
+    
     /**
      * @since 0.1.0
      */
@@ -260,10 +272,14 @@ public final class DiverCli {
             exit(1);
 
         } catch (ParameterException ex) {
+            LOG.error("");
             LOG.error(ex.getMessage());
+            LOG_DETAILS.error("Error parsing parameters!", ex);
             exit(1);
         } catch (Exception ex) {
-            LOG.error("Internal error occurred! Details:", ex);
+            LOG.error("");            
+            LOG.error(Internals.getExceptionMessages(ex) + " (For details, see " + LOGFILE + ")");
+            LOG_DETAILS.error("", ex);
             exit(1);
         }
     }

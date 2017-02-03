@@ -167,6 +167,20 @@ public class DiverCliTest extends DiverCliTestBase {
             
         }
     }
+
+    /**
+     * @since 0.1.0
+     */
+    @Test
+    public void testInternalError(){
+        try {
+            DiverCli.main(ValidateCommand.CMD, "666");
+            Assert.fail("Shouldn't arrive here!");
+        } catch (DiverCliTerminatedException ex){
+            
+        }
+    }
+    
     
     /**
      * @since 0.1.0

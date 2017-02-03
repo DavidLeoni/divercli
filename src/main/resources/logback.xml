@@ -39,8 +39,16 @@
         </encoder> 
     </appender>
     
-
-
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    	<file>divercli.log</file>
+    	<append>true</append>
+    	<!-- encoders are assigned the type
+         	ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+    	<encoder>
+      	<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+    	</encoder>
+  	</appender>
+    
     <!--  SchemaExport is way too chatty -->
     <logger name="org.hibernate.tool.hbm2ddl.SchemaExport" level="off"/>
 	
@@ -49,13 +57,15 @@
      -->
     <logger name="org.hibernate.type.TypeFactory" level="error"/>
 
-	<logger name="org.hibernate" level="warn"/> 	 
-		
+	<logger name="eu.kidf.diversicon.cli.DiverCli.details" additivity="false">
+        <appender-ref ref="FILE"/>
+    </logger> 	 		
 
 	<root level="INFO">
         <appender-ref ref="STDOUT-INFO"/>
         <appender-ref ref="STDOUT-WARN"/> 
         <appender-ref ref="STDERR" />
+        <appender-ref ref="FILE" />	
     </root>
     
 </configuration>
