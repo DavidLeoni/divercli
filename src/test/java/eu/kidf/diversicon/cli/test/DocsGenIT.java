@@ -40,7 +40,6 @@ import eu.kidf.diversicon.cli.commands.ImportShowCommand;
 import eu.kidf.diversicon.cli.commands.ImportXmlCommand;
 import eu.kidf.diversicon.cli.commands.InitCommand;
 import eu.kidf.diversicon.cli.commands.LogCommand;
-import eu.kidf.diversicon.cli.exceptions.DiverCliException;
 import eu.kidf.diversicon.cli.exceptions.DiverCliIoException;
 import eu.kidf.diversicon.core.BuildInfo;
 import eu.kidf.diversicon.core.ImportJob;
@@ -573,8 +572,8 @@ public class DocsGenIT extends DiverCliTestBase {
         DiverCli cli = diver("wn31.log", LogCommand.CMD);               
         cli.connect();
         List<ImportJob> jobs = cli.getDiversicon().getImportJobs();
-        assertEquals(1, jobs.size());
-        long id = jobs.get(0).getId();
+        assertEquals(2, jobs.size());
+        long id = jobs.get(1).getId();
         
         diver("wn31.importShow", ImportShowCommand.CMD, Long.toString(id));
     }
