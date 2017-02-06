@@ -57,7 +57,7 @@ In detail:
  
 * `--prj wn31` tells DiverCLI in which folder to put the project
 * `init` is the actual comand given to DiverCli
-* `--db` specifies to `init` command where to take the db. In this case Wordnet 3.1 is pre-packaged in the DiverCLI distribution so we picked it with the special URL beginning with `classpath:`. 
+* `--db` specifies to `init` command where to take the db. In this case Wordnet 3.1 is pre-packaged in the DiverCLI distribution so we picked it with the special URL beginning with `classpath:` 
 
 Notice that `--prj` always goes _before_ commands. 
 
@@ -71,7 +71,7 @@ $eval{wn31.dir}
 
 The file `divercli.ini` tells DiverCli where to connect when we launch the tool from the project directory. In this particular case the database is in the same folder, but it could be anywhere, even a remote connection. 
 
-You can check things are working by issuing the `log` command, which will show a status of the database and a log of the imports done so far:
+You can check things are working by issuing the `log` command, which will show a status of the database and a log of the imports done so far. Notice the first import is always the `[div-upper](https://github.com/diversicon-kb/diversicon-model/blob/master/src/main/resources/div-upper.xml)` lexical resource:
 
 $eval{wn31.log}
 
@@ -136,7 +136,7 @@ $eval{wn31.dir}
 
 ### Exporting XMLs
 
-You can export a _LexicalResource_ by issuing this command 
+You can export a `LexicalResource` by issuing this command 
 
 $eval{empty.init}
 

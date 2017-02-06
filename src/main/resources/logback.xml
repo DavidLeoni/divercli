@@ -56,6 +56,8 @@
     	2016-06-28 14:27:17 [main] WARN  org.hibernate.type.TypeFactory - HHH000233: Scoping types to session factory org.hibernate.internal.SessionFactoryImpl@17d53b9 after already scoped org.hibernate.internal.SessionFactoryImpl@103c181
      -->
     <logger name="org.hibernate.type.TypeFactory" level="error"/>
+    
+    <logger name="org.hibernate" level="warn"/> 	
 
 	<logger name="eu.kidf.diversicon.cli.DiverCli.details" additivity="false">
         <appender-ref ref="FILE"/>
