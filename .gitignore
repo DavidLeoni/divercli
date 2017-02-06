@@ -2,7 +2,7 @@
 /db/
 /conf/*
 !/conf/README.txt
-
+/*.log
 
 ##### MAVEN
 
