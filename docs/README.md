@@ -47,7 +47,7 @@ my-script.sql
 
 ``` 
 
-DiverCli comes with full support for <a href="http://h2database.com" target="_blank"> H2 database </a>, which is shipped with DiverCli and doesn't require separate installation (for info on browsing databases, see [Tools page](Tools#h2)). 
+DiverCli comes with full support for <a href="http://h2database.com" target="_blank"> H2 database </a>, which is shipped with DiverCli and doesn't require separate installation (for info on browsing databases, see [Tools page](Tools.md#h2)). 
 
 Let's create our first H2 file-based database with Wordnet 3.1 inside:
 
