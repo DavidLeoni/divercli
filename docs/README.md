@@ -131,12 +131,23 @@ $eval{wn31.dir}
 
 ### Importing XMLs
 
+You can import an XML with the {eu.kidf.diversicon.cli.commands.ImportXMLCommand.CMD} command.
+When you import an XML, it is going to be validated in todo steps:
+
+
+$eval{empty.init}
+
+```bash
+$eval{empty.cd}
+$eval{smartphones.import.failed}
+``` 
+
 #### Preprocessing XMLs
 
 
 ### Exporting XMLs
 
-You can export a `LexicalResource` by issuing this command 
+You can export a lexical resource by issuing the command $eval{eu.kidf.diversicon.cli.commands.ExportXmlCommand.CMD}: 
 
 $eval{empty.init}
 
@@ -144,14 +155,6 @@ $eval{empty.init}
 $eval{empty.cd}
 ```
 
-
-You can export a _LexicalResource_ by issuing this command 
-
-$eval{empty.init}
-
-```bash
-$eval{empty.cd}
-```
 
 
 ### Import logs

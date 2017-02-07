@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.exec.CommandLine;
@@ -43,6 +45,7 @@ import eu.kidf.diversicon.cli.commands.LogCommand;
 import eu.kidf.diversicon.cli.exceptions.DiverCliIoException;
 import eu.kidf.diversicon.core.BuildInfo;
 import eu.kidf.diversicon.core.ImportJob;
+import eu.kidf.diversicon.core.exceptions.InvalidImportException;
 import eu.kidf.diversicon.data.DivWn31;
 import eu.kidf.diversicon.data.Smartphones;
 
@@ -423,8 +426,6 @@ public class DocsGenIT extends DiverCliTestBase {
     }
 
     
-    
-
     /**
      * 
      * Associates to args key something like this:
@@ -439,40 +440,49 @@ public class DocsGenIT extends DiverCliTestBase {
      * 
      * @since 0.1.0
      */
-    private DiverCli diver(String key, String... args) { 
+    @Nullable
+    private DiverCli diver(String key, String... args) {        
         
         startCaptureSlf4j();
         
-        DiverCli cli = DiverCli.of(args);
+        DiverCli cli = null;
         
-        if (evals.containsKey(key)){
-            LOG.debug("Found already evaluated cli command key '" + key + "', recalculating...");
-        } 
+        try {
+                    
+            cli = DiverCli.of(args);
+            
+            if (evals.containsKey(key)){
+                LOG.debug("Found already evaluated cli command key '" + key + "', recalculating...");
+            } 
+                
+            cli.run();    
         
-        cli.run();                
-        
-        StringBuilder sbStr = new StringBuilder();
-        for (int i = 0, il = args.length; i < il; i++) {
-            if (i > 0)
-                sbStr.append(" ");
-            sbStr.append(args[i]);
+        } finally {
+            StringBuilder sbStr = new StringBuilder();
+            for (int i = 0, il = args.length; i < il; i++) {
+                if (i > 0)
+                    sbStr.append(" ");
+                sbStr.append(args[i]);
+            }
+
+            String cap = stopCaptureSlf4j();
+
+            String val = "```bash\n"
+                    + "> " + DIVERCLI + " " + sbStr.toString() + "\n"
+                    + cap.replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR) + "/", "")
+                         .replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR), "")
+                         .replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_USER_HOME) + "/", "/home/divergeek/")
+                         .replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_USER_HOME), "/home/divergeek/")
+                    + "\n"
+                    + "```\n";
+            
+            evals.put(key, val);
+            
         }
-
-        String cap = stopCaptureSlf4j();
-
-        String val = "```bash\n"
-                + "> " + DIVERCLI + " " + sbStr.toString() + "\n"
-                + cap.replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR) + "/", "")
-                     .replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR), "")
-                     .replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_USER_HOME) + "/", "/home/divergeek/")
-                     .replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_USER_HOME), "/home/divergeek/")
-                + "\n"
-                + "```\n";
         
-        evals.put(key, val);
         
-        return cli;
-    }
+        return cli;        
+    }    
 
     
     /**
@@ -500,6 +510,35 @@ public class DocsGenIT extends DiverCliTestBase {
         bash("wn31.dir", "dir");
     }
 
+    /**
+     * @since 0.1.0
+     */    
+    @Test
+    public void smartphonesInitFailed() {       
+        emptyInit();
+        try {
+            diver("smartphones.import.failed",            
+                ImportXmlCommand.CMD, "--author", "\"John Doe\"", "--description", "Some test import",
+                 Smartphones.XML_URI );
+        } catch (InvalidImportException ex){
+            
+        }
+    }    
+
+    /**
+     * @since 0.1.0
+     */    
+    @Test
+    public void smartphonesInitForce() {       
+        emptyInit();
+        diver("smartphones.import.force",            
+                ImportXmlCommand.CMD,
+                "--force",
+                "--author", "\"John Doe\"", "--description", "Some test import",
+                 Smartphones.XML_URI );          
+    }    
+    
+    
     /**
      * @since 0.1.0
      */    
