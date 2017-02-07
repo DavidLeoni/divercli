@@ -47,7 +47,7 @@ my-script.sql
 
 ``` 
 
-DiverCli comes with full support for <a href="http://h2database.com" target="_blank"> H2 database </a>, which is shipped with DiverCli and doesn't require separate installation (for info on browsing databases, see [Tools page](Tools#h2)). 
+DiverCli comes with full support for <a href="http://h2database.com" target="_blank"> H2 database </a>, which is shipped with DiverCli and doesn't require separate installation (for info on browsing databases, see [Tools page](Tools.md#h2)). 
 
 Let's create our first H2 file-based database with Wordnet 3.1 inside:
 
@@ -57,7 +57,7 @@ In detail:
  
 * `--prj wn31` tells DiverCLI in which folder to put the project
 * `init` is the actual comand given to DiverCli
-* `--db` specifies to `init` command where to take the db. In this case Wordnet 3.1 is pre-packaged in the DiverCLI distribution so we picked it with the special URL beginning with `classpath:`. 
+* `--db` specifies to `init` command where to take the db. In this case Wordnet 3.1 is pre-packaged in the DiverCLI distribution so we picked it with the special URL beginning with `classpath:` 
 
 Notice that `--prj` always goes _before_ commands. 
 
@@ -71,7 +71,7 @@ $eval{wn31.dir}
 
 The file `divercli.ini` tells DiverCli where to connect when we launch the tool from the project directory. In this particular case the database is in the same folder, but it could be anywhere, even a remote connection. 
 
-You can check things are working by issuing the `log` command, which will show a status of the database and a log of the imports done so far:
+You can check things are working by issuing the `log` command, which will show a status of the database and a log of the imports done so far. Notice the first import is always the `[div-upper](https://github.com/diversicon-kb/diversicon-model/blob/master/src/main/resources/div-upper.xml)` lexical resource:
 
 $eval{wn31.log}
 
@@ -131,12 +131,23 @@ $eval{wn31.dir}
 
 ### Importing XMLs
 
+You can import an XML with the {eu.kidf.diversicon.cli.commands.ImportXMLCommand.CMD} command.
+When you import an XML, it is going to be validated in todo steps:
+
+
+$eval{empty.init}
+
+```bash
+$eval{empty.cd}
+$eval{smartphones.import.failed}
+``` 
+
 #### Preprocessing XMLs
 
 
 ### Exporting XMLs
 
-You can export a _LexicalResource_ by issuing this command 
+You can export a lexical resource by issuing the command $eval{eu.kidf.diversicon.cli.commands.ExportXmlCommand.CMD}: 
 
 $eval{empty.init}
 
@@ -144,14 +155,6 @@ $eval{empty.init}
 $eval{empty.cd}
 ```
 
-
-You can export a _LexicalResource_ by issuing this command 
-
-$eval{empty.init}
-
-```bash
-$eval{empty.cd}
-```
 
 
 ### Import logs

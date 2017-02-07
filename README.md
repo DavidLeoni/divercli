@@ -5,7 +5,7 @@ RELEASE DOCS ARE ON THE <a href="http://davidleoni.github.io/divercli/" target="
 </p>
 
 <p class="josman-to-strip" align="center">
-<img alt="DiverCLI" src="docs/img/divercli-200px.png" width="150px">
+<img alt="DiverCLI" src="docs/img/divercli-writing-400px.png" >
 <br/>
 </p>
 
@@ -22,7 +22,8 @@ Java command line client for <a href="https://github.com/diversicon-kb/diversico
 
 **Features**
   
-  * supports <a href="http://www.h2database.com/html/main.html" target="_blank">H2 DB</a>, a pure Java database (both in-memory and on disk, no separate installation is required).
+  * supports all features of <a href="https://diversicon-kb.eu/manual/diversicon-core" target="_blank">Diversicon-Core</a> 
+  * allows configuration both global and per-project    
   * dependency handling with Maven    
   * unit tested with proper integration tests    
   * supports Java 7+
@@ -35,5 +36,20 @@ Java command line client for <a href="https://github.com/diversicon-kb/diversico
 
 #### Credits
 
-* Programming:  David Leoni - Heriot Watt University, Edinburgh - david.leoni at unitn.it
-* Architecture: Gabor Bella - DISI, University of Trento -  gabor.bella at unitn.it
+Design:
+
+* Fiona McNeill - Heriot Watt University, Edinburgh - f.mcneill at hw.ac.uk 
+* Gabor Bella - DISI, University of Trento -  gabor.bella at unitn.it
+* David Leoni - Heriot Watt University, Edinburgh - david.leoni at unitn.it
+
+Programming:  
+
+* David Leoni - Heriot-Watt University, Edinburgh - david.leoni at unitn.it
+
+Based on <a href="http://dkpro.github.io/dkpro-uby/" target="blank">DKPRO UBY framework</a>, by UKP Lab, Technische Universität Darmstadt.
+
+Made possible thanks to:
+
+&emsp;&emsp;&emsp;<a href="https://www.hw.ac.uk/schools/mathematical-computer-sciences/departments/computer-science.htm" target="_blank"> <img src="docs/img/hw.webp" width="80px" style="vertical-align:middle;"> </a> &emsp;&emsp;&emsp;<a href="https://www.hw.ac.uk/schools/mathematical-computer-sciences/departments/computer-science.htm" target="_blank"> Heriot-Watt Computer Science Department </a>  
+
+&emsp;<a href="http://kidf.eu" target="_blank"> <img style="vertical-align:middle;" width="140px" src="docs/img/kidf-scientia.png"> </a> &emsp; <a href="http://kidf.eu" target="_blank"> Knowledge in Diversity Foundation </a> <br/>
