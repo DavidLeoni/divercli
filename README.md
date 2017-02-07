@@ -22,7 +22,8 @@ Java command line client for <a href="https://github.com/diversicon-kb/diversico
 
 **Features**
   
-  * supports <a href="http://www.h2database.com/html/main.html" target="_blank">H2 DB</a>, a pure Java database (both in-memory and on disk, no separate installation is required).
+  * supports all features of <a href="https://diversicon-kb.eu/manual/diversicon-core" target="_blank">Diversicon-Core</a> 
+  * allows configuration both global and per-project    
   * dependency handling with Maven    
   * unit tested with proper integration tests    
   * supports Java 7+
@@ -43,7 +44,7 @@ Design:
 
 Programming:  
 
-* David Leoni - Heriot Watt University, Edinburgh - david.leoni at unitn.it
+* David Leoni - Heriot-Watt University, Edinburgh - david.leoni at unitn.it
 
 Based on <a href="http://dkpro.github.io/dkpro-uby/" target="blank">DKPRO UBY framework</a>, by UKP Lab, Technische Universität Darmstadt.
 
