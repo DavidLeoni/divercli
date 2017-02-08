@@ -544,7 +544,10 @@ public class DocsGenIT extends DiverCliTestBase {
         diver("smartphones.import.success",            
                 ImportXmlCommand.CMD,
                 "--author", "\"John Doe\"", "--description", "Some test import",
-                 Smartphones.XML_URI );          
+                 Smartphones.XML_URI );
+        diver("smartphones.import.success.log",            
+                LogCommand.CMD);
+        
     }    
     
     /**
@@ -654,8 +657,9 @@ public class DocsGenIT extends DiverCliTestBase {
         
         cd("empty.cd", MYPRJ);
         bash("empty.dir", "dir");
+        diver("empty.log",
+                InitCommand.CMD);
     }
-
     
     
     /**
@@ -708,7 +712,7 @@ public class DocsGenIT extends DiverCliTestBase {
      * @since 0.1.0
      */
     @Test
-    public void log() throws IOException {
+    public void wn31Log() throws IOException {
                
         wn31Init();        
                 
