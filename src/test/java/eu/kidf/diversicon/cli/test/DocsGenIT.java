@@ -37,6 +37,7 @@ import ch.qos.logback.core.joran.spi.JoranException;
 import ch.qos.logback.core.util.StatusPrinter;
 import eu.kidf.diversicon.cli.DiverCli;
 import eu.kidf.diversicon.cli.MainCommand;
+import eu.kidf.diversicon.cli.commands.DbAugmentCommand;
 import eu.kidf.diversicon.cli.commands.ExportXmlCommand;
 import eu.kidf.diversicon.cli.commands.HelpCommand;
 import eu.kidf.diversicon.cli.commands.ImportShowCommand;
@@ -49,6 +50,7 @@ import eu.kidf.diversicon.core.BuildInfo;
 import eu.kidf.diversicon.core.ImportJob;
 import eu.kidf.diversicon.core.exceptions.InvalidImportException;
 import eu.kidf.diversicon.data.DivWn31;
+import eu.kidf.diversicon.data.Examplicon;
 import eu.kidf.diversicon.data.Smartphones;
 
 /**
@@ -139,6 +141,11 @@ public class DocsGenIT extends DiverCliTestBase {
     /**
      * @since 0.1.0
      */
+    private static final String BAD_EXAMPLICON_URL = "classpath:/bad-examplicon.xml";
+
+    /**
+     * @since 0.1.0
+     */
     private String origWorkingDir;
 
     @Before
@@ -176,6 +183,7 @@ public class DocsGenIT extends DiverCliTestBase {
         saveEvalMap(evals, new File("target/apidocs/resources/josman-eval.csv"));
     }
 
+    
     
     /**
      * (Copied from Josmans)
@@ -531,6 +539,67 @@ public class DocsGenIT extends DiverCliTestBase {
      * @since 0.1.0
      */    
     @Test
+    public void smartphonesImportSuccess() {       
+        wn31Init();
+        diver("smartphones.import.success",            
+                ImportXmlCommand.CMD,
+                "--author", "\"John Doe\"", "--description", "Some test import",
+                 Smartphones.XML_URI );          
+    }    
+    
+    /**
+     * @since 0.1.0
+     */    
+    @Test
+    public void smartphonesExampliconImportSuccess() {       
+        wn31Init();
+        diver("smartphones.examplicon.import.success",            
+                ImportXmlCommand.CMD,
+                "--author", "\"John Doe\"", "--description", "Some test import",
+                 Smartphones.XML_URI,
+                 Examplicon.XML_URI);
+    }        
+    
+    /**
+     * @since 0.1.0
+     */    
+    @Test
+    public void smartphonesExampliconImportSkipAugment() {       
+        wn31Init();
+        diver("smartphones.import.skipaugment",            
+                ImportXmlCommand.CMD,
+                "--skip-augment", "--author", "\"John Doe\"", "--description", "Some test import",
+                 Smartphones.XML_URI);
+        diver("examplicon.import.skipaugment",            
+                ImportXmlCommand.CMD,
+                "--skip-augment", "--author", "\"John Doe\"", "--description", "Some test import",
+                 Smartphones.XML_URI);
+        diver("smartphones.examplicon.dbaugment",            
+                DbAugmentCommand.CMD);        
+    }    
+           
+    /**
+     * @since 0.1.0
+     */    
+    @Test
+    public void badexampliconImport() {
+        emptyInit();
+        try {
+            diver("badexamplicon.import",            
+                    ImportXmlCommand.CMD,
+                    "--author", "\"John Doe\"", "--description", "Some test import",
+                     BAD_EXAMPLICON_URL );
+        } catch (InvalidImportException ex){
+            
+        }
+    }    
+    
+        
+    
+    /**
+     * @since 0.1.0
+     */    
+    @Test
     public void smartphonesInitForce() {       
         emptyInit();
         diver("smartphones.import.force",            
@@ -559,7 +628,7 @@ public class DocsGenIT extends DiverCliTestBase {
         emptyInit();
         diver("badexamplicon.validate",            
                 ValidateCommand.CMD,
-                "classpath:/bad-examplicon.xml");          
+                BAD_EXAMPLICON_URL);          
     }
     
     /**

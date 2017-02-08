@@ -88,7 +88,8 @@ When a database is created default username is `$eval{eu.kidf.diversicon.core.Di
 
 #### Global configuration
 
-There is also global config in `USER_HOME/$eval{eu.kidf.diversicon.cli.DiverCli.INI_PATH}` shared by all projects. Settings there will be overridden by individual project settings. 
+There is also global config in `USER_HOME/$eval{eu.kidf.diversicon.cli.DiverCli.INI_PATH}`,
+where you can set i.e. proxy and timeouts. The config is shared by all projects, and settings there will be overridden by individual project settings. 
 
 In case global configuration gets messed up, you can reset it by issuing:
 
@@ -98,7 +99,8 @@ $eval{resetGlobalConfig}
 #### Java options
 
 To set Java options  in Linux / Mac (for example to give DiverCli more memory), you can do something like:
-```
+
+```bash
 JAVA_OPTS="-Xms1g -Xmx3g -XX:-UseGCOverheadLimit" divercli db-augment
 ```
 
@@ -131,11 +133,36 @@ $eval{wn31.dir}
 
 ### Importing XMLs
 
-You can import an XML with the $eval{eu.kidf.diversicon.cli.commands.ImportXMLCommand.CMD} command.
-When you try to import an XML, it is first validated to check it is coherent with the current db  
-[more info](http://diversicon-kb.eu/manual/diversicon-core/index.html#xml-import)).
-For example, here we try to import the `smartphones.xml` resource:
+You can import one or more XMLs with the $eval{eu.kidf.diversicon.cli.commands.ImportXMLCommand.CMD} command.
 
+For example, here we first create a database with Wordnet inside, and then import the resource `smartphones.xml` which depends upon Wordnet. Process takes some time as database is normalized and transitive closure is computed ([more info](http://diversicon-kb.eu/manual/diversicon-core/index.html#xml-import)):
+
+$eval{wn31.init}
+
+```bash
+$eval{wn31.cd}
+``` 
+$eval{smartphones.import.success}
+
+#### Importing invalid XMLs
+
+When you try to import an XML, it is first validated to check XML is valid _and_ references to
+current db are present. Let's try to import `bad-eamplicon.xml`, which we already know 
+contains many schema errors:
+
+$eval{empty.init}
+
+```bash
+$eval{empty.cd}
+```
+ 
+$eval{badexamplicon.import}
+
+Predictably, the import failed. 
+
+#### Importing XMLs with unsatisfied references
+
+Even if you try to import the well-formed resource `smartphones.xml` into an empty db the process will fail, because smartphones is referencing the resource `Diversicon Wordnet 3.1` and the validator won't find it in the database:
 
 $eval{empty.init}
 
@@ -145,15 +172,72 @@ $eval{empty.cd}
 
 $eval{smartphones.import.failed}
 
+#### `--force` import
 
-The import fails because `smartphones.xml` is referencing the resource `Diversicon Wordnet 3.1`, which has not been imported yet. In this case, the best solution would be to first import Wordnet. If you really want to import resources that reference unmet dependencies, you can use the `--force` flag:
+In this case, the best solution would be to first import Wordnet. If you really want to import resources that reference unmet dependencies, you can use the `--force` flag:
 
 $eval{smartphones.import.force}
 
 
-### Import logs
+#### Importing many resources
 
-For each resource imported via DiverCli, an import log is available. For example, here we show the log for Wordnet 3.1:
+If you need to import many resources, to avoid transitive closure recomputation, you can either:
+
+a) specify more than one xml with the `$evalNow{eu.kidf.diversicon.cli.commands.ImportXmlCommand.CMD}`.
+  The transitive closure will be automatically computed only once at the end of the two imports:
+
+ $eval{wn31.init}
+
+```bash
+$eval{wn31.cd}
+``` 
+$eval{smartphones.examplicon.import.success}
+ 
+b) equivalently, you can set the flag `--skip-augment` and execute the command `$evalNow{eu.kidf.diversicon.cli.commands.ImportXmlCommand.CMD}`  on each xml you want to import.
+  After the imports, you will explicitly have to compute the transitive closure by calling the command
+  `$evalNow{eu.kidf.diversicon.cli.commands.DbAugmentComand.CMD}` 
+  
+
+$eval{wn31.init}
+
+```bash
+$eval{wn31.cd}
+``` 
+$eval{smartphones.import.skipaugment}
+$eval{examplicon.import.skipaugment}
+$eval{smartphones.examplicon.dbaugment}
+ 
+### Validating XML
+
+You can just validate an XML without checking it is consistent with some db:
+
+
+$eval{smartphones.validate}
+ 
+
+In this case we try to validate file `bad-examplicon.xml`. As the file name implies, validator is
+not going to be happy: 
+
+
+$eval{badexamplicon.validate}
+
+
+
+### Exporting XMLs
+
+You can export a lexical resource by issuing the command $evalNow{eu.kidf.diversicon.cli.commands.ExportXmlCommand.CMD}. In this case, we are going to export the default lexical resource `DivUpper` which is always present in databases you create:
+
+$eval{empty.init}
+
+```bash
+$eval{empty.cd}
+```
+$eval{divupper.export}
+
+
+### Stored logs
+
+For each resource imported via DiverCli, an import log with relevant information is stored in the database. For example, here we show the log for Wordnet 3.1:
  
  
 $eval{wn31.init}
@@ -168,38 +252,12 @@ Note each import has a numerical identifier. To get more details about a single 
 
 $eval{wn31.importShow}
 
-### Validating XML
-
-You can just validate an XML without checking it is consistent with some db:
+Further logs can be found in files with extension `.log` available in the directory where you run `divercli`
 
 
-$eval{smartphones.validate}
+### Logging configuration
 
-
-In this case we try to validate file `bad-examplicon.xml`. As the file name implies, validator is
-not going to be happy: 
-
-
-$eval{badexamplicon.validate}
-
-
-
-### Exporting XMLs
-
-You can export a lexical resource by issuing the command $eval{eu.kidf.diversicon.cli.commands.ExportXmlCommand.CMD}. In this case, we are going to export the default lexical resource `DivUpper` which is always present in databases you create:
-
-$eval{empty.init}
-
-```bash
-$eval{empty.cd}
-```
-$eval{divupper.export}
-
-
-
-### Logging
-
-TODO review
+Logs can be found in files with extension `.log` available in the directory where you run `divercli`.
 
 DiverCLI uses <a href="http://www.slf4j.org" target="_blank">SLF4J </a> logging system with <a href="http://logback.qos.ch/" target="_blank"> Logback</a> as SLF4J implementation. They are configured by default via xml files looked upon in this order :
 
