@@ -1,0 +1,1123 @@
+529  [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+558  [main] INFO  e.k.d.cli.commands.InitCommand - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home2524899504258722440/working/myprj/myprj ...
+561  [main] INFO  eu.kidf.diversicon.core.Diversicons - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home2524899504258722440/working/myprj/myprj ...
+3968 [main] INFO  eu.kidf.diversicon.core.Diversicon - Connecting to database   jdbc:h2:file:/tmp/divercli-test-home2524899504258722440/working/myprj/myprj
+4906 [main] INFO  eu.kidf.diversicon.core.Diversicon - Connected!
+4906 [main] INFO  eu.kidf.diversicon.core.Diversicon - Going to import 1 files by import author Diversicon...
+4944 [main] INFO  eu.kidf.diversicon.core.Diversicon - Loading LMF : classpath:/div-upper.xml ...
+4954 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+4954 [main] INFO  eu.kidf.diversicon.core.Diversicon - Validating XML Schema of /tmp/extracted2722627915869023144/div-upper.xml   ...
+4954 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+5642 [main] INFO  eu.kidf.diversicon.core.Diversicon - XML is valid!
+5643 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+5643 [main] INFO  eu.kidf.diversicon.core.Diversicon - Checking XML external references against the database ...
+5643 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+5643 [main] INFO  e.k.diversicon.core.DivXmlValidator - Validating import data against the db....
+5653 [main] WARN  eu.kidf.diversicon.core.Diversicon - 1,1: DIV-3: Prefix 'wn31' is not present in database prefixes!
+5653 [main] WARN  eu.kidf.diversicon.core.Diversicon - 1,1: DIV-3: Prefix 'xsi' is not present in database prefixes!
+5654 [main] WARN  eu.kidf.diversicon.core.Diversicon - Found 2 warnings in file:/tmp/extracted2722627915869023144/div-upper.xml
+5654 [main] WARN  eu.kidf.diversicon.core.Diversicon - Ignoring warnings because of force flag.
+
+5654 [main] INFO  eu.kidf.diversicon.core.Diversicon - XML can be merged!
+5654 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+5654 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+5654 [main] INFO  eu.kidf.diversicon.core.Diversicon - Starting import...
+5654 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6497 [main] INFO  eu.kidf.diversicon.core.Diversicon - Done loading LMF : classpath:/div-upper.xml .
+6497 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6497 [main] INFO  eu.kidf.diversicon.core.Diversicon - Executing post-import db validation ... 
+6498 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6655 [main] INFO  eu.kidf.diversicon.core.Diversicon - DB is valid!
+6656 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6656 [main] INFO  eu.kidf.diversicon.core.Diversicon -    Elapsed time: 0 secs
+6656 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6657 [main] INFO  eu.kidf.diversicon.core.Diversicon - Normalizing SynsetRelations...
+6698 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+Found 1 synsets.
+
+6713 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6713 [main] INFO  eu.kidf.diversicon.core.Diversicon - Done normalizing SynsetRelations.
+6713 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6713 [main] INFO  eu.kidf.diversicon.core.Diversicon -    No edges were added to the 0 existing ones. 
+
+6713 [main] INFO  eu.kidf.diversicon.core.Diversicon -    Elapsed time: 0 secs
+6713 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6714 [main] INFO  eu.kidf.diversicon.core.Diversicon - Computing transitive closure for SynsetRelations (may take some minutes) ...
+6717 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+   Found 0 synset relations.
+
+6747 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+   Elapsed time: 0 secs
+
+6747 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+Going to write closure into the db...
+
+6753 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6753 [main] INFO  eu.kidf.diversicon.core.Diversicon - Done writing transitive closure for SynsetRelations.
+6753 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6753 [main] INFO  eu.kidf.diversicon.core.Diversicon -    No edges were added to the 0 existing ones. 
+
+6754 [main] INFO  eu.kidf.diversicon.core.Diversicon - Total elapsed time:  0 secs
+6754 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6754 [main] INFO  eu.kidf.diversicon.core.Diversicon - Elapsed time: 1sec   Started: 2017-02-06 04:22:05   Ended: 2017-02-06 04:22:07
+6754 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6754 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6754 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6754 [main] INFO  eu.kidf.diversicon.core.Diversicon - Done importing 1 LMF by import author Diversicon
+6754 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6754 [main] INFO  eu.kidf.diversicon.core.Diversicon - Imported lexical resources: 
+6754 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6755 [main] INFO  eu.kidf.diversicon.core.Diversicon -     div-upper    from    classpath:/div-upper.xml
+6755 [main] INFO  eu.kidf.diversicon.core.Diversicons - Done recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home2524899504258722440/working/myprj/myprj
+478  [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+503  [main] INFO  e.k.d.cli.commands.InitCommand - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home1245503003716845118/working/myprj/myprj ...
+505  [main] INFO  eu.kidf.diversicon.core.Diversicons - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home1245503003716845118/working/myprj/myprj ...
+5392 [main] INFO  e.k.diversicon.core.DivXmlValidator - Validating import data against the db....
+5398 [main] WARN  eu.kidf.diversicon.core.Diversicon - 1,1: DIV-3: Prefix 'wn31' is not present in database prefixes!
+5398 [main] WARN  eu.kidf.diversicon.core.Diversicon - 1,1: DIV-3: Prefix 'xsi' is not present in database prefixes!
+5399 [main] WARN  eu.kidf.diversicon.core.Diversicon - Found 2 warnings in file:/tmp/extracted4158086825793933776/div-upper.xml
+5399 [main] WARN  eu.kidf.diversicon.core.Diversicon - Ignoring warnings because of force flag.
+
+6661 [main] INFO  eu.kidf.diversicon.core.Diversicons - Done recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home1245503003716845118/working/myprj/myprj
+504  [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+535  [main] INFO  e.k.d.cli.commands.InitCommand - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home3123442542350942025/working/myprj/myprj ...
+538  [main] INFO  eu.kidf.diversicon.core.Diversicons - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home3123442542350942025/working/myprj/myprj ...
+5643 [main] INFO  e.k.diversicon.core.DivXmlValidator - Validating import data against the db....
+6569 [main] INFO  eu.kidf.diversicon.core.Diversicons - Done recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home3123442542350942025/working/myprj/myprj
+500  [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+523  [main] INFO  e.k.d.cli.commands.InitCommand - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home3552449704285706947/working/myprj/myprj ...
+524  [main] INFO  eu.kidf.diversicon.core.Diversicons - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home3552449704285706947/working/myprj/myprj ...
+4112 [main] INFO  eu.kidf.diversicon.core.Diversicon - Connecting to database   jdbc:h2:file:/tmp/divercli-test-home3552449704285706947/working/myprj/myprj
+5101 [main] INFO  eu.kidf.diversicon.core.Diversicon - Connected!
+5101 [main] INFO  eu.kidf.diversicon.core.Diversicon - Going to import 1 files by import author Diversicon...
+5128 [main] INFO  eu.kidf.diversicon.core.Diversicon - Loading LMF : classpath:/div-upper.xml ...
+5136 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+5136 [main] INFO  eu.kidf.diversicon.core.Diversicon - Validating XML Schema of /tmp/extracted5800413806413878963/div-upper.xml   ...
+5136 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+5959 [main] INFO  eu.kidf.diversicon.core.Diversicon - XML is valid!
+5959 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+5959 [main] INFO  eu.kidf.diversicon.core.Diversicon - Checking XML external references against the database ...
+5959 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+5960 [main] INFO  e.k.diversicon.core.DivXmlValidator - Validating import data against the db....
+5969 [main] WARN  eu.kidf.diversicon.core.Diversicon - 1,1: DIV-3: Prefix 'wn31' is not present in database prefixes!
+5969 [main] WARN  eu.kidf.diversicon.core.Diversicon - 1,1: DIV-3: Prefix 'xsi' is not present in database prefixes!
+5970 [main] WARN  eu.kidf.diversicon.core.Diversicon - Found 2 warnings in file:/tmp/extracted5800413806413878963/div-upper.xml
+5970 [main] WARN  eu.kidf.diversicon.core.Diversicon - Ignoring warnings because of force flag.
+
+5970 [main] INFO  eu.kidf.diversicon.core.Diversicon - XML can be merged!
+5970 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+5970 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+5970 [main] INFO  eu.kidf.diversicon.core.Diversicon - Starting import...
+5971 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6653 [main] INFO  eu.kidf.diversicon.core.Diversicon - Done loading LMF : classpath:/div-upper.xml .
+6654 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6654 [main] INFO  eu.kidf.diversicon.core.Diversicon - Executing post-import db validation ... 
+6654 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6799 [main] INFO  eu.kidf.diversicon.core.Diversicon - DB is valid!
+6799 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6799 [main] INFO  eu.kidf.diversicon.core.Diversicon -    Elapsed time: 0 secs
+6799 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6801 [main] INFO  eu.kidf.diversicon.core.Diversicon - Normalizing SynsetRelations...
+6892 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+Found 1 synsets.
+
+6906 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6907 [main] INFO  eu.kidf.diversicon.core.Diversicon - Done normalizing SynsetRelations.
+6907 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6907 [main] INFO  eu.kidf.diversicon.core.Diversicon -    No edges were added to the 0 existing ones. 
+
+6907 [main] INFO  eu.kidf.diversicon.core.Diversicon -    Elapsed time: 0 secs
+6907 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6908 [main] INFO  eu.kidf.diversicon.core.Diversicon - Computing transitive closure for SynsetRelations (may take some minutes) ...
+6912 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+   Found 0 synset relations.
+
+6943 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+   Elapsed time: 0 secs
+
+6943 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+Going to write closure into the db...
+
+6949 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6949 [main] INFO  eu.kidf.diversicon.core.Diversicon - Done writing transitive closure for SynsetRelations.
+6949 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6949 [main] INFO  eu.kidf.diversicon.core.Diversicon -    No edges were added to the 0 existing ones. 
+
+6950 [main] INFO  eu.kidf.diversicon.core.Diversicon - Total elapsed time:  0 secs
+6950 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6950 [main] INFO  eu.kidf.diversicon.core.Diversicon - Elapsed time: 1sec   Started: 2017-02-06 04:38:11   Ended: 2017-02-06 04:38:13
+6950 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6950 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6950 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6950 [main] INFO  eu.kidf.diversicon.core.Diversicon - Done importing 1 LMF by import author Diversicon
+6950 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6951 [main] INFO  eu.kidf.diversicon.core.Diversicon - Imported lexical resources: 
+6951 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6951 [main] INFO  eu.kidf.diversicon.core.Diversicon -     div-upper    from    classpath:/div-upper.xml
+6951 [main] INFO  eu.kidf.diversicon.core.Diversicons - Done recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home3552449704285706947/working/myprj/myprj
+471  [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+494  [main] INFO  e.k.d.cli.commands.InitCommand - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home8956458342100746427/working/myprj/myprj ...
+496  [main] INFO  eu.kidf.diversicon.core.Diversicons - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home8956458342100746427/working/myprj/myprj ...
+4125 [main] INFO  eu.kidf.diversicon.core.Diversicon - Connecting to database   jdbc:h2:file:/tmp/divercli-test-home8956458342100746427/working/myprj/myprj
+5285 [main] INFO  eu.kidf.diversicon.core.Diversicon - Connected!
+5285 [main] INFO  eu.kidf.diversicon.core.Diversicon - Going to import 1 files by import author Diversicon...
+5324 [main] INFO  eu.kidf.diversicon.core.Diversicon - Loading LMF : classpath:/div-upper.xml ...
+5334 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+5334 [main] INFO  eu.kidf.diversicon.core.Diversicon - Validating XML Schema of /tmp/extracted1589144846809900556/div-upper.xml   ...
+5335 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6078 [main] INFO  eu.kidf.diversicon.core.Diversicon - XML is valid!
+6078 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6078 [main] INFO  eu.kidf.diversicon.core.Diversicon - Checking XML external references against the database ...
+6078 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6080 [main] INFO  e.k.diversicon.core.DivXmlValidator - Validating import data against the db....
+6085 [main] WARN  eu.kidf.diversicon.core.Diversicon - 1,1: DIV-3: Prefix 'wn31' is not present in database prefixes!
+6086 [main] WARN  eu.kidf.diversicon.core.Diversicon - 1,1: DIV-3: Prefix 'xsi' is not present in database prefixes!
+6086 [main] WARN  eu.kidf.diversicon.core.Diversicon - Found 2 warnings in file:/tmp/extracted1589144846809900556/div-upper.xml
+6086 [main] WARN  eu.kidf.diversicon.core.Diversicon - Ignoring warnings because of force flag.
+
+6086 [main] INFO  eu.kidf.diversicon.core.Diversicon - XML can be merged!
+6086 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6087 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6087 [main] INFO  eu.kidf.diversicon.core.Diversicon - Starting import...
+6087 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6823 [main] INFO  eu.kidf.diversicon.core.Diversicon - Done loading LMF : classpath:/div-upper.xml .
+6823 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6823 [main] INFO  eu.kidf.diversicon.core.Diversicon - Executing post-import db validation ... 
+6824 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6957 [main] INFO  eu.kidf.diversicon.core.Diversicon - DB is valid!
+6957 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6957 [main] INFO  eu.kidf.diversicon.core.Diversicon -    Elapsed time: 0 secs
+6957 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+6959 [main] INFO  eu.kidf.diversicon.core.Diversicon - Normalizing SynsetRelations...
+7033 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+Found 1 synsets.
+
+7046 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7046 [main] INFO  eu.kidf.diversicon.core.Diversicon - Done normalizing SynsetRelations.
+7046 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7046 [main] INFO  eu.kidf.diversicon.core.Diversicon -    No edges were added to the 0 existing ones. 
+
+7046 [main] INFO  eu.kidf.diversicon.core.Diversicon -    Elapsed time: 0 secs
+7046 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7046 [main] INFO  eu.kidf.diversicon.core.Diversicon - Computing transitive closure for SynsetRelations (may take some minutes) ...
+7049 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+   Found 0 synset relations.
+
+7077 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+   Elapsed time: 0 secs
+
+7078 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+Going to write closure into the db...
+
+7084 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7084 [main] INFO  eu.kidf.diversicon.core.Diversicon - Done writing transitive closure for SynsetRelations.
+7084 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7084 [main] INFO  eu.kidf.diversicon.core.Diversicon -    No edges were added to the 0 existing ones. 
+
+7084 [main] INFO  eu.kidf.diversicon.core.Diversicon - Total elapsed time:  0 secs
+7084 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7085 [main] INFO  eu.kidf.diversicon.core.Diversicon - Elapsed time: 1sec   Started: 2017-02-06 04:38:43   Ended: 2017-02-06 04:38:45
+7085 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7085 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7085 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7085 [main] INFO  eu.kidf.diversicon.core.Diversicon - Done importing 1 LMF by import author Diversicon
+7085 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7085 [main] INFO  eu.kidf.diversicon.core.Diversicon - Imported lexical resources: 
+7086 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7086 [main] INFO  eu.kidf.diversicon.core.Diversicon -     div-upper    from    classpath:/div-upper.xml
+7086 [main] INFO  eu.kidf.diversicon.core.Diversicons - Done recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home8956458342100746427/working/myprj/myprj
+511  [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+534  [main] INFO  e.k.d.cli.commands.InitCommand - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home4119724955479489966/working/myprj/myprj ...
+3637 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table ArgumentRelation drop constraint FK3A19F3F9D07C6108
+3637 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "ARGUMENTRELATION" not found; SQL statement:
+
+    alter table ArgumentRelation 
+        drop constraint FK3A19F3F9D07C6108 [42102-160]
+3638 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table Component drop constraint FK24013CDD25A62DA8
+3639 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "COMPONENT" not found; SQL statement:
+
+    alter table Component 
+        drop constraint FK24013CDD25A62DA8 [42102-160]
+3640 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table Context drop constraint FK9BEFCD8FE55CD8CE
+3640 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "CONTEXT" not found; SQL statement:
+
+    alter table Context 
+        drop constraint FK9BEFCD8FE55CD8CE [42102-160]
+3641 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table Definition drop constraint FK3A5B1173E55CD8CE
+3641 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "DEFINITION" not found; SQL statement:
+
+    alter table Definition 
+        drop constraint FK3A5B1173E55CD8CE [42102-160]
+3642 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table Definition drop constraint FK3A5B11733B39B376
+3642 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "DEFINITION" not found; SQL statement:
+
+    alter table Definition 
+        drop constraint FK3A5B11733B39B376 [42102-160]
+3643 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table Definition drop constraint FK3A5B1173D07C6108
+3643 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "DEFINITION" not found; SQL statement:
+
+    alter table Definition 
+        drop constraint FK3A5B1173D07C6108 [42102-160]
+3644 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table Definition drop constraint FK3A5B1173419E4416
+3644 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "DEFINITION" not found; SQL statement:
+
+    alter table Definition 
+        drop constraint FK3A5B1173419E4416 [42102-160]
+3645 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table Equivalent drop constraint FK453DAE8AE55CD8CE
+3645 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "EQUIVALENT" not found; SQL statement:
+
+    alter table Equivalent 
+        drop constraint FK453DAE8AE55CD8CE [42102-160]
+3646 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table FormRepresentation_Lemma drop constraint FK6398139A8CF65CFF
+3646 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "FORMREPRESENTATION_LEMMA" not found; SQL statement:
+
+    alter table FormRepresentation_Lemma 
+        drop constraint FK6398139A8CF65CFF [42102-160]
+3647 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table FormRepresentation_RelatedForm drop constraint FKE419AB01395E3DED
+3647 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "FORMREPRESENTATION_RELATEDFORM" not found; SQL statement:
+
+    alter table FormRepresentation_RelatedForm 
+        drop constraint FKE419AB01395E3DED [42102-160]
+3648 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table FormRepresentation_WordForm drop constraint FK6DFB1CBCFF40E643
+3648 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "FORMREPRESENTATION_WORDFORM" not found; SQL statement:
+
+    alter table FormRepresentation_WordForm 
+        drop constraint FK6DFB1CBCFF40E643 [42102-160]
+3650 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table Frequency drop constraint FK7345A53C56B52CE0
+3650 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "FREQUENCY" not found; SQL statement:
+
+    alter table Frequency 
+        drop constraint FK7345A53C56B52CE0 [42102-160]
+3651 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table Frequency drop constraint FK7345A53CE55CD8CE
+3651 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "FREQUENCY" not found; SQL statement:
+
+    alter table Frequency 
+        drop constraint FK7345A53CE55CD8CE [42102-160]
+3652 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table Frequency drop constraint FK7345A53C3B39B376
+3652 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "FREQUENCY" not found; SQL statement:
+
+    alter table Frequency 
+        drop constraint FK7345A53C3B39B376 [42102-160]
+3653 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table Frequency drop constraint FK7345A53CD07C6108
+3653 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "FREQUENCY" not found; SQL statement:
+
+    alter table Frequency 
+        drop constraint FK7345A53CD07C6108 [42102-160]
+3653 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table Frequency drop constraint FK7345A53C7C079BE8
+3654 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "FREQUENCY" not found; SQL statement:
+
+    alter table Frequency 
+        drop constraint FK7345A53C7C079BE8 [42102-160]
+3654 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table Frequency drop constraint FK7345A53CFF40E643
+3654 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "FREQUENCY" not found; SQL statement:
+
+    alter table Frequency 
+        drop constraint FK7345A53CFF40E643 [42102-160]
+3655 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table Frequency drop constraint FK7345A53C7D905E90
+3655 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "FREQUENCY" not found; SQL statement:
+
+    alter table Frequency 
+        drop constraint FK7345A53C7D905E90 [42102-160]
+3656 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table Frequency drop constraint FK7345A53C1BCB7E3B
+3656 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "FREQUENCY" not found; SQL statement:
+
+    alter table Frequency 
+        drop constraint FK7345A53C1BCB7E3B [42102-160]
+3657 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table Frequency drop constraint FK7345A53C66CCE22E
+3657 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "FREQUENCY" not found; SQL statement:
+
+    alter table Frequency 
+        drop constraint FK7345A53C66CCE22E [42102-160]
+3658 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table ImportJob drop constraint FK6B03F1B894E20966
+3658 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "IMPORTJOB" not found; SQL statement:
+
+    alter table ImportJob 
+        drop constraint FK6B03F1B894E20966 [42102-160]
+3659 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table ImportJob drop constraint FK6B03F1B8E380AEC
+3659 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "IMPORTJOB" not found; SQL statement:
+
+    alter table ImportJob 
+        drop constraint FK6B03F1B8E380AEC [42102-160]
+3660 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table LexicalEntry drop constraint FK4D12758E81BC3362
+3660 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "LEXICALENTRY" not found; SQL statement:
+
+    alter table LexicalEntry 
+        drop constraint FK4D12758E81BC3362 [42102-160]
+3661 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table Lexicon drop constraint FK677F4EF8D2749EB6
+3661 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "LEXICON" not found; SQL statement:
+
+    alter table Lexicon 
+        drop constraint FK677F4EF8D2749EB6 [42102-160]
+3662 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table LogMessage drop constraint FK37365C43E380AEC
+3662 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "LOGMESSAGE" not found; SQL statement:
+
+    alter table LogMessage 
+        drop constraint FK37365C43E380AEC [42102-160]
+3663 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table MetaData drop constraint FKE8F9536FD2749EB6
+3663 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "METADATA" not found; SQL statement:
+
+    alter table MetaData 
+        drop constraint FKE8F9536FD2749EB6 [42102-160]
+3664 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table MonolingualExternalRef drop constraint FKAFC5EB01E55CD8CE
+3664 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "MONOLINGUALEXTERNALREF" not found; SQL statement:
+
+    alter table MonolingualExternalRef 
+        drop constraint FKAFC5EB01E55CD8CE [42102-160]
+3665 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table MonolingualExternalRef drop constraint FKAFC5EB01419E4416
+3665 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "MONOLINGUALEXTERNALREF" not found; SQL statement:
+
+    alter table MonolingualExternalRef 
+        drop constraint FKAFC5EB01419E4416 [42102-160]
+3666 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table MonolingualExternalRef drop constraint FKAFC5EB012AA1AAC4
+3666 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "MONOLINGUALEXTERNALREF" not found; SQL statement:
+
+    alter table MonolingualExternalRef 
+        drop constraint FKAFC5EB012AA1AAC4 [42102-160]
+3667 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table MonolingualExternalRef drop constraint FKAFC5EB01EED04014
+3667 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "MONOLINGUALEXTERNALREF" not found; SQL statement:
+
+    alter table MonolingualExternalRef 
+        drop constraint FKAFC5EB01EED04014 [42102-160]
+3668 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table Namespace drop constraint FKC215753B6EA867A1
+3668 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "NAMESPACE" not found; SQL statement:
+
+    alter table Namespace 
+        drop constraint FKC215753B6EA867A1 [42102-160]
+3669 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table PredicateArgumentAxis drop constraint FKFD2E8735D2749EB6
+3669 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "PREDICATEARGUMENTAXIS" not found; SQL statement:
+
+    alter table PredicateArgumentAxis 
+        drop constraint FKFD2E8735D2749EB6 [42102-160]
+3670 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table PredicateRelation drop constraint FKA16BA0B33B39B376
+3670 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "PREDICATERELATION" not found; SQL statement:
+
+    alter table PredicateRelation 
+        drop constraint FKA16BA0B33B39B376 [42102-160]
+3671 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table PredicativeRepresentation drop constraint FK365488F7E55CD8CE
+3671 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "PREDICATIVEREPRESENTATION" not found; SQL statement:
+
+    alter table PredicativeRepresentation 
+        drop constraint FK365488F7E55CD8CE [42102-160]
+3672 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table RelatedForm drop constraint FKA5BAB76F56B52CE0
+3672 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "RELATEDFORM" not found; SQL statement:
+
+    alter table RelatedForm 
+        drop constraint FKA5BAB76F56B52CE0 [42102-160]
+3673 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table SemanticArgument drop constraint FK14964EC33B39B376
+3673 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "SEMANTICARGUMENT" not found; SQL statement:
+
+    alter table SemanticArgument 
+        drop constraint FK14964EC33B39B376 [42102-160]
+3674 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table SemanticLabel drop constraint FK79EFFCAEE55CD8CE
+3674 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "SEMANTICLABEL" not found; SQL statement:
+
+    alter table SemanticLabel 
+        drop constraint FK79EFFCAEE55CD8CE [42102-160]
+3675 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table SemanticLabel drop constraint FK79EFFCAE3B39B376
+3675 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "SEMANTICLABEL" not found; SQL statement:
+
+    alter table SemanticLabel 
+        drop constraint FK79EFFCAE3B39B376 [42102-160]
+3676 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table SemanticLabel drop constraint FK79EFFCAED07C6108
+3676 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "SEMANTICLABEL" not found; SQL statement:
+
+    alter table SemanticLabel 
+        drop constraint FK79EFFCAED07C6108 [42102-160]
+3677 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table SemanticPredicate drop constraint FKA72DBA7181BC3362
+3677 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "SEMANTICPREDICATE" not found; SQL statement:
+
+    alter table SemanticPredicate 
+        drop constraint FKA72DBA7181BC3362 [42102-160]
+3678 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table Sense drop constraint FK4C1338E56B52CE0
+3678 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "SENSE" not found; SQL statement:
+
+    alter table Sense 
+        drop constraint FK4C1338E56B52CE0 [42102-160]
+3680 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table SenseAxis drop constraint FK92E0184FD2749EB6
+3680 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "SENSEAXIS" not found; SQL statement:
+
+    alter table SenseAxis 
+        drop constraint FK92E0184FD2749EB6 [42102-160]
+3681 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table SenseAxisRelation drop constraint FKC134B76B9886EAA2
+3681 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "SENSEAXISRELATION" not found; SQL statement:
+
+    alter table SenseAxisRelation 
+        drop constraint FKC134B76B9886EAA2 [42102-160]
+3682 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table SenseExample drop constraint FKDF53F9FCE55CD8CE
+3682 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "SENSEEXAMPLE" not found; SQL statement:
+
+    alter table SenseExample 
+        drop constraint FKDF53F9FCE55CD8CE [42102-160]
+3683 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table SenseRelation drop constraint FK76A223AAE55CD8CE
+3683 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "SENSERELATION" not found; SQL statement:
+
+    alter table SenseRelation 
+        drop constraint FK76A223AAE55CD8CE [42102-160]
+3685 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table Statement drop constraint FKFB29494F6748058A
+3685 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "STATEMENT" not found; SQL statement:
+
+    alter table Statement 
+        drop constraint FKFB29494F6748058A [42102-160]
+3686 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table SubcatFrameSetElement drop constraint FKC8E1D8F18646F81F
+3686 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "SUBCATFRAMESETELEMENT" not found; SQL statement:
+
+    alter table SubcatFrameSetElement 
+        drop constraint FKC8E1D8F18646F81F [42102-160]
+3687 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table SubcategorizationFrame drop constraint FKE5687A481BC3362
+3687 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "SUBCATEGORIZATIONFRAME" not found; SQL statement:
+
+    alter table SubcategorizationFrame 
+        drop constraint FKE5687A481BC3362 [42102-160]
+3689 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table SubcategorizationFrameSet drop constraint FK8793EA1E81BC3362
+3689 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "SUBCATEGORIZATIONFRAMESET" not found; SQL statement:
+
+    alter table SubcategorizationFrameSet 
+        drop constraint FK8793EA1E81BC3362 [42102-160]
+3691 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table SynArgMap drop constraint FK5BED1FEE8646F81F
+3691 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "SYNARGMAP" not found; SQL statement:
+
+    alter table SynArgMap 
+        drop constraint FK5BED1FEE8646F81F [42102-160]
+3692 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table SynSemArgMap drop constraint FKDFAF19992C9AE3BC
+3692 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "SYNSEMARGMAP" not found; SQL statement:
+
+    alter table SynSemArgMap 
+        drop constraint FKDFAF19992C9AE3BC [42102-160]
+3694 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table SynSemCorrespondence drop constraint FK8FFF1B0D81BC3362
+3694 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "SYNSEMCORRESPONDENCE" not found; SQL statement:
+
+    alter table SynSemCorrespondence 
+        drop constraint FK8FFF1B0D81BC3362 [42102-160]
+3696 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table Synset drop constraint FK947F14BA81BC3362
+3696 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "SYNSET" not found; SQL statement:
+
+    alter table Synset 
+        drop constraint FK947F14BA81BC3362 [42102-160]
+3698 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table SynsetRelation drop constraint FK9AB218D6419E4416
+3698 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "SYNSETRELATION" not found; SQL statement:
+
+    alter table SynsetRelation 
+        drop constraint FK9AB218D6419E4416 [42102-160]
+3700 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table SyntacticArgument drop constraint FKB8755CBD1BCB7E3B
+3700 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "SYNTACTICARGUMENT" not found; SQL statement:
+
+    alter table SyntacticArgument 
+        drop constraint FKB8755CBD1BCB7E3B [42102-160]
+3702 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table SyntacticBehaviour drop constraint FKB7515ABD56B52CE0
+3702 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "SYNTACTICBEHAVIOUR" not found; SQL statement:
+
+    alter table SyntacticBehaviour 
+        drop constraint FKB7515ABD56B52CE0 [42102-160]
+3704 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table TextRepresentation_Context drop constraint FKF24F6DCA2AA1AAC4
+3704 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "TEXTREPRESENTATION_CONTEXT" not found; SQL statement:
+
+    alter table TextRepresentation_Context 
+        drop constraint FKF24F6DCA2AA1AAC4 [42102-160]
+3706 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table TextRepresentation_Definition drop constraint FK9C7243586748058A
+3706 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "TEXTREPRESENTATION_DEFINITION" not found; SQL statement:
+
+    alter table TextRepresentation_Definition 
+        drop constraint FK9C7243586748058A [42102-160]
+3707 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table TextRepresentation_SenseExample drop constraint FK186646A1266E44FA
+3708 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "TEXTREPRESENTATION_SENSEEXAMPLE" not found; SQL statement:
+
+    alter table TextRepresentation_SenseExample 
+        drop constraint FK186646A1266E44FA [42102-160]
+3709 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table TextRepresentation_Statement drop constraint FK3821C6CA66BAB490
+3710 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "TEXTREPRESENTATION_STATEMENT" not found; SQL statement:
+
+    alter table TextRepresentation_Statement 
+        drop constraint FK3821C6CA66BAB490 [42102-160]
+3712 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table WordForm drop constraint FK585170E56B52CE0
+3712 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Table "WORDFORM" not found; SQL statement:
+
+    alter table WordForm 
+        drop constraint FK585170E56B52CE0 [42102-160]
+3720 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: drop sequence hibernate_sequence
+3721 [main] ERROR o.h.tool.hbm2ddl.SchemaExport - Sequence "HIBERNATE_SEQUENCE" not found; SQL statement:
+
+    drop sequence hibernate_sequence [90036-160]
+508  [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+531  [main] INFO  e.k.d.cli.commands.InitCommand - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home3952732752664358614/working/myprj/myprj ...
+582  [main] INFO  e.k.diversicon.cli.test.DocsGenIT - Writing file /home/da/Da/prj/divercli/prj/target/apidocs/resources/josman-eval.csv   ...
+586  [main] INFO  e.k.diversicon.cli.test.DocsGenIT - CSV file created successfully: /home/da/Da/prj/divercli/prj/target/apidocs/resources/josman-eval.csv
+468  [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+494  [main] INFO  e.k.d.cli.commands.InitCommand - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home8311657548277197341/working/myprj/myprj ...
+500  [main] INFO  e.k.diversicon.cli.test.DocsGenIT - Writing file /home/da/Da/prj/divercli/prj/target/apidocs/resources/josman-eval.csv   ...
+502  [main] INFO  e.k.diversicon.cli.test.DocsGenIT - CSV file created successfully: /home/da/Da/prj/divercli/prj/target/apidocs/resources/josman-eval.csv
+10287 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+10318 [main] INFO  e.k.d.cli.commands.InitCommand - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home6111115864711084954/working/myprj/myprj ...
+543  [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+573  [main] INFO  e.k.d.cli.commands.InitCommand - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home4180151754304410727/working/myprj/myprj ...
+510  [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+537  [main] INFO  e.k.d.cli.commands.InitCommand - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home962224879843548393/working/myprj/myprj ...
+483  [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+494  [main] INFO  e.k.diversicon.cli.test.DocsGenIT - Writing file /home/da/Da/prj/divercli/prj/target/apidocs/resources/josman-eval.csv   ...
+497  [main] INFO  e.k.diversicon.cli.test.DocsGenIT - CSV file created successfully: /home/da/Da/prj/divercli/prj/target/apidocs/resources/josman-eval.csv
+475  [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+498  [main] INFO  e.k.d.cli.commands.InitCommand - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home5297643334227620162/working/myprj/myprj ...
+1913 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+2201 [main] INFO  e.k.d.cli.commands.InitCommand - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home9070184109038272990/working/myprj/myprj ...
+10587 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+10595 [main] INFO  e.k.diversicon.cli.test.DocsGenIT - Writing file /home/da/Da/prj/divercli/prj/target/apidocs/resources/josman-eval.csv   ...
+10598 [main] INFO  e.k.diversicon.cli.test.DocsGenIT - CSV file created successfully: /home/da/Da/prj/divercli/prj/target/apidocs/resources/josman-eval.csv
+501  [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+525  [main] INFO  e.k.d.cli.commands.InitCommand - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home6118900227168248578/working/myprj/myprj ...
+6729 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+6740 [main] INFO  eu.kidf.diversicon.core.Diversicon - Connecting to database   jdbc:h2:file:/tmp/divercli-test-home6118900227168248578/working/myprj/myprj
+7569 [main] INFO  eu.kidf.diversicon.core.Diversicon - Connected!
+7571 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+7573 [main] INFO  eu.kidf.diversicon.cli.DiverCli -  Welcome to
+7653 [main] INFO  eu.kidf.diversicon.cli.DiverCli -          _  _                          _                     
+      __| |(_)__   __  ___  _ __  ___ (_)  ___   ___   _ __  
+     / _` || |\ \ / / / _ \| '__|/ __|| | / __| / _ \ | '_ \ 
+    | (_| || | \ V / |  __/| |   \__ \| || (__ | (_) || | | |
+     \__,_||_|  \_/   \___||_|   |___/|_| \___| \___/ |_| |_|
+                                                             
+    
+7654 [main] INFO  eu.kidf.diversicon.core.Diversicon - Going to import 1 files by import author John Doe...
+7661 [main] INFO  eu.kidf.diversicon.core.Diversicon - Loading LMF : classpath:/smartphones.xml ...
+7725 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7727 [main] INFO  eu.kidf.diversicon.core.Diversicon - Validating XML Schema of /tmp/extracted6400753677188896956/smartphones.xml   ...
+7728 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7773 [main] INFO  eu.kidf.diversicon.core.Diversicon - XML is valid!
+7774 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7776 [main] INFO  eu.kidf.diversicon.core.Diversicon - Checking XML external references against the database ...
+7777 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7779 [main] INFO  e.k.diversicon.core.DivXmlValidator - Validating import data against the db....
+7792 [main] WARN  eu.kidf.diversicon.core.Diversicon - 125,37: DIV-2: SynsetRelation.target wn31_ss_n2995984 : Db does not contain referenced synset!
+7795 [main] WARN  eu.kidf.diversicon.core.Diversicon - 156,37: DIV-2: SynsetRelation.target wn31_ss_n3086983 : Db does not contain referenced synset!
+7797 [main] ERROR eu.kidf.diversicon.core.Diversicon - There were warnings during strict validation:
+Found 2 warnings in file:/tmp/extracted6400753677188896956/smartphones.xml
+7806 [main] ERROR eu.kidf.diversicon.core.Diversicon - Import failed, no LexicalResource data was written to disk. Aborting all imports.
+eu.kidf.diversicon.core.exceptions.InvalidImportException: Invalid import for classpath:/smartphones.xml! 
+
+	at eu.kidf.diversicon.core.Diversicon.validateImport(Diversicon.java:1427) ~[classes/:na]
+	at eu.kidf.diversicon.core.Diversicon.newImportJob(Diversicon.java:1335) ~[classes/:na]
+	at eu.kidf.diversicon.core.Diversicon.importFile(Diversicon.java:1165) ~[classes/:na]
+	at eu.kidf.diversicon.core.Diversicon.importFiles(Diversicon.java:1060) ~[classes/:na]
+	at eu.kidf.diversicon.cli.commands.ImportXmlCommand.run(ImportXmlCommand.java:114) [classes/:na]
+	at eu.kidf.diversicon.cli.DiverCli.run(DiverCli.java:454) [classes/:na]
+	at eu.kidf.diversicon.cli.test.DocsGenIT.diver(DocsGenIT.java:452) [test-classes/:na]
+	at eu.kidf.diversicon.cli.test.DocsGenIT.smartphonesInit(DocsGenIT.java:509) [test-classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.7.0_80]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57) ~[na:1.7.0_80]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.7.0_80]
+	at java.lang.reflect.Method.invoke(Method.java:606) ~[na:1.7.0_80]
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.12.jar:4.12]
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363) [junit-4.12.jar:4.12]
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192) [.cp/:na]
+Caused by: eu.kidf.diversicon.core.exceptions.InvalidXmlException: There were warnings during strict validation:
+ Found 2 warnings in file:/tmp/extracted6400753677188896956/smartphones.xml
+First warning was: 125,37: DIV-2: SynsetRelation.target wn31_ss_n2995984 : Db does not contain referenced synset!
+	at eu.kidf.diversicon.core.DivXmlValidator.checkPassed(DivXmlValidator.java:721) ~[classes/:na]
+	at eu.kidf.diversicon.core.Diversicon.validateImport(Diversicon.java:1416) ~[classes/:na]
+	... 33 common frames omitted
+7808 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+7809 [main] INFO  eu.kidf.diversicon.cli.DiverCli - Disconnected.
+7809 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+7814 [main] INFO  e.k.diversicon.cli.test.DocsGenIT - Writing file /home/da/Da/prj/divercli/prj/target/apidocs/resources/josman-eval.csv   ...
+7817 [main] INFO  e.k.diversicon.cli.test.DocsGenIT - CSV file created successfully: /home/da/Da/prj/divercli/prj/target/apidocs/resources/josman-eval.csv
+484  [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+507  [main] INFO  e.k.d.cli.commands.InitCommand - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home2443790497474024986/working/myprj/myprj ...
+6932 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+6949 [main] INFO  eu.kidf.diversicon.core.Diversicon - Connecting to database   jdbc:h2:file:/tmp/divercli-test-home2443790497474024986/working/myprj/myprj
+7898 [main] INFO  eu.kidf.diversicon.core.Diversicon - Connected!
+7899 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+7899 [main] INFO  eu.kidf.diversicon.cli.DiverCli -  Welcome to
+7918 [main] INFO  eu.kidf.diversicon.cli.DiverCli -          _  _                          _                     
+      __| |(_)__   __  ___  _ __  ___ (_)  ___   ___   _ __  
+     / _` || |\ \ / / / _ \| '__|/ __|| | / __| / _ \ | '_ \ 
+    | (_| || | \ V / |  __/| |   \__ \| || (__ | (_) || | | |
+     \__,_||_|  \_/   \___||_|   |___/|_| \___| \___/ |_| |_|
+                                                             
+    
+7919 [main] INFO  eu.kidf.diversicon.core.Diversicon - Going to import 1 files by import author John Doe...
+7926 [main] INFO  eu.kidf.diversicon.core.Diversicon - Loading LMF : classpath:/smartphones.xml ...
+7930 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7931 [main] INFO  eu.kidf.diversicon.core.Diversicon - Validating XML Schema of /tmp/extracted486782584151250732/smartphones.xml   ...
+7932 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7976 [main] INFO  eu.kidf.diversicon.core.Diversicon - XML is valid!
+7978 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7979 [main] INFO  eu.kidf.diversicon.core.Diversicon - Checking XML external references against the database ...
+7980 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7983 [main] INFO  e.k.diversicon.core.DivXmlValidator - Validating import data against the db....
+7997 [main] WARN  eu.kidf.diversicon.core.Diversicon - 125,37: DIV-2: SynsetRelation.target wn31_ss_n2995984 : Db does not contain referenced synset!
+8001 [main] WARN  eu.kidf.diversicon.core.Diversicon - 156,37: DIV-2: SynsetRelation.target wn31_ss_n3086983 : Db does not contain referenced synset!
+8002 [main] WARN  eu.kidf.diversicon.core.Diversicon - Found 2 warnings in file:/tmp/extracted486782584151250732/smartphones.xml
+8003 [main] WARN  eu.kidf.diversicon.core.Diversicon - Ignoring warnings because of force flag.
+
+8005 [main] INFO  eu.kidf.diversicon.core.Diversicon - XML can be merged!
+8006 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+8007 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+8009 [main] INFO  eu.kidf.diversicon.core.Diversicon - Starting import...
+8010 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+8638 [main] INFO  eu.kidf.diversicon.core.Diversicon - Done loading LMF : classpath:/smartphones.xml .
+8640 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+8641 [main] INFO  eu.kidf.diversicon.core.Diversicon - Executing post-import db validation ... 
+8642 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+8655 [main] INFO  eu.kidf.diversicon.core.Diversicon - DB is valid!
+8656 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+8658 [main] INFO  eu.kidf.diversicon.core.Diversicon -    Elapsed time: 0 secs
+8659 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+8664 [main] INFO  eu.kidf.diversicon.core.Diversicon - Normalizing SynsetRelations...
+8680 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+Found 5 synsets.
+
+8696 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+8698 [main] INFO  eu.kidf.diversicon.core.Diversicon - Done normalizing SynsetRelations.
+8699 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+8700 [main] INFO  eu.kidf.diversicon.core.Diversicon -    No edges were added to the 5 existing ones. 
+
+8701 [main] INFO  eu.kidf.diversicon.core.Diversicon -    Elapsed time: 0 secs
+8702 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+8703 [main] INFO  eu.kidf.diversicon.core.Diversicon - Computing transitive closure for SynsetRelations (may take some minutes) ...
+8707 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+   Found 5 synset relations.
+
+8714 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+   Elapsed time: 0 secs
+
+8717 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+Going to write closure into the db...
+
+8741 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+8743 [main] INFO  eu.kidf.diversicon.core.Diversicon - Done writing transitive closure for SynsetRelations.
+8744 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+8746 [main] INFO  eu.kidf.diversicon.core.Diversicon -    Max level:      3
+   Initial edges:  5
+   Inserted edges: 6
+        hypernym:   6
+
+8748 [main] INFO  eu.kidf.diversicon.core.Diversicon - Total elapsed time:  0 secs
+8749 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+8750 [main] INFO  eu.kidf.diversicon.core.Diversicon - Elapsed time: 0 secs   Started: 2017-02-06 05:37:28   Ended: 2017-02-06 05:37:29
+8752 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+8753 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+8755 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+8756 [main] INFO  eu.kidf.diversicon.core.Diversicon - Done importing 1 LMF by import author John Doe
+8758 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+8759 [main] INFO  eu.kidf.diversicon.core.Diversicon - Imported lexical resources: 
+8761 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+8762 [main] INFO  eu.kidf.diversicon.core.Diversicon -     div-smartphones    from    classpath:/smartphones.xml
+8765 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+8765 [main] INFO  eu.kidf.diversicon.cli.DiverCli - Disconnected.
+8765 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+1852 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+2337 [main] INFO  e.k.d.cli.commands.InitCommand - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home8112250459607916528/working/myprj/myprj ...
+12837 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+12848 [main] INFO  eu.kidf.diversicon.core.Diversicon - Connecting to database   jdbc:h2:file:/tmp/divercli-test-home8112250459607916528/working/myprj/myprj
+13821 [main] INFO  eu.kidf.diversicon.core.Diversicon - Connected!
+13843 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+13843 [main] INFO  eu.kidf.diversicon.cli.DiverCli -  Welcome to
+13876 [main] INFO  eu.kidf.diversicon.cli.DiverCli -          _  _                          _                     
+      __| |(_)__   __  ___  _ __  ___ (_)  ___   ___   _ __  
+     / _` || |\ \ / / / _ \| '__|/ __|| | / __| / _ \ | '_ \ 
+    | (_| || | \ V / |  __/| |   \__ \| || (__ | (_) || | | |
+     \__,_||_|  \_/   \___||_|   |___/|_| \___| \___/ |_| |_|
+                                                             
+    
+13877 [main] INFO  eu.kidf.diversicon.core.Diversicon - Going to import 1 files by import author John Doe...
+13884 [main] INFO  eu.kidf.diversicon.core.Diversicon - Loading LMF : classpath:/smartphones.xml ...
+13911 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+13913 [main] INFO  eu.kidf.diversicon.core.Diversicon - Validating XML Schema of /tmp/extracted7912590273343164323/smartphones.xml   ...
+13914 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+13952 [main] INFO  eu.kidf.diversicon.core.Diversicon - XML is valid!
+13953 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+13954 [main] INFO  eu.kidf.diversicon.core.Diversicon - Checking XML external references against the database ...
+13955 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+13958 [main] INFO  e.k.diversicon.core.DivXmlValidator - Validating import data against the db....
+13970 [main] WARN  eu.kidf.diversicon.core.Diversicon - 125,37: DIV-2: SynsetRelation.target wn31_ss_n2995984 : Db does not contain referenced synset!
+13972 [main] WARN  eu.kidf.diversicon.core.Diversicon - 156,37: DIV-2: SynsetRelation.target wn31_ss_n3086983 : Db does not contain referenced synset!
+13974 [main] ERROR eu.kidf.diversicon.core.Diversicon - There were warnings during strict validation:
+Found 2 warnings in file:/tmp/extracted7912590273343164323/smartphones.xml
+13981 [main] ERROR eu.kidf.diversicon.core.Diversicon - Import failed, no LexicalResource data was written to disk. Aborting all imports.
+eu.kidf.diversicon.core.exceptions.InvalidImportException: Invalid import for classpath:/smartphones.xml! 
+
+	at eu.kidf.diversicon.core.Diversicon.validateImport(Diversicon.java:1427) ~[classes/:na]
+	at eu.kidf.diversicon.core.Diversicon.newImportJob(Diversicon.java:1335) ~[classes/:na]
+	at eu.kidf.diversicon.core.Diversicon.importFile(Diversicon.java:1165) ~[classes/:na]
+	at eu.kidf.diversicon.core.Diversicon.importFiles(Diversicon.java:1060) ~[classes/:na]
+	at eu.kidf.diversicon.cli.commands.ImportXmlCommand.run(ImportXmlCommand.java:114) [classes/:na]
+	at eu.kidf.diversicon.cli.DiverCli.run(DiverCli.java:454) [classes/:na]
+	at eu.kidf.diversicon.cli.test.DocsGenIT.diver(DocsGenIT.java:458) [test-classes/:na]
+	at eu.kidf.diversicon.cli.test.DocsGenIT.smartphonesInitFailed(DocsGenIT.java:520) [test-classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.7.0_80]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57) ~[na:1.7.0_80]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.7.0_80]
+	at java.lang.reflect.Method.invoke(Method.java:606) ~[na:1.7.0_80]
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.12.jar:4.12]
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363) [junit-4.12.jar:4.12]
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192) [.cp/:na]
+Caused by: eu.kidf.diversicon.core.exceptions.InvalidXmlException: There were warnings during strict validation:
+ Found 2 warnings in file:/tmp/extracted7912590273343164323/smartphones.xml
+First warning was: 125,37: DIV-2: SynsetRelation.target wn31_ss_n2995984 : Db does not contain referenced synset!
+	at eu.kidf.diversicon.core.DivXmlValidator.checkPassed(DivXmlValidator.java:721) ~[classes/:na]
+	at eu.kidf.diversicon.core.Diversicon.validateImport(Diversicon.java:1416) ~[classes/:na]
+	... 33 common frames omitted
+13983 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+13983 [main] INFO  eu.kidf.diversicon.cli.DiverCli - Disconnected.
+13983 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+1391 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+1538 [main] INFO  e.k.d.cli.commands.InitCommand - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home6674629569836211189/working/myprj/myprj ...
+11731 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+11739 [main] INFO  eu.kidf.diversicon.core.Diversicon - Connecting to database   jdbc:h2:file:/tmp/divercli-test-home6674629569836211189/working/myprj/myprj
+12521 [main] INFO  eu.kidf.diversicon.core.Diversicon - Connected!
+12521 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+12521 [main] INFO  eu.kidf.diversicon.cli.DiverCli -  Welcome to
+12556 [main] INFO  eu.kidf.diversicon.cli.DiverCli -          _  _                          _                     
+      __| |(_)__   __  ___  _ __  ___ (_)  ___   ___   _ __  
+     / _` || |\ \ / / / _ \| '__|/ __|| | / __| / _ \ | '_ \ 
+    | (_| || | \ V / |  __/| |   \__ \| || (__ | (_) || | | |
+     \__,_||_|  \_/   \___||_|   |___/|_| \___| \___/ |_| |_|
+                                                             
+    
+12575 [main] INFO  eu.kidf.diversicon.core.Diversicon - Going to import 1 files by import author John Doe...
+12583 [main] INFO  eu.kidf.diversicon.core.Diversicon - Loading LMF : classpath:/smartphones.xml ...
+12598 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+12601 [main] INFO  eu.kidf.diversicon.core.Diversicon - Validating XML Schema of /tmp/extracted5246357629381398574/smartphones.xml   ...
+12604 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+12653 [main] INFO  eu.kidf.diversicon.core.Diversicon - XML is valid!
+12656 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+12657 [main] INFO  eu.kidf.diversicon.core.Diversicon - Checking XML external references against the database ...
+12659 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+12661 [main] INFO  e.k.diversicon.core.DivXmlValidator - Validating import data against the db....
+12676 [main] WARN  eu.kidf.diversicon.core.Diversicon - 125,37: DIV-2: SynsetRelation.target wn31_ss_n2995984 : Db does not contain referenced synset!
+12679 [main] WARN  eu.kidf.diversicon.core.Diversicon - 156,37: DIV-2: SynsetRelation.target wn31_ss_n3086983 : Db does not contain referenced synset!
+12681 [main] ERROR eu.kidf.diversicon.core.Diversicon - There were warnings during strict validation:
+Found 2 warnings in file:/tmp/extracted5246357629381398574/smartphones.xml
+12691 [main] ERROR eu.kidf.diversicon.core.Diversicon - Import failed, no LexicalResource data was written to disk. Aborting all imports.
+eu.kidf.diversicon.core.exceptions.InvalidImportException: Invalid import for classpath:/smartphones.xml! 
+
+	at eu.kidf.diversicon.core.Diversicon.validateImport(Diversicon.java:1427) ~[classes/:na]
+	at eu.kidf.diversicon.core.Diversicon.newImportJob(Diversicon.java:1335) ~[classes/:na]
+	at eu.kidf.diversicon.core.Diversicon.importFile(Diversicon.java:1165) ~[classes/:na]
+	at eu.kidf.diversicon.core.Diversicon.importFiles(Diversicon.java:1060) ~[classes/:na]
+	at eu.kidf.diversicon.cli.commands.ImportXmlCommand.run(ImportXmlCommand.java:114) [classes/:na]
+	at eu.kidf.diversicon.cli.DiverCli.run(DiverCli.java:454) [classes/:na]
+	at eu.kidf.diversicon.cli.test.DocsGenIT.diver(DocsGenIT.java:458) [test-classes/:na]
+	at eu.kidf.diversicon.cli.test.DocsGenIT.smartphonesInitFailed(DocsGenIT.java:521) [test-classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.7.0_80]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57) ~[na:1.7.0_80]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.7.0_80]
+	at java.lang.reflect.Method.invoke(Method.java:606) ~[na:1.7.0_80]
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.12.jar:4.12]
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363) [junit-4.12.jar:4.12]
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192) [.cp/:na]
+Caused by: eu.kidf.diversicon.core.exceptions.InvalidXmlException: There were warnings during strict validation:
+ Found 2 warnings in file:/tmp/extracted5246357629381398574/smartphones.xml
+First warning was: 125,37: DIV-2: SynsetRelation.target wn31_ss_n2995984 : Db does not contain referenced synset!
+	at eu.kidf.diversicon.core.DivXmlValidator.checkPassed(DivXmlValidator.java:721) ~[classes/:na]
+	at eu.kidf.diversicon.core.Diversicon.validateImport(Diversicon.java:1416) ~[classes/:na]
+	... 33 common frames omitted
+12694 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+12696 [main] INFO  eu.kidf.diversicon.cli.DiverCli - Disconnected.
+12698 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+520  [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+545  [main] INFO  e.k.d.cli.commands.InitCommand - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home4267794284561278591/working/myprj/myprj ...
+6846 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+6858 [main] INFO  eu.kidf.diversicon.core.Diversicon - Connecting to database   jdbc:h2:file:/tmp/divercli-test-home4267794284561278591/working/myprj/myprj
+7905 [main] INFO  eu.kidf.diversicon.core.Diversicon - Connected!
+7905 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+7905 [main] INFO  eu.kidf.diversicon.cli.DiverCli -  Welcome to
+7919 [main] INFO  eu.kidf.diversicon.cli.DiverCli -          _  _                          _                     
+      __| |(_)__   __  ___  _ __  ___ (_)  ___   ___   _ __  
+     / _` || |\ \ / / / _ \| '__|/ __|| | / __| / _ \ | '_ \ 
+    | (_| || | \ V / |  __/| |   \__ \| || (__ | (_) || | | |
+     \__,_||_|  \_/   \___||_|   |___/|_| \___| \___/ |_| |_|
+                                                             
+    
+7920 [main] INFO  eu.kidf.diversicon.core.Diversicon - Going to import 1 files by import author John Doe...
+7926 [main] INFO  eu.kidf.diversicon.core.Diversicon - Loading LMF : classpath:/smartphones.xml ...
+7930 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7931 [main] INFO  eu.kidf.diversicon.core.Diversicon - Validating XML Schema of /tmp/extracted4823421165842182512/smartphones.xml   ...
+7933 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7966 [main] INFO  eu.kidf.diversicon.core.Diversicon - XML is valid!
+7968 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7969 [main] INFO  eu.kidf.diversicon.core.Diversicon - Checking XML external references against the database ...
+7970 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+7973 [main] INFO  e.k.diversicon.core.DivXmlValidator - Validating import data against the db....
+7984 [main] WARN  eu.kidf.diversicon.core.Diversicon - 125,37: DIV-2: SynsetRelation.target wn31_ss_n2995984 : Db does not contain referenced synset!
+7987 [main] WARN  eu.kidf.diversicon.core.Diversicon - 156,37: DIV-2: SynsetRelation.target wn31_ss_n3086983 : Db does not contain referenced synset!
+7989 [main] ERROR eu.kidf.diversicon.core.Diversicon - There were warnings during strict validation:
+Found 2 warnings in file:/tmp/extracted4823421165842182512/smartphones.xml
+7997 [main] ERROR eu.kidf.diversicon.core.Diversicon - Import failed, no LexicalResource data was written to disk. Aborting all imports.
+eu.kidf.diversicon.core.exceptions.InvalidImportException: Invalid import for classpath:/smartphones.xml! 
+
+	at eu.kidf.diversicon.core.Diversicon.validateImport(Diversicon.java:1427) ~[classes/:na]
+	at eu.kidf.diversicon.core.Diversicon.newImportJob(Diversicon.java:1335) ~[classes/:na]
+	at eu.kidf.diversicon.core.Diversicon.importFile(Diversicon.java:1165) ~[classes/:na]
+	at eu.kidf.diversicon.core.Diversicon.importFiles(Diversicon.java:1060) ~[classes/:na]
+	at eu.kidf.diversicon.cli.commands.ImportXmlCommand.run(ImportXmlCommand.java:114) [classes/:na]
+	at eu.kidf.diversicon.cli.DiverCli.run(DiverCli.java:454) [classes/:na]
+	at eu.kidf.diversicon.cli.test.DocsGenIT.diver(DocsGenIT.java:458) [test-classes/:na]
+	at eu.kidf.diversicon.cli.test.DocsGenIT.smartphonesInitFailed(DocsGenIT.java:521) [test-classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.7.0_80]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57) ~[na:1.7.0_80]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.7.0_80]
+	at java.lang.reflect.Method.invoke(Method.java:606) ~[na:1.7.0_80]
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.12.jar:4.12]
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363) [junit-4.12.jar:4.12]
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192) [.cp/:na]
+Caused by: eu.kidf.diversicon.core.exceptions.InvalidXmlException: There were warnings during strict validation:
+ Found 2 warnings in file:/tmp/extracted4823421165842182512/smartphones.xml
+First warning was: 125,37: DIV-2: SynsetRelation.target wn31_ss_n2995984 : Db does not contain referenced synset!
+	at eu.kidf.diversicon.core.DivXmlValidator.checkPassed(DivXmlValidator.java:721) ~[classes/:na]
+	at eu.kidf.diversicon.core.Diversicon.validateImport(Diversicon.java:1416) ~[classes/:na]
+	... 33 common frames omitted
+8000 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+8000 [main] INFO  eu.kidf.diversicon.cli.DiverCli - Disconnected.
+8000 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+1461 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+2186 [main] INFO  e.k.d.cli.commands.InitCommand - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home8403618370157493983/working/myprj/myprj ...
+12566 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+12573 [main] INFO  eu.kidf.diversicon.core.Diversicon - Connecting to database   jdbc:h2:file:/tmp/divercli-test-home8403618370157493983/working/myprj/myprj
+13518 [main] INFO  eu.kidf.diversicon.core.Diversicon - Connected!
+13519 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+13519 [main] INFO  eu.kidf.diversicon.cli.DiverCli -  Welcome to
+13643 [main] INFO  eu.kidf.diversicon.cli.DiverCli -          _  _                          _                     
+      __| |(_)__   __  ___  _ __  ___ (_)  ___   ___   _ __  
+     / _` || |\ \ / / / _ \| '__|/ __|| | / __| / _ \ | '_ \ 
+    | (_| || | \ V / |  __/| |   \__ \| || (__ | (_) || | | |
+     \__,_||_|  \_/   \___||_|   |___/|_| \___| \___/ |_| |_|
+                                                             
+    
+13656 [main] INFO  eu.kidf.diversicon.core.Diversicon - Going to import 1 files by import author John Doe...
+13663 [main] INFO  eu.kidf.diversicon.core.Diversicon - Loading LMF : classpath:/smartphones.xml ...
+13682 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+13685 [main] INFO  eu.kidf.diversicon.core.Diversicon - Validating XML Schema of /tmp/extracted3505280141846892624/smartphones.xml   ...
+13686 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+13733 [main] INFO  eu.kidf.diversicon.core.Diversicon - XML is valid!
+13736 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+13738 [main] INFO  eu.kidf.diversicon.core.Diversicon - Checking XML external references against the database ...
+13741 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+13743 [main] INFO  e.k.diversicon.core.DivXmlValidator - Validating import data against the db....
+13756 [main] WARN  eu.kidf.diversicon.core.Diversicon - 125,37: DIV-2: SynsetRelation.target wn31_ss_n2995984 : Db does not contain referenced synset!
+13759 [main] WARN  eu.kidf.diversicon.core.Diversicon - 156,37: DIV-2: SynsetRelation.target wn31_ss_n3086983 : Db does not contain referenced synset!
+13761 [main] ERROR eu.kidf.diversicon.core.Diversicon - There were warnings during strict validation:
+Found 2 warnings in file:/tmp/extracted3505280141846892624/smartphones.xml
+13783 [main] ERROR eu.kidf.diversicon.core.Diversicon - Import failed, no LexicalResource data was written to disk. Aborting all imports.
+eu.kidf.diversicon.core.exceptions.InvalidImportException: Invalid import for classpath:/smartphones.xml! 
+
+	at eu.kidf.diversicon.core.Diversicon.validateImport(Diversicon.java:1427) ~[classes/:na]
+	at eu.kidf.diversicon.core.Diversicon.newImportJob(Diversicon.java:1335) ~[classes/:na]
+	at eu.kidf.diversicon.core.Diversicon.importFile(Diversicon.java:1165) ~[classes/:na]
+	at eu.kidf.diversicon.core.Diversicon.importFiles(Diversicon.java:1060) ~[classes/:na]
+	at eu.kidf.diversicon.cli.commands.ImportXmlCommand.run(ImportXmlCommand.java:114) [classes/:na]
+	at eu.kidf.diversicon.cli.DiverCli.run(DiverCli.java:454) [classes/:na]
+	at eu.kidf.diversicon.cli.test.DocsGenIT.diver(DocsGenIT.java:458) [test-classes/:na]
+	at eu.kidf.diversicon.cli.test.DocsGenIT.smartphonesInitFailed(DocsGenIT.java:520) [test-classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.7.0_80]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57) ~[na:1.7.0_80]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.7.0_80]
+	at java.lang.reflect.Method.invoke(Method.java:606) ~[na:1.7.0_80]
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.12.jar:4.12]
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363) [junit-4.12.jar:4.12]
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192) [.cp/:na]
+Caused by: eu.kidf.diversicon.core.exceptions.InvalidXmlException: There were warnings during strict validation:
+ Found 2 warnings in file:/tmp/extracted3505280141846892624/smartphones.xml
+First warning was: 125,37: DIV-2: SynsetRelation.target wn31_ss_n2995984 : Db does not contain referenced synset!
+	at eu.kidf.diversicon.core.DivXmlValidator.checkPassed(DivXmlValidator.java:721) ~[classes/:na]
+	at eu.kidf.diversicon.core.Diversicon.validateImport(Diversicon.java:1416) ~[classes/:na]
+	... 33 common frames omitted
+13786 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+13787 [main] INFO  eu.kidf.diversicon.cli.DiverCli - Disconnected.
+13787 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+2737 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+3198 [main] INFO  e.k.d.cli.commands.InitCommand - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home8133449611046211548/working/myprj/myprj ...
+14555 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+14567 [main] INFO  eu.kidf.diversicon.core.Diversicon - Connecting to database   jdbc:h2:file:/tmp/divercli-test-home8133449611046211548/working/myprj/myprj
+15551 [main] INFO  eu.kidf.diversicon.core.Diversicon - Connected!
+15551 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+15551 [main] INFO  eu.kidf.diversicon.cli.DiverCli -  Welcome to
+15593 [main] INFO  eu.kidf.diversicon.cli.DiverCli -          _  _                          _                     
+      __| |(_)__   __  ___  _ __  ___ (_)  ___   ___   _ __  
+     / _` || |\ \ / / / _ \| '__|/ __|| | / __| / _ \ | '_ \ 
+    | (_| || | \ V / |  __/| |   \__ \| || (__ | (_) || | | |
+     \__,_||_|  \_/   \___||_|   |___/|_| \___| \___/ |_| |_|
+                                                             
+    
+15613 [main] INFO  eu.kidf.diversicon.core.Diversicon - Going to import 1 files by import author John Doe...
+15620 [main] INFO  eu.kidf.diversicon.core.Diversicon - Loading LMF : classpath:/smartphones.xml ...
+15647 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+15648 [main] INFO  eu.kidf.diversicon.core.Diversicon - Validating XML Schema of /tmp/extracted5843555772275409681/smartphones.xml   ...
+15649 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+15735 [main] INFO  eu.kidf.diversicon.core.Diversicon - XML is valid!
+15739 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+15742 [main] INFO  eu.kidf.diversicon.core.Diversicon - Checking XML external references against the database ...
+15743 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+15745 [main] INFO  e.k.diversicon.core.DivXmlValidator - Validating import data against the db....
+15782 [main] WARN  eu.kidf.diversicon.core.Diversicon - 125,37: DIV-2: SynsetRelation.target wn31_ss_n2995984 : Db does not contain referenced synset!
+15785 [main] WARN  eu.kidf.diversicon.core.Diversicon - 156,37: DIV-2: SynsetRelation.target wn31_ss_n3086983 : Db does not contain referenced synset!
+15787 [main] WARN  eu.kidf.diversicon.core.Diversicon - Found 2 warnings in file:/tmp/extracted5843555772275409681/smartphones.xml
+15788 [main] WARN  eu.kidf.diversicon.core.Diversicon - Ignoring warnings because of force flag.
+
+15790 [main] INFO  eu.kidf.diversicon.core.Diversicon - XML can be merged!
+15791 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+15792 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+15794 [main] INFO  eu.kidf.diversicon.core.Diversicon - Starting import...
+15795 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+16470 [main] INFO  eu.kidf.diversicon.core.Diversicon - Done loading LMF : classpath:/smartphones.xml .
+16471 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+16473 [main] INFO  eu.kidf.diversicon.core.Diversicon - Executing post-import db validation ... 
+16474 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+16486 [main] INFO  eu.kidf.diversicon.core.Diversicon - DB is valid!
+16488 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+16489 [main] INFO  eu.kidf.diversicon.core.Diversicon -    Elapsed time: 0 secs
+16491 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+16493 [main] INFO  eu.kidf.diversicon.core.Diversicon - Normalizing SynsetRelations...
+16516 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+Found 5 synsets.
+
+16551 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+16552 [main] INFO  eu.kidf.diversicon.core.Diversicon - Done normalizing SynsetRelations.
+16554 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+16555 [main] INFO  eu.kidf.diversicon.core.Diversicon -    No edges were added to the 5 existing ones. 
+
+16556 [main] INFO  eu.kidf.diversicon.core.Diversicon -    Elapsed time: 0 secs
+16558 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+16559 [main] INFO  eu.kidf.diversicon.core.Diversicon - Computing transitive closure for SynsetRelations (may take some minutes) ...
+16564 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+   Found 5 synset relations.
+
+16573 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+   Elapsed time: 0 secs
+
+16576 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+Going to write closure into the db...
+
+16608 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+16610 [main] INFO  eu.kidf.diversicon.core.Diversicon - Done writing transitive closure for SynsetRelations.
+16611 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+16613 [main] INFO  eu.kidf.diversicon.core.Diversicon -    Max level:      3
+   Initial edges:  5
+   Inserted edges: 6
+        hypernym:   6
+
+16615 [main] INFO  eu.kidf.diversicon.core.Diversicon - Total elapsed time:  0 secs
+16616 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+16618 [main] INFO  eu.kidf.diversicon.core.Diversicon - Elapsed time: 1sec   Started: 2017-02-08 02:48:36   Ended: 2017-02-08 02:48:37
+16620 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+16621 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+16622 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+16624 [main] INFO  eu.kidf.diversicon.core.Diversicon - Done importing 1 LMF by import author John Doe
+16625 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+16627 [main] INFO  eu.kidf.diversicon.core.Diversicon - Imported lexical resources: 
+16628 [main] INFO  eu.kidf.diversicon.core.Diversicon - 
+16629 [main] INFO  eu.kidf.diversicon.core.Diversicon -     div-smartphones    from    classpath:/smartphones.xml
+16651 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+16651 [main] INFO  eu.kidf.diversicon.cli.DiverCli - Disconnected.
+16651 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+2505 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+2940 [main] INFO  e.k.d.cli.commands.InitCommand - Recreating tables in database  jdbc:h2:file:/tmp/divercli-test-home1696334353313499834/working/myprj/myprj ...
+15437 [main] INFO  eu.kidf.diversicon.cli.DiverCli - 
+15551 [main] ERROR e.k.d.core.XmlValidationConfig - 29,43: cvc-datatype-valid.1.2.1: '666_lex-eng' is not a valid value for 'NCName'.
+15552 [main] ERROR e.k.d.core.XmlValidationConfig - 29,43: cvc-attribute.3: The value '666_lex-eng' of attribute 'id' on element 'Lexicon' is not valid with respect to its type, 'ID'.
+15552 [main] ERROR e.k.d.core.XmlValidationConfig - 33,34: cvc-complex-type.4: Attribute 'id' must appear on element 'LexicalEntry'.
+15553 [main] ERROR e.k.d.core.XmlValidationConfig - 39,32: cvc-datatype-valid.1.2.1: '-trial' is not a valid value for 'NCName'.
+15553 [main] ERROR e.k.d.core.XmlValidationConfig - 39,32: cvc-attribute.3: The value '-trial' of attribute 'id' on element 'Lemma' is not valid with respect to its type, 'ID'.
+15553 [main] ERROR e.k.d.core.XmlValidationConfig - 45,46: cvc-datatype-valid.1.2.1: 'bex_s-€€€€lectric-car' is not a valid value for 'NCName'.
+15554 [main] ERROR e.k.d.core.XmlValidationConfig - 45,46: cvc-attribute.3: The value 'bex_s-€€€€lectric-car' of attribute 'id' on element 'Sense' is not valid with respect to its type, 'ID'.
+15558 [main] ERROR e.k.d.core.XmlValidationConfig - 16,48: DIV-10: Couldn't find LexicalResource prefix 'bex' among namespace prefixes! 
+15558 [main] ERROR e.k.d.core.XmlValidationConfig - 29,43: DIV-0: Found Lexicon id 666_lex-eng not starting with LexicalResource prefix 'bex'
+15559 [main] ERROR e.k.d.core.XmlValidationConfig - 39,32: DIV-0: Found Lemma id -trial not starting with LexicalResource prefix 'bex'
+15561 [main] ERROR e.k.d.core.XmlValidationConfig - 45,46: DIV-4: Sense.synset bex_ss-electric-car : Found undeclared prefix in id!
+15561 [main] ERROR e.k.d.core.XmlValidationConfig - 58,43: DIV-4: Sense.synset bex_ss-tesla-car : Found undeclared prefix in id!
+15561 [main] ERROR e.k.d.core.XmlValidationConfig - 77,37: DIV-3: SynsetRelation.target 666_ss-n2961779 : Invalid prefix !
+15561 [main] ERROR e.k.d.core.XmlValidationConfig - 91,37: DIV-4: SynsetRelation.target bex_ss-electric-car : Found undeclared prefix in id!
+15561 [main] ERROR e.k.d.core.XmlValidationConfig - Invalid xml! Found 14 errors in file:/tmp/extracted4815429387082597421/bad-examplicon.xml

@@ -42,7 +42,7 @@ public class ValidateCommand implements DiverCliCommand {
     
     @Parameter(names = {"--log-limit", "-l"}, description = "The amount of logs which will be outputted. If -1 all"
      + " log messages will be emitted.")
-    private int logLimit = -1;
+    private int logLimit = 10;
     
     @Parameter(names = {"--schema", "-c"}, description = "The filepath to the Xml Schema used to validate the document."           
          + " Will override the schema pointed to in the document.")
