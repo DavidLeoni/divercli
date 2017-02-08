@@ -37,11 +37,13 @@ import ch.qos.logback.core.joran.spi.JoranException;
 import ch.qos.logback.core.util.StatusPrinter;
 import eu.kidf.diversicon.cli.DiverCli;
 import eu.kidf.diversicon.cli.MainCommand;
+import eu.kidf.diversicon.cli.commands.ExportXmlCommand;
 import eu.kidf.diversicon.cli.commands.HelpCommand;
 import eu.kidf.diversicon.cli.commands.ImportShowCommand;
 import eu.kidf.diversicon.cli.commands.ImportXmlCommand;
 import eu.kidf.diversicon.cli.commands.InitCommand;
 import eu.kidf.diversicon.cli.commands.LogCommand;
+import eu.kidf.diversicon.cli.commands.ValidateCommand;
 import eu.kidf.diversicon.cli.exceptions.DiverCliIoException;
 import eu.kidf.diversicon.core.BuildInfo;
 import eu.kidf.diversicon.core.ImportJob;
@@ -472,7 +474,7 @@ public class DocsGenIT extends DiverCliTestBase {
                     + cap.replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR) + "/", "")
                          .replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR), "")
                          .replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_USER_HOME) + "/", "/home/divergeek/")
-                         .replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_USER_HOME), "/home/divergeek/")
+                         .replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_USER_HOME), "/home/divergeek/")                         
                     + "\n"
                     + "```\n";
             
@@ -538,6 +540,39 @@ public class DocsGenIT extends DiverCliTestBase {
                  Smartphones.XML_URI );          
     }    
     
+    /**
+     * @since 0.1.0
+     */    
+    @Test
+    public void smartphonesValidate() {
+        emptyInit();
+        diver("smartphones.validate",            
+                ValidateCommand.CMD,
+                Smartphones.XML_URI );          
+    }
+    
+    /**
+     * @since 0.1.0
+     */    
+    @Test
+    public void badExampliconValidate() {       
+        emptyInit();
+        diver("badexamplicon.validate",            
+                ValidateCommand.CMD,
+                "classpath:/bad-examplicon.xml");          
+    }
+    
+    /**
+     * @since 0.1.0
+     */
+    @Test
+    public void divupperExport(){
+        emptyInit();
+        diver("divupper.export",            
+                ExportXmlCommand.CMD,
+                "--name", "acme-upper-lexres",
+                "acme-upper-lexres.xml" ); 
+    }    
     
     /**
      * @since 0.1.0

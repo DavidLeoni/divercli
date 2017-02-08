@@ -61,11 +61,11 @@ In detail:
 
 Notice that `--prj` always goes _before_ commands. 
 
-These files where generated:
+These files were generated:
 
 ```
 $eval{wn31.cd}
-$eval{wn31.dir}      
+$eval{wn31.dir}
         
 ```
 
@@ -109,7 +109,7 @@ Currently you can create H2 databases which can be empty or already containing W
 
 #### Creating empty database
 
-You can create an empty database in directory 'myprj' by issuing `divercli --prj myprj init`:
+You can create an empty database in directory `myprj` by issuing `divercli --prj myprj init`:
 
 $eval{empty.init}
 
@@ -131,30 +131,24 @@ $eval{wn31.dir}
 
 ### Importing XMLs
 
-You can import an XML with the {eu.kidf.diversicon.cli.commands.ImportXMLCommand.CMD} command.
-When you import an XML, it is going to be validated in todo steps:
+You can import an XML with the $eval{eu.kidf.diversicon.cli.commands.ImportXMLCommand.CMD} command.
+When you try to import an XML, it is first validated to check it is coherent with the current db  
+[more info](http://diversicon-kb.eu/manual/diversicon-core/index.html#xml-import)).
+For example, here we try to import the `smartphones.xml` resource:
 
 
 $eval{empty.init}
 
 ```bash
 $eval{empty.cd}
-$eval{smartphones.import.failed}
 ``` 
 
-#### Preprocessing XMLs
+$eval{smartphones.import.failed}
 
 
-### Exporting XMLs
+The import fails because `smartphones.xml` is referencing the resource `Diversicon Wordnet 3.1`, which has not been imported yet. In this case, the best solution would be to first import Wordnet. If you really want to import resources that reference unmet dependencies, you can use the `--force` flag:
 
-You can export a lexical resource by issuing the command $eval{eu.kidf.diversicon.cli.commands.ExportXmlCommand.CMD}: 
-
-$eval{empty.init}
-
-```bash
-$eval{empty.cd}
-```
-
+$eval{smartphones.import.force}
 
 
 ### Import logs
@@ -173,6 +167,34 @@ $eval{wn31.log}
 Note each import has a numerical identifier. To get more details about a single import (like warnings occurred during the import), you can use this command:
 
 $eval{wn31.importShow}
+
+### Validating XML
+
+You can just validate an XML without checking it is consistent with some db:
+
+
+$eval{smartphones.validate}
+
+
+In this case we try to validate file `bad-examplicon.xml`. As the file name implies, validator is
+not going to be happy: 
+
+
+$eval{badexamplicon.validate}
+
+
+
+### Exporting XMLs
+
+You can export a lexical resource by issuing the command $eval{eu.kidf.diversicon.cli.commands.ExportXmlCommand.CMD}. In this case, we are going to export the default lexical resource `DivUpper` which is always present in databases you create:
+
+$eval{empty.init}
+
+```bash
+$eval{empty.cd}
+```
+$eval{divupper.export}
+
 
 
 ### Logging
