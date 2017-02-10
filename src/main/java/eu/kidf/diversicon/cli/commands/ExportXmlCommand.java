@@ -26,7 +26,8 @@ public class ExportXmlCommand implements DiverCliCommand {
     public static final String CMD = "export-xml";
 
     
-    @Parameter(names = "--name", required=true, description = "The name of the lexical resource to export.")
+    @Parameter(names = "--name", required=true, description = "The name of the lexical resource to export."
+            + " Should be worldwide unique and prefixed by your namespace (i.e. 'div-smartphones').")
     private String name;
 
     @Parameter(names = "--compress", description = "Compress the file into a zip archive")
