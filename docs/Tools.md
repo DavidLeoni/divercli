@@ -16,7 +16,7 @@ For example, supposing you:
 From DiverCli installation directory you coud run a command like this:
 
 ```
-basex -bold-prefix=sm -bnew-prefix=mysm -binfile=samples/smartphones.xml  -o my-smartphones.xml  scripts/xml/rename-prefixes.xql
+basex -bold-prefix=sm -bnew-prefix=mysm -binfile=lexres/smartphones.xml  -o my-smartphones.xml  scripts/rename-prefixes.xql
 ```
 
 You can import an LMF XML this way:

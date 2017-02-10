@@ -11,7 +11,8 @@
 			<directory>${project.basedir}/</directory>
 			<outputDirectory>/</outputDirectory>
 			<includes>
-				<include>LICENSE*</include>
+				<include>LICENSE.txt</include>
+				<include>INSTALL.txt</include>
 				<include>docs/CHANGES*</include>
 			</includes>
 		</fileSet>
@@ -29,7 +30,7 @@
 			<fileMode>0755</fileMode>
 		</fileSet>
 		<fileSet>
-			<directory>target/appassembler/bin</directory>
+			<directory>${project.build.directory}/appassembler/bin</directory>
 			<outputDirectory>bin</outputDirectory>
 			<includes>
 				<include>*.bat</include>
@@ -38,18 +39,30 @@
 			<fileMode>0644</fileMode>
 		</fileSet>
 		<fileSet>
-			<directory>target/appassembler/repo</directory>
+			<directory>${project.build.directory}/appassembler/repo</directory>
 			<outputDirectory>repo</outputDirectory>
+			<directoryMode>0755</directoryMode>
+			<fileMode>0644</fileMode>
+		</fileSet>
+		<fileSet>
+			<directory>${project.build.directory}/divercli-overlay</directory>
+			<outputDirectory>/</outputDirectory>
+			<includes>
+				<include>**/*</include>
+			</includes>
 			<directoryMode>0755</directoryMode>
 			<fileMode>0644</fileMode>
 		</fileSet>
 		<fileSet>
 			<directory>${project.basedir}/bin</directory>
 			<outputDirectory>bin</outputDirectory>
+			<includes>
+				<include>**/*</include>				
+			</includes>
 		</fileSet>
 	</fileSets>
-	<files>
 
+	<files>
 
 		<file>
 			<source>${project.build.directory}/${artifactId}-${version}.jar</source>
@@ -66,7 +79,6 @@
 			<outputDirectory>/dist/</outputDirectory>
 			<destName>${artifactId}-${version}-sources.jar</destName>
 		</file>
-
 
 	</files>
 </assembly>

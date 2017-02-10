@@ -1,0 +1,49 @@
+
+
+						DIVERCLI INSTALLATION
+	
+	
+  RUNNING
+	
+    After you unzipped the archive, you can run the software straight away without 
+    installing anything:
+	
+      on Windows
+	  
+         1) click Start
+         2) in the Search or Run line type   cmd   and press enter.  	
+         3) cd  to the directory where divercli is unzipped and type:
+	   
+             bin\divercli.bat	
+	
+      on Mac/Linux    
+	  	
+         open a terminal and type:
+	
+             bin/divercli
+	  	    
+  RUNNING FROM ANY DIRECTORY
+	
+    To be able to run divercli easily from any directory, after you unzipped somewhere the archive, 
+    you can add the divercli  'bin/'  directory to your path like so:
+	
+      on Windows 
+	
+         See for example
+            http://geekswithblogs.net/renso/archive/2009/10/21/how-to-set-the-windows-path-in-windows-7.aspx
+	  
+      on Mac
+	  
+         See for example
+            http://hathaway.cc/post/69201163472/how-to-edit-your-path-environment-variables-on-mac
+	 
+      on Linux
+	  
+         See for example
+            https://www.cyberciti.biz/faq/unix-linux-adding-path/
+	
+  FURTHER INFO
+	
+     See the manual:   http://diversicon-kb.eu/manual/divercli
+
+	
