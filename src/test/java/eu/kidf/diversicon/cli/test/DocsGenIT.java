@@ -658,7 +658,7 @@ public class DocsGenIT extends DiverCliTestBase {
         cd("empty.cd", MYPRJ);
         bash("empty.dir", "dir");
         diver("empty.log",
-                InitCommand.CMD);
+                LogCommand.CMD);
     }
     
     

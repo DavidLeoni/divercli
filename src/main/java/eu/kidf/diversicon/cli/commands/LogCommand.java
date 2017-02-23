@@ -53,10 +53,9 @@ public class LogCommand implements DiverCliCommand {
     public void run() {
 
         diverCli.connect();
-        LOG.info("\n");
+        LOG.info("");
         LOG.info(diverCli.getDiversicon()
                          .formatDbStatus(true));
-        LOG.info("\n");
         LOG.info(diverCli.getDiversicon()
                          .formatImportJobs(false));
     }

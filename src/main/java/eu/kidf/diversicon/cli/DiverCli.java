@@ -688,9 +688,6 @@ public final class DiverCli {
             }
 
             diversicon = Diversicon.connectToDb(divConfig);
-
-            LOG.info("");
-            LOG.info("");            
         }
 
     }
@@ -741,7 +738,6 @@ public final class DiverCli {
 
             LOG.info("");
             LOG.info("Disconnected.");
-            LOG.info("");
         }
     }
 
