@@ -276,12 +276,6 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>com.github.lalyos</groupId>
-			<artifactId>jfiglet</artifactId>
-			<version>0.0.7</version>
-		</dependency>
-
-		<dependency>
 			<groupId>eu.kidf</groupId>
 			<artifactId>diversicon-core</artifactId>
 		</dependency>

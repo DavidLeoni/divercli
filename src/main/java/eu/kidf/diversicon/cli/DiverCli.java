@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.MissingCommandException;
 import com.beust.jcommander.ParameterException;
-import com.github.lalyos.jfiglet.FigletFont;
 
 import de.tudarmstadt.ukp.lmf.transform.DBConfig;
 import eu.kidf.diversicon.cli.commands.DbAugmentCommand;
@@ -691,13 +690,7 @@ public final class DiverCli {
             diversicon = Diversicon.connectToDb(divConfig);
 
             LOG.info("");
-            LOG.info(" Welcome to");
-            try {
-                String asciiArt1 = FigletFont.convertOneLine("diversicon");
-                LOG.info("    " + asciiArt1.replace("\n", "\n    "));
-            } catch (Exception ex) {
-                LOG.debug("Minor error: Couldn't display awesome ASCII banner!", ex);
-            }
+            LOG.info("");            
         }
 
     }
