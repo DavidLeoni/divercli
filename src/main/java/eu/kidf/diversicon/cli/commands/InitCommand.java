@@ -145,13 +145,13 @@ public class InitCommand implements DiverCliCommand {
 
         String targetDbPath = prjFolder.getAbsolutePath() + "/" + dbName;
         
-        DBConfig dbCfg = Diversicons.h2MakeDefaultFileDbConfig(
+        DBConfig dbCfg = Diversicons.h2FileConfig(
                 targetDbPath, false);                         
                 
         cli.setDbConfig(dbCfg);
                 
         if (!Internals.isBlank(restoreH2DbPath)){            
-            Diversicons.restoreH2Db(restoreH2DbPath, targetDbPath);    
+            Diversicons.h2RestoreDb(restoreH2DbPath, targetDbPath);    
         } else if (!Internals.isBlank(restoreSqlPath)){        
             Diversicons.h2RestoreSql(restoreSqlPath, cli.divConfig());    
         }  else {
