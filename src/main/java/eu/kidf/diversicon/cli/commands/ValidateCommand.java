@@ -52,6 +52,7 @@ public class ValidateCommand implements DiverCliCommand {
     private List<String> xmlPaths = new ArrayList<>();
     
     
+    @SuppressWarnings("unused")
     private DiverCli cli;
     
     private XmlValidationConfig xmlValidationConfig;

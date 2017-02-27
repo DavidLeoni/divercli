@@ -136,11 +136,6 @@ public class DocsGenIT extends DiverCliTestBase {
     /**
      * @since 0.1.0
      */
-    private static final String WN31 = "wn31";
-
-    /**
-     * @since 0.1.0
-     */
     private static final String BAD_EXAMPLICON_URL = "classpath:/bad-examplicon.xml";
 
     /**
