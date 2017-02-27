@@ -1,6 +1,6 @@
 <p class="josman-to-strip">
 WARNING: WORK IN PROGRESS - THIS IS ONLY A TEMPLATE FOR THE DOCUMENTATION. <br/>
-RELEASE DOCS ARE ON THE <a href="http://davidleoni.github.io/diversicon/" target="_blank">PROJECT WEBSITE</a>
+RELEASE DOCS ARE ON THE <a href="http://diversicon-kb.eu/manual/divercli" target="_blank">PROJECT WEBSITE</a>
 </p>
 
 This release allows to perform basic import / export of XML in IBY-LMF format and SQL dumps. Some function to query db metadata and import log is also provided.

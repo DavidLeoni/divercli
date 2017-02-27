@@ -1,7 +1,7 @@
 
 <p class="josman-to-strip">
 WARNING: THIS IS ONLY A TEMPLATE FOR THE DOCUMENTATION. <br/>
-RELEASE DOCS ARE ON THE <a href="http://davidleoni.github.io/divercli/" target="_blank">PROJECT WEBSITE</a>
+RELEASE DOCS ARE ON THE <a href="http://diversicon-kb.eu/manual/divercli" target="_blank">PROJECT WEBSITE</a>
 </p>
 
 <p class="josman-to-strip" align="center">
