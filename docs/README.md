@@ -5,10 +5,14 @@ RELEASE DOCS ARE ON THE <a href="http://davidleoni.github.io/diversicon/" target
 
 This release allows to perform basic import / export of XML in IBY-LMF format and SQL dumps. Some function to query db metadata and import log is also provided.
 
-### Getting started
+### Install
 
 You can download Diver CLI <a href="../releases/download/divercli-#{version}/divercli-#{version}.zip" target="_blank"> from here</a>, then unzip somewhere on your system. In case updates are available, version numbers follow <a href="http://semver.org/" target="_blank">semantic versioning</a> rules. 
-This manual assumes you have added `bin/divercli` to the path. 
+
+**NOTE: This manual assumes you have added `bin/divercli` to the path of your shell,
+see <a href="INSTALL.txt" target="_blank">INSTALL.txt</a> instructions.**
+
+### Getting started
 
 To see usage commands:
 
@@ -24,11 +28,7 @@ In Windows, click on Start menu, run command `cmd` and in the console type
 bin\divercli.bat
 ```
 
-You should see a command list like this:
-
-$eval{help}
-
-To get more help about a specific command (say `import-xml`), you can issue `help` command: 
+To get help about a specific command (say `import-xml`), you can issue `help` command: 
 
 $eval{help.importXml}
 
@@ -70,7 +70,7 @@ $eval{wn31.dir}
 
 The file `divercli.ini` tells DiverCli where to connect when we launch the tool from the project directory. In this particular case the database is in the same folder, but it could be anywhere, even a remote connection. 
 
-You can check things are working by issuing the `log` command, which will show a status of the database and a log of the imports done so far. Notice the first import is always the `[div-upper](https://github.com/diversicon-kb/diversicon-model/blob/master/src/main/resources/div-upper.xml)` lexical resource:
+You can check things are working by issuing the `log` command, which will show a status of the database and a log of the imports done so far. Notice the first import is always the [`div-upper`](https://github.com/diversicon-kb/diversicon-model/blob/master/src/main/resources/div-upper.xml) lexical resource:
 
 $eval{wn31.log}
 
