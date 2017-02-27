@@ -1,4 +1,4 @@
-If you want to include the CLI into your own programs, you can read the following instructions. For more info about developing DiverCLI itself, see [the wiki](../../../wiki).
+If you want to include the CLI into your own programs, read the following instructions. For more info about developing DiverCLI itself, see [the wiki](../../../wiki).
 
 **With Maven**: If you use Maven as build system, put this in the `dependencies` section of your `pom.xml`:
 
