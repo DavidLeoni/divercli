@@ -4,22 +4,12 @@ For preprocessing and quering XMLs we suggest [BaseX](#basex) database, while fo
 
 ### BaseX 
 
-If you need to browse large XMLs or update them for some preprocessing before importing them into Diversicon, <a href="http://basex.org/" target="_blank">BaseX</a> db could be a good choice. For some common tasks, we already provide scripts in `$exec{eu.kidf.diversicon.cli.DiverCli.SCRIPTS_XML_PATH}`
+If you need to browse large XMLs you can you <a href="http://basex.org/products/download/all-downloads/" target="_blank">BaseX</a> tool.
 
 For example, supposing you:
 
 1) installed <a href="http://basex.org/products/download/all-downloads/" target="_blank">BaseX</a>
 2) `basex` executable is on your path
-3) want to rename prefixes of an XML
-
-From DiverCli installation directory you coud run a command like this:
-
-```
-
-basex -bold-prefix=sm -bnew-prefix=mysm -bin-file=lexres/smartphones.xml  -o my-smartphones.xml  scripts/rename-prefixes.xql
-
-```
-**NOTE**: this script is just an example, to replace everything you will still have to fix manually the xmlns: with the new prefix !
 
 Here we show how to load the <a href="http://diversicon-kb.eu/dataset/diversicon-wordnet-31/resource/xml" target="_blank">Diversicon Wordnet 3.1 XML</a>:
 
@@ -35,6 +25,23 @@ In `Indexes` tab check `Full-text`:
 
 <img src="img/basex-new-3.png" width="500px">
 
+### XQuery
+
+If you need to transform XML to do some preprocessing before importing them into Diversicon, using XQuery language with the [BaseX](#basex) implementation could be a good choice. 
+
+For some common tasks, we already provide scripts in `$exec{eu.kidf.diversicon.cli.DiverCli.SCRIPTS_XML_PATH}` 
+
+For example, suppose you have BaseX installed and want to rename prefixes of an XML. 
+From DiverCli installation directory you coud run a command like this:
+
+```
+
+basex -bold-prefix=sm -bnew-prefix=mysm -bin-file=lexres/smartphones.xml  -o my-smartphones.xml  scripts/rename-prefixes.xql
+
+```
+**NOTE**: this script is just an example, to replace everything you will still have to fix manually the xmlns: with the new prefix !
+
+To edit XQuery files, you might use <a href="https://code.visualstudio.com/" target="_blank">Visual Studio Code</a> with the <a href="https://marketplace.visualstudio.com/items?itemName=DotJoshJohnson.xml" target="_blank">XML Tools extension.</a>
 
 
 ### H2
