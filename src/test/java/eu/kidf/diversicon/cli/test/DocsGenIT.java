@@ -49,6 +49,7 @@ import eu.kidf.diversicon.cli.exceptions.DiverCliIoException;
 import eu.kidf.diversicon.core.BuildInfo;
 import eu.kidf.diversicon.core.ImportJob;
 import eu.kidf.diversicon.core.exceptions.InvalidImportException;
+import eu.kidf.diversicon.core.exceptions.InvalidXmlException;
 import eu.kidf.diversicon.data.DivWn31;
 import eu.kidf.diversicon.data.Examplicon;
 import eu.kidf.diversicon.data.Smartphones;
@@ -525,8 +526,9 @@ public class DocsGenIT extends DiverCliTestBase {
             diver("smartphones.import.failed",            
                 ImportXmlCommand.CMD, "--author", "\"John Doe\"", "--description", "Some test import",
                  Smartphones.XML_URI );
+            Assert.fail("Shouldn't arrive here!");
         } catch (InvalidImportException ex){
-            
+            LOG.debug("Got expected exception: ", ex);
         }
     }    
 
@@ -571,7 +573,7 @@ public class DocsGenIT extends DiverCliTestBase {
         diver("examplicon.import.skipaugment",            
                 ImportXmlCommand.CMD,
                 "--skip-augment", "--author", "\"John Doe\"", "--description", "Some test import",
-                 Smartphones.XML_URI);
+                 Examplicon.XML_URI);
         diver("smartphones.examplicon.dbaugment",            
                 DbAugmentCommand.CMD);        
     }    
@@ -587,9 +589,11 @@ public class DocsGenIT extends DiverCliTestBase {
                     ImportXmlCommand.CMD,
                     "--author", "\"John Doe\"", "--description", "Some test import",
                      BAD_EXAMPLICON_URL );
+            Assert.fail("Shouldn't arrive here!");
         } catch (InvalidImportException ex){
-            
+            LOG.debug("Got expected exception: ", ex);
         }
+            
     }    
     
         
@@ -624,9 +628,14 @@ public class DocsGenIT extends DiverCliTestBase {
     @Test
     public void badExampliconValidate() {       
         emptyInit();
-        diver("badexamplicon.validate",            
-                ValidateCommand.CMD,
-                BAD_EXAMPLICON_URL);          
+        try {
+            diver("badexamplicon.validate",            
+                    ValidateCommand.CMD,
+                    BAD_EXAMPLICON_URL);
+            Assert.fail("Shouldn't arrive here!");
+        } catch (InvalidXmlException ex){
+            LOG.debug("Got expected exception. ", ex);            
+        }
     }
     
     /**
@@ -637,8 +646,8 @@ public class DocsGenIT extends DiverCliTestBase {
         emptyInit();
         diver("divupper.export",            
                 ExportXmlCommand.CMD,
-                "--name", "acme-upper-lexres",
-                "acme-upper-lexres.xml" ); 
+                "--name", "div-upper",
+                System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR) + "acme-upper-lexres.xml" ); 
     }    
     
     /**

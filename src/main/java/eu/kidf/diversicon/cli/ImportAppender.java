@@ -39,7 +39,20 @@ public class ImportAppender extends AppenderBase<ILoggingEvent> {
      * @since 0.1.0
      */
     public void append(ILoggingEvent event) {
+        
+        // check log is relative to an import job 
+        // Remember validation errors prevent an ImportJob from even starting !
+        
+        if (!diversicon.getSession().isOpen()){                                      
+            return;
+        }
+        
         ImportJob importJob = diversicon.getDbInfo().getCurrentImportJob();
+        
+        if (importJob == null){            
+            return;
+        }
+ 
         
         org.slf4j.event.Level slf4jLevel = null;
         try {
@@ -48,7 +61,8 @@ public class ImportAppender extends AppenderBase<ILoggingEvent> {
             LOG.error("Couldn't convert from logback to slf4j format level, skipping append log into db!", ex);
         }
             
-        if (slf4jLevel != null && event.getLevel().isGreaterOrEqual(Level.WARN)){
+        if (slf4jLevel != null                
+                && event.getLevel().isGreaterOrEqual(Level.WARN)){
             importJob.addLogMessage(new LogMessage(importJob, slf4jLevel, event.getFormattedMessage()));
         }            
                  

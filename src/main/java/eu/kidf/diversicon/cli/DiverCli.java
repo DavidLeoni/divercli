@@ -378,6 +378,8 @@ public final class DiverCli {
     /**
      * Runs the cli, actually parsing the arguments.
      * 
+     * On error directly throws exceptions from commands.   
+     * 
      * @since 0.1.0
      */
     public void run() {
