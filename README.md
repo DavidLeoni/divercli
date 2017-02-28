@@ -22,8 +22,9 @@ Java command line client for <a href="https://github.com/diversicon-kb/diversico
 
 **Features**
   
-  * supports all features of <a href="https://diversicon-kb.eu/manual/diversicon-core" target="_blank">Diversicon-Core</a> 
-  * allows configuration both global and per-project    
+  * supports all features of <a href="https://diversicon-kb.eu/manual/diversicon-core" target="_blank">Diversicon-Core</a>
+  * includes Princeton Wordnet 3.1 
+  * allows configuration both per-project and global    
   * dependency handling with Maven    
   * unit tested with proper integration tests    
   * supports Java 7+

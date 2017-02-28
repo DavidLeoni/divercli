@@ -1,5 +1,11 @@
 
 
+### Commands list
+
+You can see all options and commands with `help` command: 
+
+$eval{help}
+
 ### Creating databases
 
 Currently you can create H2 databases which can be empty or already containing Wordnet 3.1. Let's see how to do it. 
