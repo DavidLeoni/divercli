@@ -1,3 +1,6 @@
+
+### Getting started for developers
+
 If you want to include the CLI into your own programs, read the following instructions. For more info about developing DiverCLI itself, see [the wiki](../../../wiki).
 
 **With Maven**: If you use Maven as build system, put this in the `dependencies` section of your `pom.xml`:
@@ -17,7 +20,14 @@ Note that Wordnet 3.1 dependency will be automatically included.
 
 In case updates are available, version numbers follow <a href="http://semver.org/" target="_blank">semantic versioning</a> rules.
 
-#### Logging when testing
+### Dependencies
+
+* See <a href="https://diversicon-kb.eu/manual/diversicon-core" target="_blank">Diversicon Core</a> dependencies. 
+* <a href="http://jcommander.org/" target="_blank"> JCommander</a>
+* <a href="http://diversicon-kb.eu/manual/diversicon-wordnet-3.1" target="_blank"> Diversicon Wordnet 3.1</a>
+
+
+### Logging when testing
 
 Logging configuration is in `logback.xml`  files, that during developing / testing are found in this order: 
 

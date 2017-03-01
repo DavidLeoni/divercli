@@ -30,11 +30,6 @@ Java command line client for <a href="https://github.com/diversicon-kb/diversico
   * supports Java 7+
 
 
-#### Dependencies
-
-* See <a href="https://github.com/diversicon-kb/diversicon" target="_blank">Diversicon</a> dependencies. 
-
-
 #### Credits
 
 Design:

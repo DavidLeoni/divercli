@@ -28,10 +28,6 @@ In Windows, click on Start menu, run command `cmd` and in the console type
 bin\divercli.bat
 ```
 
-To get help about a specific command (say `import-xml`), you can issue `help` command: 
-
-$eval{help.importXml}
-
 ### Your first project
 
 In DiverCli, a project is a folder with configuration for connecting to a database, plus possibly the database itself and other custom scripts. It might look like this :
