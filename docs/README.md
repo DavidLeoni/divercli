@@ -85,9 +85,7 @@ $eval{smartphones.import.success.log}
 
 ### Empty databases
 
-If instead of Wordnet you want to start with an empty database, you can create an empty database
-for example  in directory `myprj` by issuing `divercli --prj myprj init`. Note however that
-the system will always preload in the db the `DivUpper` lexical resource:
+If instead of Wordnet you want to start with an empty database, you can create an empty database for example in directory `myprj` by issuing `divercli --prj myprj init`. Note that the system will always preload in the db the lexical resource `DivUpper`:
 
 $eval{empty.init}
 
@@ -99,6 +97,6 @@ $eval{empty.log}
 
 ### More info 
 
-You can learn more about handling XMLs in [Commands](Commands.md) page. In [Configuration](Configuration.md) you can find info about global and per-project configuration and logging.
+You can learn more about handling XMLs in [Commands](Commands.md) page. In [Configuration](Configuration.md) you can read about global and per-project configuration, and logging.
 
 

@@ -2,7 +2,7 @@
 
 ### Commands list
 
-You can see all options and commands with `help` command: 
+You can see all options and commands by just calling `divercli` without parameters: 
 
 $eval{help}
 
@@ -114,30 +114,34 @@ $eval{wn31.cd}
 ``` 
 $eval{smartphones.examplicon.import.success}
  
-b) equivalently, you can set the flag `--skip-augment` and execute the command `import-xml`  on each xml you want to import. After the imports, you will explicitly have to compute the transitive closure by calling the command
-  `db-augment`: 
-  
+b) equivalently, you can set the flag `--skip-augment` and execute the command `import-xml`  on each xml you want to import. After the imports, you will explicitly have to compute the transitive closure by calling the command `db-augment`: 
+
+For example, here we first initialize a project with Wordnet 3.1:
 
 $eval{wn31.init}
 
 ```bash
 $eval{wn31.cd}
 ``` 
+Afterwards, we import Smartphones resource with `--skip-augment` option:
+
 $eval{smartphones.import.skipaugment}
+
+Then we import Examplicon, again with `--skip-augment` option:
+
 $eval{examplicon.import.skipaugment}
+
+Finally, we augment the database:
+
 $eval{smartphones.examplicon.dbaugment}
  
 ### Validating XML
 
-You can just validate an XML without checking it is consistent with some db:
-
+You can just validate an XML without checking it is consistent with current project db:
 
 $eval{smartphones.validate}
  
-
-In this case we try to validate file `bad-examplicon.xml`. As the file name implies, validator is
-not going to be happy: 
-
+As an example of failed validation, we can try to validate file `bad-examplicon.xml`. As the filename implies, validator is not going to be happy: 
 
 $eval{badexamplicon.validate}
 
@@ -145,13 +149,18 @@ $eval{badexamplicon.validate}
 
 ### Export
 
-You can export a lexical resource by issuing the command `export-xml`. In this case, we are going to export the default lexical resource `DivUpper` which is always present in databases you create:
+You can export a lexical resource by issuing the command `export-xml`. For example, we are going to export the default lexical resource `DivUpper` which is always present in databases you create.
+
+First we create an empty project:
 
 $eval{empty.init}
 
 ```bash
 $eval{empty.cd}
 ```
+
+Then we can export the implicitly created `DivUpper` resource into `acme-upper-lexres.xml` file:
+
 $eval{divupper.export}
 
 

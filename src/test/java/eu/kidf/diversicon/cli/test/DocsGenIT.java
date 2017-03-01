@@ -474,8 +474,8 @@ public class DocsGenIT extends DiverCliTestBase {
             String cap = stopCaptureSlf4j();
 
             String val = "```bash\n"
-                    + "> " + DIVERCLI + " " + sbStr.toString() + "\n"
-                    + cap.replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR) + "/", "")
+                    + "> " + DIVERCLI + " " + (sbStr.toString() + "\n"
+                    + cap).replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR) + "/", "")
                          .replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_WORKING_DIR), "")
                          .replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_USER_HOME) + "/", "/home/divergeek/")
                          .replace(System.getProperty(DiverCli.SYSTEM_PROPERTY_USER_HOME), "/home/divergeek/")                         
@@ -524,7 +524,7 @@ public class DocsGenIT extends DiverCliTestBase {
         emptyInit();
         try {
             diver("smartphones.import.failed",            
-                ImportXmlCommand.CMD, "--author", "\"John Doe\"", "--description", "Some test import",
+                ImportXmlCommand.CMD, "--author", "\"John Doe\"", "--description", "\"Some test import\"",
                  Smartphones.XML_URI );
             Assert.fail("Shouldn't arrive here!");
         } catch (InvalidImportException ex){
@@ -540,7 +540,7 @@ public class DocsGenIT extends DiverCliTestBase {
         wn31Init();
         diver("smartphones.import.success",            
                 ImportXmlCommand.CMD,
-                "--author", "\"John Doe\"", "--description", "Some test import",
+                "--author", "\"John Doe\"", "--description", "\"Some test import\"",
                  Smartphones.XML_URI );
         diver("smartphones.import.success.log",            
                 LogCommand.CMD);
@@ -555,7 +555,7 @@ public class DocsGenIT extends DiverCliTestBase {
         wn31Init();
         diver("smartphones.examplicon.import.success",            
                 ImportXmlCommand.CMD,
-                "--author", "\"John Doe\"", "--description", "Some test import",
+                "--author", "\"John Doe\"", "--description", "\"Some test import\"",
                  Smartphones.XML_URI,
                  Examplicon.XML_URI);
     }        
@@ -568,11 +568,11 @@ public class DocsGenIT extends DiverCliTestBase {
         wn31Init();
         diver("smartphones.import.skipaugment",            
                 ImportXmlCommand.CMD,
-                "--skip-augment", "--author", "\"John Doe\"", "--description", "Some test import",
+                "--skip-augment", "--author", "\"John Doe\"", "--description", "\"Some test import\"",
                  Smartphones.XML_URI);
         diver("examplicon.import.skipaugment",            
                 ImportXmlCommand.CMD,
-                "--skip-augment", "--author", "\"John Doe\"", "--description", "Some test import",
+                "--skip-augment", "--author", "\"John Doe\"", "--description", "\"Some test import\"",
                  Examplicon.XML_URI);
         diver("smartphones.examplicon.dbaugment",            
                 DbAugmentCommand.CMD);        
@@ -587,7 +587,7 @@ public class DocsGenIT extends DiverCliTestBase {
         try {
             diver("badexamplicon.import",            
                     ImportXmlCommand.CMD,
-                    "--author", "\"John Doe\"", "--description", "Some test import",
+                    "--author", "\"John Doe\"", "--description", "\"Some test import\"",
                      BAD_EXAMPLICON_URL );
             Assert.fail("Shouldn't arrive here!");
         } catch (InvalidImportException ex){
@@ -607,7 +607,7 @@ public class DocsGenIT extends DiverCliTestBase {
         diver("smartphones.import.force",            
                 ImportXmlCommand.CMD,
                 "--force",
-                "--author", "\"John Doe\"", "--description", "Some test import",
+                "--author", "\"John Doe\"", "--description", "\"Some test import\"",
                  Smartphones.XML_URI );          
     }    
     
