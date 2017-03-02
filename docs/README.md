@@ -3,7 +3,7 @@ WARNING: WORK IN PROGRESS - THIS IS ONLY A TEMPLATE FOR THE DOCUMENTATION. <br/>
 RELEASE DOCS ARE ON THE <a href="http://diversicon-kb.eu/manual/divercli" target="_blank">PROJECT WEBSITE</a>
 </p>
 
-This release allows to perform basic import / export of XML in IBY-LMF format and SQL dumps. Some function to query db metadata and import log is also provided.
+This release allows to perform basic import / export of XML in <a href="http://diversicon-kb.eu/manual/diversicon-core/DiversiconLMF.html" target="_blank">Diversicon LMF</a> format and SQL dumps. Some function to query db metadata and import log is also provided.
 
 ### Install
 
@@ -16,13 +16,13 @@ see <a href="INSTALL.txt" target="_blank">INSTALL.txt</a> instructions.**
 
 To see usage commands:
 
-In Linux / Mac, from terminal just type
+In Linux / Mac, from terminal just type:
 
 ```
 bin/divercli
 ```
 
-In Windows, click on Start menu, run command `cmd` and in the console type
+In Windows, click on Start menu, run command `cmd` and in the console type:
 
 ```
 bin\divercli.bat
@@ -30,7 +30,7 @@ bin\divercli.bat
 
 ### Your first project
 
-In DiverCli, a project is a folder with configuration for connecting to a database, plus possibly the database itself and other custom scripts. It might look like this :
+In DiverCli, a project is a folder with configuration for connecting to a database, plus possibly the database itself and other custom scripts. It might look like this:
 
 ```
 divercli.ini
@@ -42,7 +42,7 @@ my-script.sql
 
 ``` 
 
-DiverCli comes with full support for <a href="http://h2database.com" target="_blank"> H2 database </a>, which is shipped with DiverCli and doesn't require separate installation (for info on browsing databases, see [Tools page](Tools.md#h2)). 
+DiverCli comes with full support for <a href="http://h2database.com" target="_blank">H2 database</a>, which is shipped with DiverCli and doesn't require separate installation (for info on browsing databases, see [Tools page](Tools.md#h2)). 
 
 Let's create our first H2 file-based database with Wordnet 3.1 inside:
 

@@ -11,7 +11,7 @@ TODO date
 
 Closed issues: https://github.com/diversicon-kb/divercli/milestone/1?closed=1
 
-- supports all features of Diversicon Core 0.1.0
+- supports all features of <a href="https://diversicon-kb.eu/manual/diversicon-core/0.1.0" target="_blank">Diversicon-Core 0.1.0</a>
 - allows configuration both global and per-project
 
 

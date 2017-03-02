@@ -23,13 +23,12 @@ In case updates are available, version numbers follow <a href="http://semver.org
 ### Dependencies
 
 * See <a href="https://diversicon-kb.eu/manual/diversicon-core" target="_blank">Diversicon Core</a> dependencies. 
-* <a href="http://jcommander.org/" target="_blank"> JCommander</a>
 * <a href="http://diversicon-kb.eu/manual/diversicon-wordnet-3.1" target="_blank"> Diversicon Wordnet 3.1</a>
-
+* <a href="http://jcommander.org/" target="_blank"> JCommander</a>
 
 ### Logging when testing
 
-Logging configuration is in `logback.xml`  files, that during developing / testing are found in this order: 
+Logging is configured with `logback.xml` files, which during developing / testing are found in this order: 
 
 1. whatever is passed by command line: ` mvn test -Dlogback.configurationFile=path-to-my-logback.xml`
 2. `conf/logback-test.xml` as indicated in Maven surefire plugin configuration 
