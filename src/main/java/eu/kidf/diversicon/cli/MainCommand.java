@@ -92,8 +92,7 @@ public class MainCommand implements DiverCliCommand {
      * 
      * To be called for all commands
      * 
-     * @throws DiverCliException
-     * @see {@link #configureProject()}
+     * @throws DiverCliException 
      * 
      * @since 0.1.0
      */

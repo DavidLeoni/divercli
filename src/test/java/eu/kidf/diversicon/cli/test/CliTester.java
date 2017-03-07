@@ -2,8 +2,6 @@ package eu.kidf.diversicon.cli.test;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import eu.kidf.diversicon.cli.DiverCli;
 import eu.kidf.diversicon.cli.commands.InitCommand;
@@ -13,11 +11,7 @@ import eu.kidf.diversicon.data.DivWn31;
  * @since 0.1.0
  *
  */
-public class CliTester {
-
-    private static final Logger LOG = LoggerFactory.getLogger(CliTester.class);   
-    
-
+public class CliTester {       
 
     /**
      * Makes default db project in directory {@code working/ }

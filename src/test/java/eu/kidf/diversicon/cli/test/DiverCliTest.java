@@ -322,7 +322,7 @@ public class DiverCliTest extends DiverCliTestBase {
         LOG.info("I logged something!");
         DiverCli cli = DiverCli.of("--debug");
         cli.run();
-        Wini ini = new Wini(cli.findConfigFile(DiverCli.INI_FILENAME));
+        Wini ini = new Wini(cli.findGlobalConfigFile(DiverCli.INI_FILENAME));
         assertEquals(null, ini.get("666", "666", String.class));
         assertEquals(null, ini.get("Database", "666", String.class));
     }

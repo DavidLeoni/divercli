@@ -1,7 +1,7 @@
 
 <p class="josman-to-strip">
 WARNING: THIS IS ONLY A TEMPLATE FOR THE DOCUMENTATION. <br/>
-RELEASE DOCS ARE ON THE <a href="http://davidleoni.github.io/divercli/" target="_blank">PROJECT WEBSITE</a>
+RELEASE DOCS ARE ON THE <a href="http://diversicon-kb.eu/manual/divercli" target="_blank">PROJECT WEBSITE</a>
 </p>
 
 <p class="josman-to-strip" align="center">
@@ -10,10 +10,9 @@ RELEASE DOCS ARE ON THE <a href="http://davidleoni.github.io/divercli/" target="
 </p>
 
 
-
 #### About
 
-Java command line client for <a href="https://github.com/diversicon-kb/diversicon" target="_blank">Diversicon knowledge base</a>. 
+Java command line client for <a href="https://diversicon-kb.eu/tools" target="_blank">Diversicon system</a>. 
 
 
 |**Usage**|**License**|**Roadmap**|**Contributing**|
@@ -22,16 +21,12 @@ Java command line client for <a href="https://github.com/diversicon-kb/diversico
 
 **Features**
   
-  * supports all features of <a href="https://diversicon-kb.eu/manual/diversicon-core" target="_blank">Diversicon-Core</a> 
-  * allows configuration both global and per-project    
+  * supports all features of <a href="https://diversicon-kb.eu/manual/diversicon-core" target="_blank">Diversicon-Core</a>
+  * includes Princeton Wordnet 3.1 
+  * allows configuration both per-project and global    
   * dependency handling with Maven    
   * unit tested with proper integration tests    
   * supports Java 7+
-
-
-#### Dependencies
-
-* See <a href="https://github.com/diversicon-kb/diversicon" target="_blank">Diversicon</a> dependencies. 
 
 
 #### Credits

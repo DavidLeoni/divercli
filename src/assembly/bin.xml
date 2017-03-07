@@ -11,11 +11,17 @@
 			<directory>${project.basedir}/</directory>
 			<outputDirectory>/</outputDirectory>
 			<includes>
-				<include>LICENSE.txt</include>
-				<include>INSTALL.txt</include>
-				<include>docs/CHANGES*</include>
+				<include>LICENSE.txt</include>				
 			</includes>
 		</fileSet>
+		<fileSet>
+			<directory>${project.basedir}/docs</directory>
+			<outputDirectory>/</outputDirectory>
+			<includes>
+				<include>INSTALL.txt</include>
+				<include>CHANGES*</include>
+			</includes>
+		</fileSet>		
 		<fileSet>
 			<directory>${project.build.directory}/site</directory>
 			<outputDirectory>docs</outputDirectory>

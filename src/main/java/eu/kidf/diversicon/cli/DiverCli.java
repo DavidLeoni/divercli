@@ -325,11 +325,7 @@ public final class DiverCli {
 
     /**
      * 
-     * Extracts given {@code option} from ini file.
-     * 
-     * @param isMandatory
-     *            if false and option is empty throws
-     *            {@link DiverCliNotFoundException}
+     * Extracts given {@code optionName} from {@code optionSection} in provided ini file.
      * 
      * @throws DiverCliNotFoundException
      * @since 0.1.0
@@ -381,6 +377,8 @@ public final class DiverCli {
 
     /**
      * Runs the cli, actually parsing the arguments.
+     * 
+     * On error directly throws exceptions from commands.   
      * 
      * @since 0.1.0
      */
@@ -489,8 +487,7 @@ public final class DiverCli {
     }
     
     /**
-     * Returns true if DiverCLI has been configured. If not you can run
-     * {@link #configure()}
+     * Returns true if DiverCLI has been configured. 
      * 
      * @since 0.1.0
      */
@@ -499,9 +496,7 @@ public final class DiverCli {
     }
 
     /**
-     * To be called for commands requiring a project
-     * 
-     * @see {@link #configure()}
+     * To be called for commands requiring a project    
      * 
      * @since 0.1.0
      */
@@ -569,10 +564,8 @@ public final class DiverCli {
     
     
     /**
-     * Loads a configuration file. Doesn't complain if there are missing fields.
+     * Load a configuration file. Doesn't complain if there are missing fields.               
      * 
-     * @see #checkGlobalConfig()
-     * @see #checkProjectConfig()()
      * @since 0.1.0
      */
     // package visibility so we can access from MainCommand
@@ -762,7 +755,7 @@ public final class DiverCli {
     }
 
     /**
-     * Finds a configuration file in {@link #projectDir}. If
+     * Finds a configuration file in {@link #getProjectDir()}. If
      * file is not present it is created from template indicated by
      * {@code databaseId}.
      * If database type is unknown, use {@link #DEFAULT_DB_IDENTIFIER} as
@@ -771,12 +764,12 @@ public final class DiverCli {
      * @param filepath
      *            Relative filepath with file name and extension included. i.e.
      *            abc/myfile.xml, which will be first searched in
-     *            {@link #projectDir}/abc/myfile.xml
+     *            {@link #getProjectDir()}/abc/myfile.xml
      *
      *            if file is not found, it is searched in
      *            {@code template} resource folder for the specified database
      *            type and copied to current
-     *            {@link #projectDir}.
+     *            {@link #getProjectDir()}.
      * @param databaseId
      *            If unknown use {@link #DEFAULT_DB_IDENTIFIER}
      * 
@@ -1002,7 +995,7 @@ public final class DiverCli {
     }
 
     /**
-     * Saves {@code dbConfig} to INI file in {@link #projectDir} folder
+     * Saves {@code dbConfig} to INI file in {@link #getProjectDir()} folder
      * 
      * @throws DiverCliIoException
      * 
@@ -1064,12 +1057,12 @@ public final class DiverCli {
 
 
     /**
-     * Finds a file in {@link #projectDir}.
+     * Finds a file in {@link #getProjectDir()}.
      *
      * @param filepath
      *            Relative filepath with file name and extension included. i.e.
      *            abc/myfile.xml, which will be searched in
-     *            {@link #projectDir}/abc/myfile.xml
+     *            {@link #getProjectDir()}/abc/myfile.xml
      *
      * @throws DiverCliNotFoundException
      *             if no file is found
@@ -1093,18 +1086,18 @@ public final class DiverCli {
     }
 
     /**
-     * Finds a file in {@link #globalConfDir}.
+     * Finds a file in user home under {@link #GLOBAL_CONF_DIR}.
      *
      * @param filepath
      *            Relative filepath with file name and extension included. i.e.
      *            abc/myfile.xml, which will be searched in
-     *            {@link #projectDir}/abc/myfile.xml
+     *            {@link #getProjectDir()}/abc/myfile.xml
      *
      * @throws DiverCliNotFoundException
      *             if no file is found
      * @since 0.1.0
      */
-    public File findConfigFile(String filepath) {
+    public File findGlobalConfigFile(String filepath) {
 
         Internals.checkNotEmpty(filepath, "Invalid filepath!");
         // better not, may be used during initialization 
