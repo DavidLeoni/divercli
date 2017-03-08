@@ -12,7 +12,7 @@ RELEASE DOCS ARE ON THE <a href="http://diversicon-kb.eu/manual/divercli" target
 
 #### About
 
-Java command line client for <a href="https://diversicon-kb.eu/tools" target="_blank">Diversicon system</a>. 
+Java command line client for <a href="http://diversicon-kb.eu/tools" target="_blank">Diversicon system</a>. 
 
 
 |**Usage**|**License**|**Roadmap**|**Contributing**|
