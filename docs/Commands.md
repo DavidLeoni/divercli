@@ -39,7 +39,7 @@ $eval{wn31.dir}
 
 You can import one or more XMLs with the `import-xml` command.
 
-For example, here we first create a database with Wordnet inside, and then import the resource `smartphones.xml` which depends upon Wordnet. Process takes some time as database is normalized and transitive closure is computed ([more info](http://diversicon-kb.eu/manual/diversicon-core/index.html#xml-import)):
+For example, here we first create a database with Wordnet inside, and then import the resource `smartphones.xml` which depends upon Wordnet. Process takes some time as database is normalized and transitive closure is computed (<a href="http://diversicon-kb.eu/manual/diversicon-core/latest/Operations.html#xml-import">more info</a>):
 
 $eval{wn31.init}
 
