@@ -21,7 +21,7 @@ Java command line client for <a href="http://diversicon-kb.eu/tools" target="_bl
 
 **Features**
   
-  * supports all features of <a href="https://diversicon-kb.eu/manual/diversicon-core" target="_blank">Diversicon-Core</a>
+  * supports all features of <a href="http://diversicon-kb.eu/manual/diversicon-core" target="_blank">Diversicon-Core</a>
   * includes Princeton Wordnet 3.1 
   * allows configuration both per-project and global    
   * dependency handling with Maven    
