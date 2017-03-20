@@ -7,7 +7,7 @@ This release allows to perform basic import / export of XML in <a href="http://d
 
 ### Install
 
-You can download Diver CLI <a href="../releases/download/divercli-#{version}/divercli-#{version}.zip" target="_blank"> from here</a>, then unzip somewhere on your system. In case updates are available, version numbers follow <a href="http://semver.org/" target="_blank">semantic versioning</a> rules. 
+You can download Diver CLI <a href="../releases/download/divercli-#{version}/divercli-#{version}.zip" target="_blank"> from here</a>, then unzip somewhere on your system. 
 
 **NOTE: This manual assumes you have added `bin/divercli` to the path of your shell,
 see <a href="INSTALL.txt" target="_blank">INSTALL.txt</a> instructions.**
